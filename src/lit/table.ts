@@ -22,6 +22,7 @@ export interface TableColumn {
 
 export interface TableRow {
   id: string;
+  children?: TableRow[];
   [key: string]: unknown;
 }
 
@@ -262,6 +263,67 @@ export class CaTable extends LitElement {
       box-shadow: inset 0 -2px 0 0 var(--ca-color-primary);
     }
 
+    /* ── Expand toggle ── */
+    .expand-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border: none;
+      border-radius: var(--ca-radius-sm);
+      background: none;
+      cursor: pointer;
+      color: var(--ca-text-muted);
+      padding: 0;
+      transition: color var(--ca-transition-fast), background-color var(--ca-transition-fast);
+    }
+    .expand-btn:hover {
+      color: var(--ca-text-primary);
+      background-color: var(--ca-surface-active);
+    }
+    .expand-icon {
+      display: inline-flex;
+      transition: transform 0.2s ease;
+    }
+    .expand-icon.expanded {
+      transform: rotate(90deg);
+    }
+    .cell-expand {
+      justify-content: center;
+    }
+
+    /* ── Child rows container ── */
+    .child-rows {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s ease;
+      grid-column: 1 / -1;
+    }
+    .child-rows.open {
+      grid-template-rows: 1fr;
+    }
+    .child-rows-inner {
+      overflow: hidden;
+      display: contents;
+    }
+    .child-rows:not(.open) .child-rows-inner {
+      display: grid;
+      grid-template-rows: 0fr;
+      overflow: hidden;
+    }
+
+    /* Child row styling */
+    .grid-row.child-row .cell {
+      background-color: var(--ca-surface-active);
+    }
+    .grid-row.child-row:hover .cell {
+      background-color: var(--ca-surface-hover);
+    }
+    .child-indent {
+      padding-left: 28px;
+    }
+
     /* Row height variants */
     :host([row-height='compact']) .grid-row .cell { padding-top: 6px; padding-bottom: 6px; }
     :host([row-height='relaxed']) .grid-row .cell { padding-top: 18px; padding-bottom: 18px; }
@@ -409,6 +471,8 @@ export class CaTable extends LitElement {
   @property({ type: Object, attribute: false }) sort: TableSort | undefined;
   @property({ type: Array, attribute: false }) selectedIds: string[] = [];
   @property({ type: String, reflect: true, attribute: 'row-height' }) rowHeight: 'compact' | 'default' | 'relaxed' = 'default';
+  @property({ type: Boolean, reflect: true }) expandable = false;
+  @property({ type: Array, attribute: false }) expandedIds: string[] = [];
 
   /* ── Internal state ── */
   @state() private _openMenuRowId: string | null = null;
@@ -436,6 +500,7 @@ export class CaTable extends LitElement {
   /* ── Grid template columns computation ── */
   private get _gridTemplateCols(): string {
     const parts: string[] = [];
+    if (this.expandable) parts.push('32px');
     if (this.draggable) parts.push('40px');
     if (this.selectable) parts.push('48px');
     for (const col of this.columns) {
@@ -550,6 +615,18 @@ export class CaTable extends LitElement {
   private _handleToggle(col: TableColumn, row: TableRow, e: Event) {
     const checked = (e as CustomEvent).detail?.checked ?? false;
     this._emit('ca-cell-toggle', { key: col.key, row, checked });
+  }
+
+  /* ── Expand/collapse handler ── */
+  private _handleExpand(row: TableRow) {
+    const idx = this.expandedIds.indexOf(row.id);
+    const newIds = [...this.expandedIds];
+    if (idx >= 0) {
+      newIds.splice(idx, 1);
+    } else {
+      newIds.push(row.id);
+    }
+    this._emit('ca-expand', { id: row.id, expanded: idx < 0, expandedIds: newIds });
   }
 
   /* ── Drag-and-drop (pointer events) ── */
@@ -731,6 +808,7 @@ export class CaTable extends LitElement {
       >
         <!-- Header row -->
         <div class="grid-header">
+          ${this.expandable ? html`<div class="cell"></div>` : nothing}
           ${this.draggable ? html`<div class="cell"></div>` : nothing}
           ${this.selectable
             ? html`
@@ -759,7 +837,12 @@ export class CaTable extends LitElement {
         <!-- Data rows -->
         ${this.rows.length === 0
           ? html`<div class="empty" style="grid-column:1/-1">No data</div>`
-          : this.rows.map((row, i) => this._renderRow(row, i, hasActions))}
+          : this.rows.map((row, i) => html`
+              ${this._renderRow(row, i, hasActions)}
+              ${this.expandable && (row.children?.length ?? 0) > 0 && this.expandedIds.includes(row.id)
+                ? row.children!.map((child, ci) => this._renderChildRow(child, ci, hasActions))
+                : nothing}
+            `)}
       </div>
     `;
   }
@@ -769,6 +852,9 @@ export class CaTable extends LitElement {
     const isDragging = this._dragRowId === row.id;
     const isDragOverAbove = this._dragOverRowId === row.id && this._dragOverPosition === 'above';
     const isDragOverBelow = this._dragOverRowId === row.id && this._dragOverPosition === 'below';
+
+    const hasChildren = this.expandable && (row.children?.length ?? 0) > 0;
+    const isExpanded = this.expandedIds.includes(row.id);
 
     return html`
       <div
@@ -781,6 +867,23 @@ export class CaTable extends LitElement {
         })}
         data-row-id=${row.id}
       >
+        ${this.expandable
+          ? html`
+              <div class="cell cell-expand">
+                ${hasChildren
+                  ? html`
+                      <button class="expand-btn" @click=${() => this._handleExpand(row)} aria-label=${isExpanded ? 'Collapse' : 'Expand'}>
+                        <span class=${classMap({ 'expand-icon': true, expanded: isExpanded })}>
+                          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                            <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </span>
+                      </button>
+                    `
+                  : nothing}
+              </div>
+            `
+          : nothing}
         ${this.draggable
           ? html`
               <div class="cell cell-checkbox">
@@ -831,6 +934,22 @@ export class CaTable extends LitElement {
               </div>
             `
           : nothing}
+      </div>
+    `;
+  }
+
+  private _renderChildRow(child: TableRow, _index: number, hasActions: boolean) {
+    return html`
+      <div class="grid-row child-row" data-row-id=${child.id}>
+        ${this.expandable ? html`<div class="cell cell-expand"></div>` : nothing}
+        ${this.draggable ? html`<div class="cell"></div>` : nothing}
+        ${this.selectable ? html`<div class="cell"></div>` : nothing}
+        ${this.columns.map(
+          (col, ci) => html`
+            <div class="cell ${ci === 0 ? 'child-indent' : ''}">${this._renderCell(col, child)}</div>
+          `
+        )}
+        ${hasActions ? html`<div class="cell"></div>` : nothing}
       </div>
     `;
   }
