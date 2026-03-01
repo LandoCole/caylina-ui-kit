@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caylina UI Kit — Web Components Demo</title>
+  <link rel="stylesheet" href="/src/tokens.css" />
+  <style>
+    body {
+      font-family: var(--ca-font-family);
+      background: var(--ca-surface);
+      color: var(--ca-text-primary);
+      padding: 32px;
+      margin: 0;
+    }
+    h1 { margin-bottom: 8px; }
+    h2 { margin-top: 32px; margin-bottom: 12px; border-bottom: 1px solid var(--ca-border); padding-bottom: 8px; }
+    .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+    .col { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+    .theme-toggle { position: fixed; top: 16px; right: 16px; z-index: 100; }
+  </style>
+</head>
+<body>
+  <ca-button variant="secondary" size="sm" class="theme-toggle" id="theme-toggle-btn">
+    Toggle Dark Mode
+  </ca-button>
+
+  <h1>Caylina UI Kit</h1>
+  <p>Lit Web Components</p>
+
+  <!-- ─── Button ─── -->
+  <h2>Button</h2>
+  <div class="row">
+    <ca-button variant="primary">Primary</ca-button>
+    <ca-button variant="secondary">Secondary</ca-button>
+    <ca-button variant="tertiary">Tertiary</ca-button>
+    <ca-button variant="primary" size="sm">Small</ca-button>
+    <ca-button variant="primary" size="lg">Large</ca-button>
+    <ca-button variant="primary" disabled>Disabled</ca-button>
+    <ca-button variant="primary" loading>Loading</ca-button>
+  </div>
+
+  <!-- ─── Link ─── -->
+  <h2>Link</h2>
+  <div class="row">
+    <ca-link href="#" type="subtle">Subtle Link</ca-link>
+    <ca-link href="#" type="legal">Legal Link</ca-link>
+    <ca-link href="#" type="subtle" size="small">Small Subtle</ca-link>
+    <ca-link href="#" type="legal" size="small">Small Legal</ca-link>
+  </div>
+
+  <!-- ─── Checkbox ─── -->
+  <h2>Checkbox</h2>
+  <div class="row">
+    <ca-checkbox checked label="Checked"></ca-checkbox>
+    <ca-checkbox label="Unchecked"></ca-checkbox>
+    <ca-checkbox disabled label="Disabled"></ca-checkbox>
+    <ca-checkbox checked label="With subtext" subtext="This is helper text" size="lg"></ca-checkbox>
+  </div>
+  <p style="margin: 8px 0 4px; font-size: 13px; color: var(--ca-text-muted);">Sizes:</p>
+  <div class="row">
+    <ca-checkbox size="xs" label="XS"></ca-checkbox>
+    <ca-checkbox size="sm" label="SM"></ca-checkbox>
+    <ca-checkbox size="md" label="MD"></ca-checkbox>
+    <ca-checkbox size="lg" label="LG"></ca-checkbox>
+    <ca-checkbox size="xl" label="XL"></ca-checkbox>
+  </div>
+
+  <!-- ─── Radio Button ─── -->
+  <h2>Radio Button</h2>
+  <div class="row">
+    <ca-radio checked name="demo-radio" value="a" label="Option A"></ca-radio>
+    <ca-radio name="demo-radio" value="b" label="Option B"></ca-radio>
+    <ca-radio name="demo-radio" value="c" label="Option C" subtext="With description" size="md"></ca-radio>
+  </div>
+  <p style="margin: 8px 0 4px; font-size: 13px; color: var(--ca-text-muted);">Sizes:</p>
+  <div class="row">
+    <ca-radio size="xs" label="XS" name="radio-sizes" value="xs"></ca-radio>
+    <ca-radio size="sm" label="SM" name="radio-sizes" value="sm" checked></ca-radio>
+    <ca-radio size="md" label="MD" name="radio-sizes" value="md"></ca-radio>
+    <ca-radio size="lg" label="LG" name="radio-sizes" value="lg"></ca-radio>
+    <ca-radio size="xl" label="XL" name="radio-sizes" value="xl"></ca-radio>
+  </div>
+  <script type="module">
+    // Radio group behavior: uncheck siblings on change
+    document.querySelectorAll('ca-radio[name="demo-radio"]').forEach((radio) => {
+      radio.addEventListener('ca-change', (e) => {
+        document.querySelectorAll('ca-radio[name="demo-radio"]').forEach((r) => {
+          if (r !== e.target) r.checked = false;
+        });
+      });
+    });
+    document.querySelectorAll('ca-radio[name="radio-sizes"]').forEach((radio) => {
+      radio.addEventListener('ca-change', (e) => {
+        document.querySelectorAll('ca-radio[name="radio-sizes"]').forEach((r) => {
+          if (r !== e.target) r.checked = false;
+        });
+      });
+    });
+  </script>
+
+  <!-- ─── Toggle ─── -->
+  <h2>Toggle</h2>
+  <div class="row">
+    <ca-toggle checked label="Enabled"></ca-toggle>
+    <ca-toggle label="Disabled state" disabled></ca-toggle>
+    <ca-toggle checked size="sm" label="Small toggle"></ca-toggle>
+    <ca-toggle label="With subtext" subtext="Additional description here"></ca-toggle>
+  </div>
+
+  <!-- ─── Input ─── -->
+  <h2>Input</h2>
+  <div class="col" style="max-width: 320px;">
+    <ca-input label="Email" type="email" placeholder="you@example.com"></ca-input>
+    <ca-input label="Name" error="This field is required" value="Bad value"></ca-input>
+    <ca-input label="Loading" loading placeholder="Searching..."></ca-input>
+    <ca-input label="Small" size="sm" placeholder="Small input"></ca-input>
+    <ca-input label="Large" size="lg" placeholder="Large input"></ca-input>
+  </div>
+
+  <!-- ─── Callout ─── -->
+  <h2>Callout</h2>
+  <div class="col">
+    <ca-callout variant="highlight">This is a highlight callout with important information.</ca-callout>
+    <ca-callout variant="info">This is an info callout with additional details.</ca-callout>
+  </div>
+
+  <!-- ─── Chip ─── -->
+  <h2>Chip</h2>
+  <div class="row">
+    <ca-chip>Small (default)</ca-chip>
+    <ca-chip selected>Selected SM</ca-chip>
+    <ca-chip size="md">Medium</ca-chip>
+    <ca-chip size="md" selected>Selected MD</ca-chip>
+    <ca-chip disabled>Disabled</ca-chip>
+  </div>
+
+  <!-- ─── Map Chip ─── -->
+  <h2>Map Chip</h2>
+  <div class="row">
+    <ca-map-chip>Location A</ca-map-chip>
+    <ca-map-chip selected>Selected</ca-map-chip>
+    <ca-map-chip viewed>Viewed</ca-map-chip>
+    <ca-map-chip>
+      Favorited
+      <svg slot="icon-after" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </ca-map-chip>
+  </div>
+
+  <!-- ─── Card ─── -->
+  <h2>Card</h2>
+  <div class="row">
+    <ca-card style="width: 200px;">
+      <strong>Card Title</strong>
+      <p style="margin: 8px 0 0;">Card content goes here.</p>
+    </ca-card>
+    <ca-card padding="sm" style="width: 200px;">
+      <strong>Small Padding</strong>
+      <p style="margin: 8px 0 0;">Compact card.</p>
+    </ca-card>
+    <ca-card padding="lg" style="width: 200px;">
+      <strong>Large Padding</strong>
+      <p style="margin: 8px 0 0;">Spacious card.</p>
+    </ca-card>
+  </div>
+
+  <!-- ─── Card Button ─── -->
+  <h2>Card Button</h2>
+  <div class="row">
+    <ca-card-button label="Option A"></ca-card-button>
+    <ca-card-button label="Option B" selected></ca-card-button>
+    <ca-card-button label="Small" size="sm"></ca-card-button>
+  </div>
+
+  <!-- ─── Badge ─── -->
+  <h2>Badge</h2>
+  <div class="row">
+    <ca-badge>3</ca-badge>
+    <ca-badge variant="success">OK</ca-badge>
+    <ca-badge variant="danger">5</ca-badge>
+    <ca-badge variant="warning">!</ca-badge>
+    <ca-badge size="md">12</ca-badge>
+    <ca-badge dot></ca-badge>
+    <ca-badge dot variant="success"></ca-badge>
+    <ca-badge dot variant="danger"></ca-badge>
+  </div>
+
+  <!-- ─── Tabs ─── -->
+  <h2>Tabs</h2>
+  <ca-underline-tabs active-id="t1" id="demo-underline-tabs" style="margin-bottom: 16px;"></ca-underline-tabs>
+  <ca-pill-tabs active-id="p1" id="demo-pill-tabs"></ca-pill-tabs>
+  <script type="module">
+    document.getElementById('demo-underline-tabs').tabs = [
+      { id: 't1', label: 'Tab 1', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>' },
+      { id: 't2', label: 'Tab 2', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' },
+      { id: 't3', label: 'Tab 3' },
+    ];
+    document.getElementById('demo-pill-tabs').tabs = [
+      { id: 'p1', label: 'Pill 1' },
+      { id: 'p2', label: 'Pill 2' },
+      { id: 'p3', label: 'Pill 3' },
+    ];
+  </script>
+
+  <!-- ─── Menu ─── -->
+  <h2>Menu</h2>
+  <ca-menu id="demo-menu"></ca-menu>
+  <script type="module">
+    document.getElementById('demo-menu').sections = [
+      { items: [
+        { label: 'Profile', bold: true },
+        { label: 'Settings' },
+        { label: 'Preferences' },
+      ]},
+      { items: [
+        { label: 'Help Center', href: '#' },
+        { label: 'Log Out', action: 'logout' },
+      ]},
+    ];
+  </script>
+
+  <!-- ─── Spinner ─── -->
+  <h2>Spinner</h2>
+  <div class="row">
+    <ca-spinner size="sm"></ca-spinner>
+    <ca-spinner size="md"></ca-spinner>
+    <ca-spinner size="lg"></ca-spinner>
+    <ca-spinner variant="circular" size="sm"></ca-spinner>
+    <ca-spinner variant="circular" size="md"></ca-spinner>
+    <ca-spinner variant="circular" size="lg"></ca-spinner>
+  </div>
+
+  <!-- ─── Divider ─── -->
+  <h2>Divider</h2>
+  <ca-divider spacing="md"></ca-divider>
+
+  <!-- ─── Accordion ─── -->
+  <h2>Accordion</h2>
+  <ca-accordion id="demo-accordion"></ca-accordion>
+  <script type="module">
+    document.getElementById('demo-accordion').items = [
+      { id: '1', title: 'Section 1', content: 'Content for section one.' },
+      { id: '2', title: 'Section 2', content: 'Content for section two.' },
+      { id: '3', title: 'Section 3', content: 'Content for section three.' },
+    ];
+  </script>
+
+  <!-- ─── Select ─── -->
+  <h2>Select</h2>
+  <div class="row">
+    <ca-select placeholder="Pick a fruit" style="width: 220px;" id="demo-select"></ca-select>
+  </div>
+  <script type="module">
+    document.getElementById('demo-select').options = [
+      { value: 'apple', label: 'Apple' },
+      { value: 'banana', label: 'Banana' },
+      { value: 'cherry', label: 'Cherry' },
+      { value: 'date', label: 'Date' },
+    ];
+  </script>
+
+  <!-- ─── Avatar ─── -->
+  <h2>Avatar</h2>
+  <div class="row">
+    <ca-avatar name="John Doe" size="sm"></ca-avatar>
+    <ca-avatar name="Jane Smith" size="md"></ca-avatar>
+    <ca-avatar name="Bob Wilson" size="lg" src="https://i.pravatar.cc/80?img=3"></ca-avatar>
+  </div>
+
+  <!-- ─── Textarea ─── -->
+  <h2>Textarea</h2>
+  <div style="max-width: 400px;">
+    <ca-textarea label="Comment" placeholder="Write something..." maxcount="200"></ca-textarea>
+  </div>
+
+  <!-- ─── Tooltip ─── -->
+  <h2>Tooltip</h2>
+  <div class="row">
+    <ca-tooltip content="This is a tooltip!">
+      <ca-button variant="secondary">Hover me</ca-button>
+    </ca-tooltip>
+  </div>
+
+  <!-- ─── Modal ─── -->
+  <h2>Modal</h2>
+  <ca-button variant="primary" id="open-modal-btn">Open Modal</ca-button>
+  <ca-modal id="demo-modal" size="md">
+    <span slot="header">Modal Title</span>
+    <p>This is the modal body content.</p>
+    <div slot="footer">
+      <ca-button variant="secondary" id="modal-cancel">Cancel</ca-button>
+      <ca-button variant="primary" id="modal-confirm">Confirm</ca-button>
+    </div>
+  </ca-modal>
+  <script type="module">
+    const modal = document.getElementById('demo-modal');
+    document.getElementById('open-modal-btn').addEventListener('click', () => modal.setAttribute('open', ''));
+    document.getElementById('modal-cancel').addEventListener('click', () => modal.removeAttribute('open'));
+    document.getElementById('modal-confirm').addEventListener('click', () => modal.removeAttribute('open'));
+    modal.addEventListener('ca-close', () => modal.removeAttribute('open'));
+  </script>
+
+  <!-- ─── Split Button ─── -->
+  <h2>Split Button</h2>
+  <div class="row">
+    <ca-split-button label="Save" variant="primary" id="demo-split-button"></ca-split-button>
+  </div>
+  <script type="module">
+    document.getElementById('demo-split-button').options = [
+      { value: 'save-draft', label: 'Save as Draft' },
+      { value: 'save-publish', label: 'Save & Publish' },
+    ];
+  </script>
+
+  <!-- ─── Date Picker ─── -->
+  <h2>Date Picker</h2>
+  <div class="row">
+    <ca-datepicker label="Start date" placeholder="Pick a date" style="width: 260px;"></ca-datepicker>
+    <ca-datepicker label="Date range" mode="range" placeholder="Select range" style="width: 300px;"></ca-datepicker>
+  </div>
+
+  <!-- ─── Toast ─── -->
+  <h2>Toast</h2>
+  <div class="row">
+    <ca-button variant="primary" id="toast-success">Success Toast</ca-button>
+    <ca-button variant="secondary" id="toast-error">Error Toast</ca-button>
+    <ca-button variant="secondary" id="toast-info">Info Toast</ca-button>
+    <ca-button variant="secondary" id="toast-warning">Warning Toast</ca-button>
+  </div>
+  <script type="module">
+    import { toast } from './src/lit/toast.ts';
+    document.getElementById('toast-success').addEventListener('click', () => toast('Operation completed!', { type: 'success' }));
+    document.getElementById('toast-error').addEventListener('click', () => toast('Something went wrong.', { type: 'error' }));
+    document.getElementById('toast-info').addEventListener('click', () => toast('Here is some useful information.', { type: 'info' }));
+    document.getElementById('toast-warning').addEventListener('click', () => toast('Please review before continuing.', { type: 'warning' }));
+  </script>
+
+  <!-- ─── Progress Bar ─── -->
+  <h2>Progress Bar</h2>
+  <div class="col" style="max-width: 300px;">
+    <ca-progress-bar value="37" max="60" show-label label-suffix="times"></ca-progress-bar>
+    <ca-progress-bar value="75" max="100" show-label></ca-progress-bar>
+    <ca-progress-bar value="50" max="100" size="md" show-label></ca-progress-bar>
+    <ca-progress-bar value="20" max="100"></ca-progress-bar>
+  </div>
+
+  <!-- ─── Table (Selection) ─── -->
+  <h2>Table — Selection &amp; Status</h2>
+  <ca-table id="demo-table-selection" heading="Team Members" heading-badge="Active" supporting-text="Manage your team members and their roles." selectable>
+    <div slot="header-actions" style="display:flex;gap:8px;">
+      <ca-button variant="tertiary" size="sm">Export</ca-button>
+      <ca-button variant="primary" size="sm">Add new</ca-button>
+    </div>
+  </ca-table>
+  <script type="module">
+    const selTable = document.getElementById('demo-table-selection');
+    selTable.columns = [
+      { key: 'name', heading: 'Name', type: 'bold-text', sortable: true },
+      { key: 'email', heading: 'Email' },
+      { key: 'role', heading: 'Role', sortable: true },
+      { key: 'status', heading: 'Status', type: 'badge', badgeMap: { Active: 'success', Inactive: 'danger' }, sortable: true },
+    ];
+    selTable.rows = [
+      { id: '1', name: 'Olivia Martin', email: 'olivia@example.com', role: 'Designer', status: 'Active' },
+      { id: '2', name: 'Jackson Lee', email: 'jackson@example.com', role: 'Developer', status: 'Active' },
+      { id: '3', name: 'Isabella Nguyen', email: 'isabella@example.com', role: 'Manager', status: 'Inactive' },
+      { id: '4', name: 'William Kim', email: 'william@example.com', role: 'Developer', status: 'Active' },
+      { id: '5', name: 'Sofia Davis', email: 'sofia@example.com', role: 'Designer', status: 'Active' },
+    ];
+    selTable.rowActions = [
+      { label: 'Edit', action: 'edit' },
+      { label: 'Delete', action: 'delete' },
+    ];
+    selTable.sort = { key: 'name', direction: 'asc' };
+    selTable.selectedIds = ['1', '3'];
+
+    selTable.addEventListener('ca-sort', (e) => {
+      selTable.sort = e.detail;
+    });
+    selTable.addEventListener('ca-select', (e) => {
+      selTable.selectedIds = e.detail.selectedIds;
+    });
+    selTable.addEventListener('ca-row-action', (e) => {
+      console.log('Row action:', e.detail.action, e.detail.row);
+    });
+  </script>
+
+  <!-- ─── Table (Drag & Toggle) ─── -->
+  <h2>Table — Drag, Toggle &amp; Progress</h2>
+  <ca-table id="demo-table-drag" heading="Exercises" show-search show-filters draggable></ca-table>
+  <script type="module">
+    const dragTable = document.getElementById('demo-table-drag');
+    dragTable.columns = [
+      { key: 'exercise', heading: 'Exercise', type: 'bold-text' },
+      { key: 'enabled', heading: 'Enabled', type: 'toggle' },
+      { key: 'progress', heading: 'Progress', type: 'progress', progressMax: 'total', progressSuffix: 'times' },
+      { key: 'category', heading: 'Category' },
+    ];
+    dragTable.rows = [
+      { id: '1', exercise: 'Push-ups', enabled: true, progress: 37, total: 60, category: 'Strength' },
+      { id: '2', exercise: 'Running', enabled: true, progress: 12, total: 20, category: 'Cardio' },
+      { id: '3', exercise: 'Squats', enabled: false, progress: 5, total: 30, category: 'Strength' },
+      { id: '4', exercise: 'Plank', enabled: true, progress: 18, total: 25, category: 'Core' },
+      { id: '5', exercise: 'Cycling', enabled: false, progress: 8, total: 15, category: 'Cardio' },
+    ];
+    dragTable.filterTabs = [
+      { id: 'all', label: 'All', count: 5 },
+      { id: 'strength', label: 'Strength', count: 2 },
+      { id: 'cardio', label: 'Cardio', count: 2 },
+      { id: 'core', label: 'Core', count: 1 },
+    ];
+    dragTable.activeFilterTab = 'all';
+    dragTable.pagination = { page: 1, pageSize: 5, totalItems: 12 };
+
+    dragTable.addEventListener('ca-reorder', (e) => {
+      dragTable.rows = e.detail.rows;
+    });
+    dragTable.addEventListener('ca-filter-tab', (e) => {
+      dragTable.activeFilterTab = e.detail.id;
+    });
+    dragTable.addEventListener('ca-page', (e) => {
+      dragTable.pagination = { ...dragTable.pagination, page: e.detail.page };
+    });
+    dragTable.addEventListener('ca-search', (e) => {
+      console.log('Search:', e.detail.query);
+    });
+    dragTable.addEventListener('ca-cell-toggle', (e) => {
+      const row = dragTable.rows.find(r => r.id === e.detail.row.id);
+      if (row) row[e.detail.key] = e.detail.checked;
+      dragTable.rows = [...dragTable.rows];
+    });
+  </script>
+
+  <!-- ─── Dark Mode Toggle ─── -->
+  <script type="module">
+    document.getElementById('theme-toggle-btn').addEventListener('click', () => {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        html.removeAttribute('data-theme');
+      } else {
+        html.setAttribute('data-theme', 'dark');
+      }
+    });
+  </script>
+
+  <!-- Main entry point -->
+  <script type="module" src="/src/index.ts"></script>
+</body>
+</html>

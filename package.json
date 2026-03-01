@@ -1,0 +1,36 @@
+{
+  "name": "@caylina/ui-kit",
+  "version": "1.0.1",
+  "description": "Caylina UI Kit — Lit Web Components (CDN-ready)",
+  "type": "module",
+  "main": "dist/caylina-ui.js",
+  "module": "dist/caylina-ui.js",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/caylina-ui.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./caylina-ui.js": "./dist/caylina-ui.js"
+  },
+  "sideEffects": [
+    "dist/caylina-ui.js"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lit": "^3.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^5.4.21"
+  }
+}

@@ -1,0 +1,117 @@
+@layer caylina.tokens, caylina.components;
+
+@layer caylina.tokens {
+  :root {
+    /* ── Brand Colors (constant across themes) ── */
+    --ca-color-primary: #728EC7;
+    --ca-color-primary-pressed: #657EAB;
+    --ca-color-secondary: #222222;
+    --ca-color-secondary-hover: rgba(34, 34, 34, 0.05);
+    --ca-color-white: #FFFFFF;
+    --ca-color-link: #004CC4;
+    --ca-color-danger: #C13515;
+    --ca-color-success: #15803D;
+    --ca-color-warning: #CA8A04;
+
+    /* ── Semantic Surfaces ── */
+    --ca-surface: #FFFFFF;
+    --ca-surface-hover: #F7F7F7;
+    --ca-surface-active: #F6F6F6;
+    --ca-surface-elevated: #FFFFFF;
+
+    /* ── Semantic Text ── */
+    --ca-text-primary: #222222;
+    --ca-text-secondary: #757575;
+    --ca-text-muted: #717171;
+    --ca-text-danger: #D55F5A;
+
+    /* ── Semantic Borders ── */
+    --ca-border: #DDDDDD;
+    --ca-border-strong: #B0B0B0;
+    --ca-border-input: #C2C2C2;
+    --ca-divider: #D3D3D3;
+
+    /* ── State Colors ── */
+    --ca-color-disabled: #DDDDDD;
+    --ca-color-disabled-text: #FFFFFF;
+    --ca-color-focus-ring: #D3D3D3;
+
+    /* ── Typography ── */
+    --ca-font-family: "SF Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --ca-font-weight-semibold: 590;
+
+    --ca-font-size-xs: 11px;
+    --ca-font-size-sm: 13px;
+    --ca-font-size-md: 14px;
+    --ca-font-size-lg: 16px;
+
+    /* ── Radii ── */
+    --ca-radius-sm: 4px;
+    --ca-radius-md: 8px;
+    --ca-radius-lg: 12px;
+    --ca-radius-xl: 16px;
+    --ca-radius-full: 9999px;
+    --ca-radius-button: 8px;
+    --ca-radius-focus-wrapper: 12px;
+    --ca-radius-link-focus: 4px;
+    --ca-radius-link-focus-sm: 2px;
+
+    /* ── Spacing Scale ── */
+    --ca-space-xs: 4px;
+    --ca-space-sm: 8px;
+    --ca-space-md: 16px;
+    --ca-space-lg: 24px;
+    --ca-space-xl: 32px;
+    --ca-focus-padding: 4px;
+
+    /* ── Transitions ── */
+    --ca-transition-fast: 0.15s ease;
+    --ca-transition-normal: 0.2s ease;
+
+    /* ── Toggle ── */
+    --ca-toggle-active: #222222;
+
+    /* ── Shadows ── */
+    --ca-shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    --ca-shadow-md: 0px 4px 12px rgba(0, 0, 0, 0.12);
+    --ca-shadow-lg: 0px 8px 24px rgba(0, 0, 0, 0.15);
+    --ca-shadow-menu: 0px 4px 18px 0px rgba(0, 0, 0, 0.17);
+    --ca-shadow-chip: 0px 1px 5px 0px rgba(0, 0, 0, 0.19);
+  }
+
+  /* ── Dark Mode ── */
+  [data-theme="dark"] {
+    --ca-color-secondary-hover: rgba(255, 255, 255, 0.05);
+    --ca-color-link: #7EB3FF;
+    --ca-color-danger: #CC8889;
+    --ca-color-success: #22C55E;
+    --ca-color-warning: #EAB308;
+
+    --ca-surface: #161A23;
+    --ca-surface-hover: #2D2F39;
+    --ca-surface-active: #2D2F39;
+    --ca-surface-elevated: #1E222D;
+
+    --ca-text-primary: rgba(255, 255, 255, 0.8);
+    --ca-text-secondary: rgba(255, 255, 255, 0.5);
+    --ca-text-muted: rgba(255, 255, 255, 0.5);
+    --ca-text-danger: #CC8889;
+
+    --ca-border: rgba(255, 255, 255, 0.1);
+    --ca-border-strong: rgba(255, 255, 255, 0.2);
+    --ca-border-input: rgba(255, 255, 255, 0.2);
+    --ca-divider: #2D2F39;
+
+    --ca-color-disabled: #3A3D47;
+    --ca-color-disabled-text: rgba(255, 255, 255, 0.3);
+    --ca-color-focus-ring: rgba(255, 255, 255, 0.3);
+
+    --ca-toggle-active: #008A05;
+
+    --ca-shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.25);
+    --ca-shadow-md: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    --ca-shadow-lg: 0px 8px 24px rgba(0, 0, 0, 0.35);
+    --ca-shadow-menu: 0px 4px 18px 0px rgba(0, 0, 0, 0.4);
+    --ca-shadow-chip: 0px 1px 5px 0px rgba(0, 0, 0, 0.35);
+  }
+}
