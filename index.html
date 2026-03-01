@@ -39,6 +39,12 @@
     <ca-button variant="primary" disabled>Disabled</ca-button>
     <ca-button variant="primary" loading>Loading</ca-button>
   </div>
+  <p style="margin: 8px 0 4px; font-size: 13px; color: var(--ca-text-muted);">Thin:</p>
+  <div class="row">
+    <ca-button variant="primary" size="thin">Primary Thin</ca-button>
+    <ca-button variant="secondary" size="thin">Secondary Thin</ca-button>
+    <ca-button variant="tertiary" size="thin">Tertiary Thin</ca-button>
+  </div>
 
   <!-- ─── Link ─── -->
   <h2>Link</h2>
@@ -304,12 +310,26 @@
   <h2>Split Button</h2>
   <div class="row">
     <ca-split-button label="Save" variant="primary" id="demo-split-button"></ca-split-button>
+    <ca-split-button label="Save" variant="secondary" id="demo-split-secondary"></ca-split-button>
+    <ca-split-button label="Save" variant="tertiary" id="demo-split-tertiary"></ca-split-button>
+  </div>
+  <p style="margin: 8px 0 4px; font-size: 13px; color: var(--ca-text-muted);">Thin:</p>
+  <div class="row">
+    <ca-split-button label="Save" variant="primary" size="thin" id="demo-split-thin-primary"></ca-split-button>
+    <ca-split-button label="Save" variant="secondary" size="thin" id="demo-split-thin-secondary"></ca-split-button>
+    <ca-split-button label="Save" variant="tertiary" size="thin" id="demo-split-thin-tertiary"></ca-split-button>
   </div>
   <script type="module">
-    document.getElementById('demo-split-button').options = [
+    const splitOpts = [
       { value: 'save-draft', label: 'Save as Draft' },
       { value: 'save-publish', label: 'Save & Publish' },
     ];
+    document.getElementById('demo-split-button').options = splitOpts;
+    document.getElementById('demo-split-secondary').options = splitOpts;
+    document.getElementById('demo-split-tertiary').options = splitOpts;
+    document.getElementById('demo-split-thin-primary').options = splitOpts;
+    document.getElementById('demo-split-thin-secondary').options = splitOpts;
+    document.getElementById('demo-split-thin-tertiary').options = splitOpts;
   </script>
 
   <!-- ─── Date Picker ─── -->

@@ -32,6 +32,7 @@ export class CaButton extends LitElement {
     }
 
     /* Sizes */
+    .button.thin { padding: 6px 16px; font-size: var(--ca-font-size-sm); }
     .button.xs { padding: 8px 16px; font-size: var(--ca-font-size-xs); }
     .button.sm { padding: 12px 20px; font-size: var(--ca-font-size-sm); }
     .button.md { padding: 14px 24px; font-size: var(--ca-font-size-sm); }
@@ -132,7 +133,7 @@ export class CaButton extends LitElement {
   `;
 
   @property({ type: String, reflect: true }) variant: 'primary' | 'secondary' | 'tertiary' = 'primary';
-  @property({ type: String, reflect: true }) size: 'xs' | 'sm' | 'md' | 'lg' | 'full' = 'md';
+  @property({ type: String, reflect: true }) size: 'thin' | 'xs' | 'sm' | 'md' | 'lg' | 'full' = 'md';
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: Boolean, reflect: true }) loading = false;
 
