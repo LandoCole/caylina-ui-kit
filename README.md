@@ -2,6 +2,22 @@
 
 A lightweight, CDN-ready web component library built with [Lit 3](https://lit.dev). Drop it into any HTML page — no build step required.
 
+### Light Mode
+
+![Light Mode](screenshots/light-mode-full.png)
+
+### Dark Mode
+
+![Dark Mode](screenshots/dark-mode-full.png)
+
+### Selection Table
+
+![Selection Table](screenshots/table-selection-light.png)
+
+### Drag, Toggle & Progress Table
+
+![Drag Table](screenshots/table-drag-light.png)
+
 ## Getting Started
 
 Add the tokens stylesheet and component bundle to your HTML:
@@ -50,11 +66,13 @@ All components and tokens respond automatically.
 | Menu | `<ca-menu>` | Dropdown menu with sections |
 | Modal | `<ca-modal>` | Dialog with header, body, footer slots |
 | Pill Tabs | `<ca-pill-tabs>` | Pill-style tab navigation |
+| Progress Bar | `<ca-progress-bar>` | Horizontal progress bar with optional label |
 | Radio Button | `<ca-radio>` | Radio with label and sizes xs–xl |
 | Select | `<ca-select>` | Dropdown select |
 | Side Nav | `<ca-sidenav>` | Sidebar navigation |
 | Spinner | `<ca-spinner>` | Loading indicator (dots/circular) |
 | Split Button | `<ca-split-button>` | Button with dropdown actions |
+| Table | `<ca-table>` | Data table with selection, sorting, drag, pagination |
 | Textarea | `<ca-textarea>` | Multi-line input with character count |
 | Toast | `<ca-toast-container>` | Notification toasts (success/error/info/warning) |
 | Toggle | `<ca-toggle>` | Switch toggle with label |
