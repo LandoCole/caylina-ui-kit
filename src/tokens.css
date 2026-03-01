@@ -81,6 +81,9 @@
 
   /* ── Dark Mode ── */
   [data-theme="dark"] {
+    --ca-color-secondary: rgba(255, 255, 255, 0.85);
+    --ca-color-secondary-text: #161A23;
+    --ca-color-secondary-divider: rgba(0, 0, 0, 0.15);
     --ca-color-secondary-hover: rgba(255, 255, 255, 0.05);
     --ca-color-link: #7EB3FF;
     --ca-color-danger: #CC8889;

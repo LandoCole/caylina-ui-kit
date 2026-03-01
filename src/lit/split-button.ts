@@ -35,8 +35,8 @@ export class CaSplitButton extends LitElement {
     :host([variant="primary"]) .divider, .divider { background-color: rgba(255,255,255,0.25); }
     :host([variant="primary"]) .main-button:hover:not(:disabled), :host([variant="primary"]) .dropdown-trigger:hover:not(:disabled) { background-color: var(--ca-color-primary-pressed); }
     /* Secondary */
-    :host([variant="secondary"]) .main-button, :host([variant="secondary"]) .dropdown-trigger { background-color: var(--ca-color-secondary); color: var(--ca-color-white); border: none; }
-    :host([variant="secondary"]) .divider { background-color: rgba(255,255,255,0.2); }
+    :host([variant="secondary"]) .main-button, :host([variant="secondary"]) .dropdown-trigger { background-color: var(--ca-color-secondary); color: var(--ca-color-secondary-text, var(--ca-color-white)); border: none; }
+    :host([variant="secondary"]) .divider { background-color: var(--ca-color-secondary-divider, rgba(255,255,255,0.2)); }
     :host([variant="secondary"]) .main-button:hover:not(:disabled), :host([variant="secondary"]) .dropdown-trigger:hover:not(:disabled) { opacity: 0.8; }
     /* Tertiary */
     :host([variant="tertiary"]) .main-button, :host([variant="tertiary"]) .dropdown-trigger { background-color: transparent; color: var(--ca-text-primary); border: 1px solid var(--ca-text-primary); }

@@ -60,7 +60,7 @@ export class CaButton extends LitElement {
     /* Secondary */
     .button.secondary {
       background-color: var(--ca-color-secondary);
-      color: var(--ca-color-white);
+      color: var(--ca-color-secondary-text, var(--ca-color-white));
     }
     .button.secondary:hover:not(:disabled):not(.loading) {
       opacity: 0.8;
