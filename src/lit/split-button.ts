@@ -15,15 +15,21 @@ export class CaSplitButton extends LitElement {
     .main-button { border-radius: var(--ca-radius-button) 0 0 var(--ca-radius-button); }
     .dropdown-trigger { border-radius: 0 var(--ca-radius-button) var(--ca-radius-button) 0; }
     .divider { width: 1px; align-self: center; height: 60%; flex-shrink: 0; }
+    /* Size: xs */
+    :host([size="xs"]) .main-button { padding: 6px 12px; font-size: 11px; }
+    :host([size="xs"]) .dropdown-trigger { padding: 6px 8px; }
     /* Size: sm */
-    :host([size="sm"]) .main-button { padding: 6px 16px; font-size: 13px; }
-    :host([size="sm"]) .dropdown-trigger { padding: 6px 10px; }
+    :host([size="sm"]) .main-button { padding: 8px 16px; font-size: 13px; }
+    :host([size="sm"]) .dropdown-trigger { padding: 8px 10px; }
     /* Size: md (default) */
     .main-button { padding: 14px 24px; font-size: 13px; }
     .dropdown-trigger { padding: 14px 12px; }
     /* Size: lg */
     :host([size="lg"]) .main-button { padding: 16px 32px; font-size: 16px; }
     :host([size="lg"]) .dropdown-trigger { padding: 16px 16px; }
+    /* Size: xl */
+    :host([size="xl"]) .main-button { padding: 20px 40px; font-size: 16px; }
+    :host([size="xl"]) .dropdown-trigger { padding: 20px 20px; }
     /* Primary */
     :host([variant="primary"]) .main-button, :host([variant="primary"]) .dropdown-trigger, .main-button, .dropdown-trigger { background-color: var(--ca-color-primary); color: var(--ca-color-white); border: none; }
     :host([variant="primary"]) .divider, .divider { background-color: rgba(255,255,255,0.25); }
@@ -60,7 +66,7 @@ export class CaSplitButton extends LitElement {
   `;
 
   @property({ type: String, reflect: true }) variant: 'primary' | 'secondary' | 'tertiary' = 'primary';
-  @property({ type: String, reflect: true }) size: 'sm' | 'md' | 'lg' = 'md';
+  @property({ type: String, reflect: true }) size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
   @property({ type: Array }) options: SplitButtonOption[] = [];
   @property({ type: String }) value = '';
   @property({ type: String }) label = '';

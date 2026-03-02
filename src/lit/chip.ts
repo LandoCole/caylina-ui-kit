@@ -12,13 +12,13 @@ export class CaChip extends LitElement {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 6px 12px;
+      padding: 10px 20px;
       border-radius: 50px;
       border: 1px solid var(--ca-border);
       background-color: var(--ca-surface);
       font-family: var(--ca-font-family);
       font-weight: 400;
-      font-size: 12px;
+      font-size: 14px;
       line-height: 1;
       color: var(--ca-text-primary);
       cursor: pointer;
@@ -26,10 +26,10 @@ export class CaChip extends LitElement {
       transition: background-color var(--ca-transition-fast), border-color var(--ca-transition-fast), color var(--ca-transition-fast), transform 0.1s ease;
       box-sizing: border-box;
     }
-    /* Size: md */
-    :host([size='md']) .chip {
-      padding: 10px 20px;
-      font-size: 14px;
+    /* Size: sm */
+    :host([size='sm']) .chip {
+      padding: 6px 12px;
+      font-size: 12px;
     }
     .chip:hover {
       border-color: var(--ca-text-primary);
@@ -57,7 +57,7 @@ export class CaChip extends LitElement {
 
   @property({ type: Boolean, reflect: true }) selected = false;
   @property({ type: Boolean, reflect: true }) disabled = false;
-  @property({ type: String, reflect: true }) size: 'sm' | 'md' = 'sm';
+  @property({ type: String, reflect: true }) size: 'sm' | 'md' = 'md';
 
   private _handleClick() {
     if (this.disabled) return;

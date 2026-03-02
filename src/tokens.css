@@ -37,7 +37,7 @@
     --ca-color-focus-ring: #D3D3D3;
 
     /* ── Typography ── */
-    --ca-font-family: "SF Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --ca-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --ca-font-weight-semibold: 590;
 
     --ca-font-size-xs: 11px;

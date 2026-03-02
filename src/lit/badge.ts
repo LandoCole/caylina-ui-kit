@@ -19,13 +19,13 @@ export class CaBadge extends LitElement {
     }
 
     /* Sizes */
-    :host, :host([size='sm']) {
+    :host([size='sm']) {
       font-size: var(--ca-font-size-xs);
       min-width: 18px;
       height: 18px;
       padding: 2px 6px;
     }
-    :host([size='md']) {
+    :host, :host([size='md']) {
       font-size: var(--ca-font-size-sm);
       min-width: 22px;
       height: 22px;
@@ -36,12 +36,12 @@ export class CaBadge extends LitElement {
     :host([dot]) {
       padding: 0;
     }
-    :host([dot]), :host([dot][size='sm']) {
+    :host([dot][size='sm']) {
       width: 8px;
       height: 8px;
       min-width: 8px;
     }
-    :host([dot][size='md']) {
+    :host([dot]), :host([dot][size='md']) {
       width: 10px;
       height: 10px;
       min-width: 10px;
@@ -54,7 +54,7 @@ export class CaBadge extends LitElement {
   `;
 
   @property({ type: String, reflect: true }) variant: 'default' | 'success' | 'warning' | 'danger' = 'default';
-  @property({ type: String, reflect: true }) size: 'sm' | 'md' = 'sm';
+  @property({ type: String, reflect: true }) size: 'sm' | 'md' = 'md';
   @property({ type: Boolean, reflect: true }) dot = false;
 
   render() {

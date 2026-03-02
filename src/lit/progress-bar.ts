@@ -12,13 +12,13 @@ export class CaProgressBar extends LitElement {
     }
     .track {
       flex: 1;
-      height: 6px;
+      height: 8px;
       border-radius: var(--ca-radius-full);
       background-color: var(--ca-surface-active);
       overflow: hidden;
     }
-    :host([size='md']) .track {
-      height: 8px;
+    :host([size='sm']) .track {
+      height: 6px;
     }
     .fill {
       height: 100%;
@@ -29,20 +29,20 @@ export class CaProgressBar extends LitElement {
     }
     .label {
       font-family: var(--ca-font-family);
-      font-size: var(--ca-font-size-xs);
+      font-size: var(--ca-font-size-sm);
       color: var(--ca-text-secondary);
       white-space: nowrap;
       flex-shrink: 0;
     }
-    :host([size='md']) .label {
-      font-size: var(--ca-font-size-sm);
+    :host([size='sm']) .label {
+      font-size: var(--ca-font-size-xs);
     }
   `;
 
   @property({ type: Number }) value = 0;
   @property({ type: Number }) max = 100;
   @property({ type: Boolean, reflect: true, attribute: 'show-label' }) showLabel = false;
-  @property({ type: String, reflect: true }) size: 'sm' | 'md' = 'sm';
+  @property({ type: String, reflect: true }) size: 'sm' | 'md' = 'md';
   @property({ type: String }) labelSuffix = '';
 
   private get _percent(): number {

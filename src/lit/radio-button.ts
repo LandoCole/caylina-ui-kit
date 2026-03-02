@@ -135,7 +135,7 @@ export class CaRadio extends LitElement {
 
   @property({ type: Boolean, reflect: true }) checked = false;
   @property({ type: Boolean, reflect: true }) disabled = false;
-  @property({ type: String, reflect: true }) size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'sm';
+  @property({ type: String, reflect: true }) size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
   @property({ type: String }) name = '';
   @property({ type: String }) value = '';
   @property({ type: String }) label = '';

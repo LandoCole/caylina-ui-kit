@@ -22,14 +22,14 @@ export class CaMultiSelect extends LitElement {
     .field {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
       width: 100%;
-      padding: 16px 12px;
+      padding: 10px 12px;
       border: 1px solid var(--ca-border-strong);
       border-radius: 8px;
       background-color: var(--ca-surface);
       font-family: var(--ca-font-family);
-      font-size: 16px;
+      font-size: var(--ca-font-size-md);
       color: var(--ca-text-primary);
       cursor: pointer;
       box-sizing: border-box;
@@ -42,52 +42,52 @@ export class CaMultiSelect extends LitElement {
     .field.loading { justify-content: center; pointer-events: none; }
 
     /* ── XS ── */
-    :host([size='xs']) .field { padding: 6px 8px; gap: 8px; font-size: 11px; border-radius: 6px; }
+    :host([size='xs']) .field { padding: 6px 8px; gap: 8px; font-size: var(--ca-font-size-xs); border-radius: 6px; }
     :host([size='xs']) .label { font-size: 9px; }
     :host([size='xs']) .value,
-    :host([size='xs']) .chips-area { font-size: 11px; }
+    :host([size='xs']) .chips-area { font-size: var(--ca-font-size-xs); }
     :host([size='xs']) .chip { padding: 1px 5px; font-size: 10px; gap: 3px; }
     :host([size='xs']) .chip-remove { width: 12px; height: 12px; }
     :host([size='xs']) .chip-remove svg { width: 8px; height: 8px; }
     :host([size='xs']) .chevron { width: 12px; height: 12px; }
-    :host([size='xs']) .option { padding: 6px 8px; font-size: 11px; gap: 6px; }
+    :host([size='xs']) .option { padding: 6px 8px; font-size: var(--ca-font-size-xs); gap: 6px; }
     :host([size='xs']) .dropdown { border-radius: 6px; }
-    :host([size='xs']) .search-input { font-size: 11px; }
+    :host([size='xs']) .search-input { font-size: var(--ca-font-size-xs); }
     :host([size='xs']) .search-wrapper { padding: 6px 8px; }
     :host([size='xs']) .checkbox-box { width: 13px; height: 13px; border-radius: 3px; }
     :host([size='xs']) .checkbox-box svg { width: 8px; height: 8px; }
 
     /* ── SM ── */
-    :host([size='sm']) .field { padding: 10px 10px; gap: 10px; font-size: 13px; border-radius: 6px; }
+    :host([size='sm']) .field { padding: 8px 10px; gap: 10px; font-size: var(--ca-font-size-sm); border-radius: 6px; }
     :host([size='sm']) .label { font-size: 10px; }
     :host([size='sm']) .value,
-    :host([size='sm']) .chips-area { font-size: 13px; }
+    :host([size='sm']) .chips-area { font-size: var(--ca-font-size-sm); }
     :host([size='sm']) .chip { padding: 2px 6px; font-size: 11px; gap: 3px; }
     :host([size='sm']) .chip-remove { width: 14px; height: 14px; }
     :host([size='sm']) .chip-remove svg { width: 8px; height: 8px; }
     :host([size='sm']) .chevron { width: 14px; height: 14px; }
-    :host([size='sm']) .option { padding: 8px 10px; font-size: 13px; gap: 8px; }
+    :host([size='sm']) .option { padding: 8px 10px; font-size: var(--ca-font-size-sm); gap: 8px; }
     :host([size='sm']) .dropdown { border-radius: 6px; }
-    :host([size='sm']) .search-input { font-size: 13px; }
+    :host([size='sm']) .search-input { font-size: var(--ca-font-size-sm); }
     :host([size='sm']) .search-wrapper { padding: 8px 10px; }
     :host([size='sm']) .checkbox-box { width: 14px; height: 14px; border-radius: 3px; }
     :host([size='sm']) .checkbox-box svg { width: 9px; height: 9px; }
 
     /* ── LG ── */
-    :host([size='lg']) .field { padding: 18px 14px; gap: 18px; font-size: 18px; border-radius: 10px; }
+    :host([size='lg']) .field { padding: 14px 14px; gap: 14px; font-size: var(--ca-font-size-lg); border-radius: 10px; }
     :host([size='lg']) .label { font-size: 13px; }
     :host([size='lg']) .value,
-    :host([size='lg']) .chips-area { font-size: 18px; }
+    :host([size='lg']) .chips-area { font-size: var(--ca-font-size-lg); }
     :host([size='lg']) .chip { padding: 4px 10px; font-size: 14px; }
     :host([size='lg']) .chevron { width: 18px; height: 18px; }
-    :host([size='lg']) .option { padding: 16px 14px; font-size: 18px; }
+    :host([size='lg']) .option { padding: 14px 14px; font-size: var(--ca-font-size-lg); }
     :host([size='lg']) .dropdown { border-radius: 10px; }
-    :host([size='lg']) .search-input { font-size: 18px; }
+    :host([size='lg']) .search-input { font-size: var(--ca-font-size-lg); }
     :host([size='lg']) .search-wrapper { padding: 14px; }
     :host([size='lg']) .checkbox-box { width: 20px; height: 20px; }
 
     /* ── XL ── */
-    :host([size='xl']) .field { padding: 20px 16px; gap: 20px; font-size: 20px; border-radius: 12px; }
+    :host([size='xl']) .field { padding: 18px 16px; gap: 16px; font-size: 20px; border-radius: 12px; }
     :host([size='xl']) .label { font-size: 14px; }
     :host([size='xl']) .value,
     :host([size='xl']) .chips-area { font-size: 20px; }
@@ -117,7 +117,7 @@ export class CaMultiSelect extends LitElement {
     .value {
       font-family: var(--ca-font-family);
       font-weight: 400;
-      font-size: 16px;
+      font-size: var(--ca-font-size-md);
       color: var(--ca-text-primary);
       line-height: 1;
       overflow: hidden;
@@ -220,7 +220,7 @@ export class CaMultiSelect extends LitElement {
       outline: none;
       background: transparent;
       font-family: var(--ca-font-family);
-      font-size: 14px;
+      font-size: var(--ca-font-size-md);
       color: var(--ca-text-primary);
       box-sizing: border-box;
     }
@@ -241,7 +241,7 @@ export class CaMultiSelect extends LitElement {
       border: none;
       cursor: pointer;
       font-family: var(--ca-font-family);
-      font-size: 14px;
+      font-size: var(--ca-font-size-md);
       color: var(--ca-text-primary);
       text-align: left;
       box-sizing: border-box;

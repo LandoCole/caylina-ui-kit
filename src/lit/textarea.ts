@@ -76,7 +76,38 @@ export class CaTextarea extends LitElement {
     .counter-over {
       color: var(--ca-text-danger);
     }
+
+    /* Size: xs */
+    :host([size='xs']) textarea {
+      padding: 6px 8px;
+      font-size: var(--ca-font-size-xs);
+    }
+    :host([size='xs']) .field { border-radius: 6px; }
+
+    /* Size: sm */
+    :host([size='sm']) textarea {
+      padding: 8px 10px;
+      font-size: var(--ca-font-size-xs);
+    }
+    :host([size='sm']) .field { border-radius: 6px; }
+
+    /* Size: lg */
+    :host([size='lg']) textarea {
+      padding: 14px 14px;
+      font-size: var(--ca-font-size-lg);
+    }
+    :host([size='lg']) .field { border-radius: 10px; }
+
+    /* Size: xl */
+    :host([size='xl']) textarea {
+      padding: 18px 16px;
+      font-size: 20px;
+    }
+    :host([size='xl']) .field { border-radius: 12px; }
   `;
+
+  @property({ type: String, reflect: true })
+  size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
 
   @property({ type: String })
   label = '';

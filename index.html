@@ -34,16 +34,16 @@
     <ca-button variant="primary">Primary</ca-button>
     <ca-button variant="secondary">Secondary</ca-button>
     <ca-button variant="tertiary">Tertiary</ca-button>
-    <ca-button variant="primary" size="sm">Small</ca-button>
-    <ca-button variant="primary" size="lg">Large</ca-button>
     <ca-button variant="primary" disabled>Disabled</ca-button>
     <ca-button variant="primary" loading>Loading</ca-button>
   </div>
-  <p style="margin: 8px 0 4px; font-size: 13px; color: var(--ca-text-muted);">Thin:</p>
+  <p style="margin: 8px 0 4px; font-size: 13px; color: var(--ca-text-muted);">Sizes:</p>
   <div class="row">
-    <ca-button variant="primary" size="thin">Primary Thin</ca-button>
-    <ca-button variant="secondary" size="thin">Secondary Thin</ca-button>
-    <ca-button variant="tertiary" size="thin">Tertiary Thin</ca-button>
+    <ca-button variant="primary" size="xs">XS</ca-button>
+    <ca-button variant="primary" size="sm">SM</ca-button>
+    <ca-button variant="primary" size="md">MD</ca-button>
+    <ca-button variant="primary" size="lg">LG</ca-button>
+    <ca-button variant="primary" size="xl">XL</ca-button>
   </div>
 
   <!-- ─── Link ─── -->
@@ -51,8 +51,8 @@
   <div class="row">
     <ca-link href="#" type="subtle">Subtle Link</ca-link>
     <ca-link href="#" type="legal">Legal Link</ca-link>
-    <ca-link href="#" type="subtle" size="small">Small Subtle</ca-link>
-    <ca-link href="#" type="legal" size="small">Small Legal</ca-link>
+    <ca-link href="#" type="subtle" size="sm">Small Subtle</ca-link>
+    <ca-link href="#" type="legal" size="sm">Small Legal</ca-link>
   </div>
 
   <!-- ─── Checkbox ─── -->
@@ -120,8 +120,14 @@
     <ca-input label="Email" type="email" placeholder="you@example.com"></ca-input>
     <ca-input label="Name" error="This field is required" value="Bad value"></ca-input>
     <ca-input label="Loading" loading placeholder="Searching..."></ca-input>
+  </div>
+  <p style="margin: 8px 0 4px; font-size: 13px; color: var(--ca-text-muted);">Sizes:</p>
+  <div class="col" style="max-width: 320px;">
+    <ca-input label="XS" size="xs" placeholder="Extra small input"></ca-input>
     <ca-input label="Small" size="sm" placeholder="Small input"></ca-input>
+    <ca-input label="Medium" size="md" placeholder="Medium input"></ca-input>
     <ca-input label="Large" size="lg" placeholder="Large input"></ca-input>
+    <ca-input label="XL" size="xl" placeholder="Extra large input"></ca-input>
   </div>
 
   <!-- ─── Callout ─── -->
@@ -134,10 +140,10 @@
   <!-- ─── Chip ─── -->
   <h2>Chip</h2>
   <div class="row">
-    <ca-chip>Small (default)</ca-chip>
-    <ca-chip selected>Selected SM</ca-chip>
-    <ca-chip size="md">Medium</ca-chip>
-    <ca-chip size="md" selected>Selected MD</ca-chip>
+    <ca-chip size="sm">Small</ca-chip>
+    <ca-chip size="sm" selected>Selected SM</ca-chip>
+    <ca-chip>Medium (default)</ca-chip>
+    <ca-chip selected>Selected MD</ca-chip>
     <ca-chip disabled>Disabled</ca-chip>
   </div>
 
@@ -334,6 +340,14 @@
   <h2>Textarea</h2>
   <div style="max-width: 400px;">
     <ca-textarea label="Comment" placeholder="Write something..." maxcount="200"></ca-textarea>
+  </div>
+  <p style="margin: 8px 0 4px; font-size: 13px; color: var(--ca-text-muted);">Sizes:</p>
+  <div class="col" style="max-width: 400px;">
+    <ca-textarea size="xs" placeholder="XS textarea" rows="2"></ca-textarea>
+    <ca-textarea size="sm" placeholder="SM textarea" rows="2"></ca-textarea>
+    <ca-textarea size="md" placeholder="MD textarea" rows="2"></ca-textarea>
+    <ca-textarea size="lg" placeholder="LG textarea" rows="2"></ca-textarea>
+    <ca-textarea size="xl" placeholder="XL textarea" rows="2"></ca-textarea>
   </div>
 
   <!-- ─── Tooltip ─── -->

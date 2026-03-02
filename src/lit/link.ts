@@ -55,11 +55,11 @@ export class CaLink extends LitElement {
     }
 
     /* Sizes */
-    .link.small {
+    :host([size='sm']) .link {
       font-size: 12px;
       font-feature-settings: 'kern' 0;
     }
-    .link.subtle.small {
+    :host([size='sm']) .link.subtle {
       text-decoration: underline;
       text-decoration-skip-ink: none;
     }
@@ -80,7 +80,7 @@ export class CaLink extends LitElement {
   @property({ type: String }) href = '';
   @property({ type: String }) target = '';
   @property({ type: String, reflect: true }) type: 'subtle' | 'legal' = 'subtle';
-  @property({ type: String, reflect: true }) size: 'medium' | 'small' = 'medium';
+  @property({ type: String, reflect: true }) size: 'md' | 'sm' = 'md';
 
   render() {
     return html`
@@ -88,7 +88,6 @@ export class CaLink extends LitElement {
         class=${classMap({
           link: true,
           [this.type]: true,
-          [this.size]: true,
         })}
         href=${this.href}
         target=${ifDefined(this.target || undefined)}

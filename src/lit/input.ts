@@ -90,15 +90,31 @@ export class CaInput extends LitElement {
       40% { opacity: 1; transform: scale(1); }
     }
 
+    /* Size: xs */
+    :host([size='xs']) .field {
+      padding: 6px 8px;
+      font-size: var(--ca-font-size-xs);
+      border-radius: 6px;
+      gap: 6px;
+    }
     /* Size: sm */
     :host([size='sm']) .field {
       padding: 8px 10px;
       font-size: var(--ca-font-size-xs);
+      border-radius: 6px;
     }
     /* Size: lg */
     :host([size='lg']) .field {
-      padding: 14px 16px;
+      padding: 14px 14px;
       font-size: var(--ca-font-size-lg);
+      border-radius: 10px;
+    }
+    /* Size: xl */
+    :host([size='xl']) .field {
+      padding: 18px 16px;
+      font-size: 20px;
+      border-radius: 12px;
+      gap: 10px;
     }
 
     /* Disabled */
@@ -115,7 +131,7 @@ export class CaInput extends LitElement {
   @property({ type: String }) placeholder = '';
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: Boolean }) loading = false;
-  @property({ type: String, reflect: true }) size: 'sm' | 'md' | 'lg' = 'md';
+  @property({ type: String, reflect: true }) size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
 
   private _handleInput(e: Event) {
     const input = e.target as HTMLInputElement;
