@@ -45,30 +45,37 @@ export class CaSelect extends LitElement {
       justify-content: center;
       pointer-events: none;
     }
-    :host([size='xs']) .field {
-      padding: 6px 8px;
-      gap: 8px;
-      font-size: 11px;
-      border-radius: 6px;
-    }
-    :host([size='sm']) .field {
-      padding: 10px 10px;
-      gap: 10px;
-      font-size: 13px;
-      border-radius: 6px;
-    }
-    :host([size='lg']) .field {
-      padding: 18px 14px;
-      gap: 18px;
-      font-size: 18px;
-      border-radius: 10px;
-    }
-    :host([size='xl']) .field {
-      padding: 20px 16px;
-      gap: 20px;
-      font-size: 20px;
-      border-radius: 12px;
-    }
+    :host([size='xs']) .field { padding: 6px 8px; gap: 8px; font-size: 11px; border-radius: 6px; }
+    :host([size='xs']) .label { font-size: 9px; }
+    :host([size='xs']) .value { font-size: 11px; }
+    :host([size='xs']) .chevron { width: 12px; height: 12px; }
+    :host([size='xs']) .dropdown { border-radius: 6px; }
+    :host([size='xs']) .option { padding: 6px 8px; font-size: 11px; gap: 8px; }
+    :host([size='xs']) .check-icon { width: 14px; height: 14px; }
+
+    :host([size='sm']) .field { padding: 10px 10px; gap: 10px; font-size: 13px; border-radius: 6px; }
+    :host([size='sm']) .label { font-size: 10px; }
+    :host([size='sm']) .value { font-size: 13px; }
+    :host([size='sm']) .chevron { width: 14px; height: 14px; }
+    :host([size='sm']) .dropdown { border-radius: 6px; }
+    :host([size='sm']) .option { padding: 8px 10px; font-size: 13px; gap: 10px; }
+    :host([size='sm']) .check-icon { width: 18px; height: 18px; }
+
+    :host([size='lg']) .field { padding: 18px 14px; gap: 18px; font-size: 18px; border-radius: 10px; }
+    :host([size='lg']) .label { font-size: 13px; }
+    :host([size='lg']) .value { font-size: 18px; }
+    :host([size='lg']) .chevron { width: 18px; height: 18px; }
+    :host([size='lg']) .dropdown { border-radius: 10px; }
+    :host([size='lg']) .option { padding: 16px 14px; font-size: 18px; gap: 18px; }
+    :host([size='lg']) .check-icon { width: 26px; height: 26px; }
+
+    :host([size='xl']) .field { padding: 20px 16px; gap: 20px; font-size: 20px; border-radius: 12px; }
+    :host([size='xl']) .label { font-size: 14px; }
+    :host([size='xl']) .value { font-size: 20px; }
+    :host([size='xl']) .chevron { width: 20px; height: 20px; }
+    :host([size='xl']) .dropdown { border-radius: 12px; }
+    :host([size='xl']) .option { padding: 18px 16px; font-size: 20px; gap: 20px; }
+    :host([size='xl']) .check-icon { width: 28px; height: 28px; }
     .text-area {
       flex: 1;
       display: flex;

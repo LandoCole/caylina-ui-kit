@@ -267,13 +267,9 @@
 
   <!-- ─── Multi Select ─── -->
   <h2>Multi Select</h2>
-  <p style="margin: 0 0 8px; font-size: 13px; color: var(--ca-text-muted);">Default (md):</p>
+  <p style="margin: 0 0 8px; font-size: 13px; color: var(--ca-text-muted);">Default (md) with search:</p>
   <div class="row">
     <ca-multi-select label="Technologies" placeholder="Select technologies..." searchable style="width: 320px;" id="demo-multi-select"></ca-multi-select>
-  </div>
-  <p style="margin: 12px 0 8px; font-size: 13px; color: var(--ca-text-muted);">Thin:</p>
-  <div class="row">
-    <ca-multi-select placeholder="Tags..." searchable size="thin" style="width: 260px;" id="demo-multi-thin"></ca-multi-select>
   </div>
   <p style="margin: 12px 0 8px; font-size: 13px; color: var(--ca-text-muted);">Sizes:</p>
   <div class="row" style="align-items: flex-start;">
@@ -294,13 +290,6 @@
       { value: 'nuxt', label: 'Nuxt' },
       { value: 'astro', label: 'Astro' },
     ];
-    const tagOptions = [
-      { value: 'bug', label: 'Bug' },
-      { value: 'feature', label: 'Feature' },
-      { value: 'docs', label: 'Documentation' },
-      { value: 'urgent', label: 'Urgent' },
-      { value: 'enhancement', label: 'Enhancement' },
-    ];
     const fruitOptions = [
       { value: 'apple', label: 'Apple' },
       { value: 'banana', label: 'Banana' },
@@ -313,12 +302,6 @@
     ms.options = techOptions;
     ms.value = ['react', 'lit'];
     ms.addEventListener('ca-change', (e) => { ms.value = e.detail.value; });
-
-    // Thin
-    const msThin = document.getElementById('demo-multi-thin');
-    msThin.options = tagOptions;
-    msThin.value = ['bug', 'urgent'];
-    msThin.addEventListener('ca-change', (e) => { msThin.value = e.detail.value; });
 
     // Size variants
     ['xs', 'sm', 'md', 'lg'].forEach((sz) => {

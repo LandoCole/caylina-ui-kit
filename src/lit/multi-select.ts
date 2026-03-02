@@ -41,27 +41,6 @@ export class CaMultiSelect extends LitElement {
     .field:focus { outline: none; border: 2px solid var(--ca-text-primary); }
     .field.loading { justify-content: center; pointer-events: none; }
 
-    /* ── Thin ── */
-    :host([size='thin']) .field {
-      padding: 6px 10px;
-      gap: 8px;
-      font-size: var(--ca-font-size-sm);
-      border-radius: 6px;
-    }
-    :host([size='thin']) .label { font-size: 10px; }
-    :host([size='thin']) .value,
-    :host([size='thin']) .chips-area { font-size: var(--ca-font-size-sm); }
-    :host([size='thin']) .chip { padding: 1px 6px; font-size: 11px; gap: 3px; }
-    :host([size='thin']) .chip-remove { width: 12px; height: 12px; }
-    :host([size='thin']) .chip-remove svg { width: 8px; height: 8px; }
-    :host([size='thin']) .chevron { width: 12px; height: 12px; }
-    :host([size='thin']) .option { padding: 6px 10px; font-size: var(--ca-font-size-sm); gap: 8px; }
-    :host([size='thin']) .dropdown { border-radius: 6px; }
-    :host([size='thin']) .search-input { font-size: var(--ca-font-size-sm); }
-    :host([size='thin']) .search-wrapper { padding: 6px 10px; }
-    :host([size='thin']) .checkbox-box { width: 14px; height: 14px; border-radius: 3px; }
-    :host([size='thin']) .checkbox-box svg { width: 9px; height: 9px; }
-
     /* ── XS ── */
     :host([size='xs']) .field { padding: 6px 8px; gap: 8px; font-size: 11px; border-radius: 6px; }
     :host([size='xs']) .label { font-size: 9px; }
@@ -336,7 +315,7 @@ export class CaMultiSelect extends LitElement {
   /* ── Properties ── */
 
   @property({ type: String, reflect: true })
-  size: 'thin' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
+  size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
 
   @property({ type: String })
   label = '';
