@@ -95,6 +95,24 @@ export class CaButton extends LitElement {
       cursor: not-allowed;
     }
 
+    /* Danger */
+    .button.danger {
+      background-color: var(--ca-color-danger);
+      color: var(--ca-color-white);
+    }
+    .button.danger:hover:not(:disabled):not(.loading) {
+      background-color: var(--ca-color-danger-pressed);
+    }
+    .button.danger:focus-visible {
+      border: 2px solid var(--ca-color-focus-ring);
+    }
+    .button.danger:disabled,
+    .button.danger.loading {
+      background-color: var(--ca-color-disabled);
+      color: var(--ca-color-disabled-text);
+      cursor: not-allowed;
+    }
+
     /* Icon */
     .icon-slot {
       display: inline-flex;
@@ -131,7 +149,7 @@ export class CaButton extends LitElement {
     }
   `;
 
-  @property({ type: String, reflect: true }) variant: 'primary' | 'secondary' | 'tertiary' = 'primary';
+  @property({ type: String, reflect: true }) variant: 'primary' | 'secondary' | 'tertiary' | 'danger' = 'primary';
   @property({ type: String, reflect: true }) size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: Boolean, reflect: true }) loading = false;

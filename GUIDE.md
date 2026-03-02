@@ -229,7 +229,7 @@ Or scope overrides to a container:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `variant` | `'primary' \| 'secondary' \| 'tertiary'` | `'primary'` | Visual style |
+| `variant` | `'primary' \| 'secondary' \| 'tertiary' \| 'danger'` | `'primary'` | Visual style |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Button size |
 | `disabled` | `boolean` | `false` | Disable interaction |
 | `loading` | `boolean` | `false` | Show loading spinner |

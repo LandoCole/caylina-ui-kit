@@ -46,7 +46,7 @@ export class CaChip extends LitElement {
     .chip.selected {
       background-color: var(--ca-color-secondary);
       border-color: var(--ca-color-secondary);
-      color: var(--ca-color-white);
+      color: var(--ca-color-secondary-text, var(--ca-color-white));
     }
     :host([disabled]) .chip {
       opacity: 0.5;

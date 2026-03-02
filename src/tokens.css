@@ -10,6 +10,7 @@
     --ca-color-white: #FFFFFF;
     --ca-color-link: #004CC4;
     --ca-color-danger: #C13515;
+    --ca-color-danger-pressed: #A42E12;
     --ca-color-success: #15803D;
     --ca-color-warning: #CA8A04;
 
@@ -83,10 +84,12 @@
   [data-theme="dark"] {
     --ca-color-secondary: rgba(255, 255, 255, 0.85);
     --ca-color-secondary-text: #161A23;
+    --ca-checkbox-checkmark: #161A23;
     --ca-color-secondary-divider: rgba(0, 0, 0, 0.15);
     --ca-color-secondary-hover: rgba(255, 255, 255, 0.05);
     --ca-color-link: #7EB3FF;
     --ca-color-danger: #CC8889;
+    --ca-color-danger-pressed: #B87A7B;
     --ca-color-success: #22C55E;
     --ca-color-warning: #EAB308;
 

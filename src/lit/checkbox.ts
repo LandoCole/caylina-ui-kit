@@ -58,7 +58,7 @@ export class CaCheckbox extends LitElement {
     .checkmark {
       opacity: 0;
       transition: opacity var(--ca-transition-fast);
-      color: var(--ca-color-white);
+      color: var(--ca-checkbox-checkmark, var(--ca-color-white));
       width: 16px;
       height: 16px;
     }
