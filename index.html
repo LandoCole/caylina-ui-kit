@@ -482,6 +482,11 @@
 
     selTable.addEventListener('ca-sort', (e) => {
       selTable.sort = e.detail;
+      const { key, direction } = e.detail;
+      selTable.rows = [...selTable.rows].sort((a, b) => {
+        const cmp = String(a[key]).localeCompare(String(b[key]));
+        return direction === 'asc' ? cmp : -cmp;
+      });
     });
     selTable.addEventListener('ca-select', (e) => {
       selTable.selectedIds = e.detail.selectedIds;
@@ -616,6 +621,65 @@
 
     expandTable.addEventListener('ca-expand', (e) => {
       expandTable.expandedIds = e.detail.expandedIds;
+    });
+  </script>
+
+  <!-- ─── Table (Column Resize & Filters) ─── -->
+  <h2>Table — Column Resize &amp; Filters</h2>
+  <ca-table id="demo-table-resize-filter" heading="Team Directory" supporting-text="Resize columns and filter by role or status." resizable></ca-table>
+  <script type="module">
+    const rfTable = document.getElementById('demo-table-resize-filter');
+    const rfAllRows = [
+      { id: '1', name: 'Olivia Martin', email: 'olivia@example.com', role: 'Designer', status: 'Active' },
+      { id: '2', name: 'Jackson Lee', email: 'jackson@example.com', role: 'Developer', status: 'Active' },
+      { id: '3', name: 'Isabella Nguyen', email: 'isabella@example.com', role: 'Manager', status: 'Inactive' },
+      { id: '4', name: 'William Kim', email: 'william@example.com', role: 'Developer', status: 'Active' },
+      { id: '5', name: 'Sofia Davis', email: 'sofia@example.com', role: 'Designer', status: 'Inactive' },
+      { id: '6', name: 'Liam Johnson', email: 'liam@example.com', role: 'Developer', status: 'Active' },
+      { id: '7', name: 'Emma Wilson', email: 'emma@example.com', role: 'Manager', status: 'Active' },
+    ];
+    rfTable.columns = [
+      { key: 'name', heading: 'Name', type: 'bold-text', sortable: true },
+      { key: 'email', heading: 'Email' },
+      { key: 'role', heading: 'Role', sortable: true, filterable: true },
+      { key: 'status', heading: 'Status', type: 'badge', badgeMap: { Active: 'success', Inactive: 'danger' }, sortable: true, filterable: true },
+    ];
+    rfTable.rows = [...rfAllRows];
+    rfTable.sort = { key: 'name', direction: 'asc' };
+
+    rfTable.addEventListener('ca-sort', (e) => {
+      rfTable.sort = e.detail;
+      const { key, direction } = e.detail;
+      rfTable.rows = [...rfTable.rows].sort((a, b) => {
+        const cmp = String(a[key]).localeCompare(String(b[key]));
+        return direction === 'asc' ? cmp : -cmp;
+      });
+    });
+
+    rfTable.addEventListener('ca-column-filter', (e) => {
+      const { key, values } = e.detail;
+      const filters = { ...rfTable.columnFilters, [key]: values };
+      rfTable.columnFilters = filters;
+      // Apply all active filters
+      let filtered = [...rfAllRows];
+      for (const [colKey, colValues] of Object.entries(filters)) {
+        if (colValues.length > 0) {
+          filtered = filtered.filter((row) => colValues.includes(String(row[colKey])));
+        }
+      }
+      // Apply current sort to filtered results
+      if (rfTable.sort) {
+        const { key: sortKey, direction } = rfTable.sort;
+        filtered.sort((a, b) => {
+          const cmp = String(a[sortKey]).localeCompare(String(b[sortKey]));
+          return direction === 'asc' ? cmp : -cmp;
+        });
+      }
+      rfTable.rows = filtered;
+    });
+
+    rfTable.addEventListener('ca-column-resize', (e) => {
+      console.log('Column resized:', e.detail.key, e.detail.width + 'px');
     });
   </script>
 

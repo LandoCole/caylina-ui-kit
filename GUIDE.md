@@ -41,6 +41,18 @@ A comprehensive guide to using and customizing every component in the Caylina UI
    - [Toast](#toast)
    - [Table](#table)
 5. [Table Deep Dive](#table-deep-dive)
+   - [Sorting](#feature-sorting)
+   - [Selection](#feature-selection)
+   - [Drag-to-Reorder](#feature-drag-to-reorder)
+   - [Row Actions](#feature-row-actions)
+   - [Search & Filters](#feature-search--filters)
+   - [Pagination](#feature-pagination)
+   - [Row Height](#feature-row-height)
+   - [Column Width](#feature-column-width)
+   - [Column Resizing](#feature-column-resizing)
+   - [Per-Column Filtering](#feature-per-column-filtering)
+   - [Expandable Rows](#feature-expandable-rows-nested-data)
+   - [Header Actions Slot](#feature-header-actions-slot)
 6. [Customization Patterns](#customization-patterns)
 
 ---
@@ -1145,6 +1157,8 @@ The `<ca-table>` component is the most feature-rich component in the library. Th
 | `row-height` | `'compact' \| 'default' \| 'relaxed'` | `'default'` | Row padding density |
 | `expandable` | `boolean` | `false` | Enable expand/collapse arrows |
 | `expandedIds` | `string[]` | `[]` | Currently expanded row IDs |
+| `resizable` | `boolean` | `false` | Enable column resize handles |
+| `columnFilters` | `Record<string, string[]>` | `{}` | Active filter values per column |
 
 **Slots:** `header-actions` — buttons in the card header
 
@@ -1162,6 +1176,8 @@ The `<ca-table>` component is the most feature-rich component in the library. Th
 | `ca-reorder` | `{ rowId, fromIndex, toIndex, rows }` | Row drag completed |
 | `ca-cell-toggle` | `{ key, row, checked }` | Toggle cell changed |
 | `ca-expand` | `{ id, expanded, expandedIds }` | Expand/collapse arrow clicked |
+| `ca-column-filter` | `{ key, values }` | Column filter checkbox toggled |
+| `ca-column-resize` | `{ key, width }` | Column resize handle released |
 
 ### Types
 
@@ -1172,6 +1188,7 @@ interface TableColumn {
   type?: 'text' | 'bold-text' | 'badge' | 'toggle' | 'progress' | 'custom';
   width?: string;             // CSS width, e.g. '200px', 'minmax(120px, 1fr)'
   sortable?: boolean;
+  filterable?: boolean;        // Enable per-column filter dropdown
   badgeMap?: Record<string, string>;   // For badge type: value → variant
   progressMax?: string;                // For progress type: row property for max
   progressSuffix?: string;            // For progress type: label suffix
@@ -1300,7 +1317,7 @@ import { html } from 'lit';
 
 ### Feature: Sorting
 
-Enable sorting on individual columns with `sortable: true`. The table emits `ca-sort` events — you handle the actual sort logic:
+Enable sorting on individual columns with `sortable: true`. Sortable columns display stacked up/down chevron arrows in the header — the active sort direction is highlighted while the other stays muted. Clicking the header toggles between ascending and descending. The table emits `ca-sort` events — you handle the actual sort logic:
 
 ```html
 <ca-table id="sorted-table"></ca-table>
@@ -1463,6 +1480,68 @@ table.columns = [
   { key: 'bio', heading: 'Bio' },                                      // Default: minmax(120px, 1fr)
 ];
 ```
+
+### Feature: Column Resizing
+
+Enable drag-to-resize column handles with `resizable`. Users can drag the right edge of any column header to adjust its width:
+
+```html
+<ca-table id="resize-table" resizable></ca-table>
+<script>
+  const table = document.getElementById('resize-table');
+  table.columns = [
+    { key: 'name', heading: 'Name', type: 'bold-text' },
+    { key: 'email', heading: 'Email' },
+    { key: 'role', heading: 'Role' },
+  ];
+  table.rows = [/* ... */];
+
+  table.addEventListener('ca-column-resize', (e) => {
+    console.log(`Column "${e.detail.key}" resized to ${e.detail.width}px`);
+  });
+</script>
+```
+
+The minimum column width is 60px. Resized widths override the `width` property in column definitions.
+
+### Feature: Per-Column Filtering
+
+Enable filter dropdowns on individual columns with `filterable: true`. The table collects unique values from your row data and renders a checkbox list. The component emits `ca-column-filter` — you handle the actual filtering:
+
+```html
+<ca-table id="col-filter-table"></ca-table>
+<script>
+  const table = document.getElementById('col-filter-table');
+  const allRows = [
+    { id: '1', name: 'Alice', role: 'Designer', status: 'Active' },
+    { id: '2', name: 'Bob', role: 'Developer', status: 'Active' },
+    { id: '3', name: 'Charlie', role: 'Manager', status: 'Inactive' },
+  ];
+  table.columns = [
+    { key: 'name', heading: 'Name', type: 'bold-text' },
+    { key: 'role', heading: 'Role', filterable: true },
+    { key: 'status', heading: 'Status', filterable: true },
+  ];
+  table.rows = [...allRows];
+
+  table.addEventListener('ca-column-filter', (e) => {
+    const { key, values } = e.detail;
+    const filters = { ...table.columnFilters, [key]: values };
+    table.columnFilters = filters;
+
+    // Apply all active filters
+    let filtered = [...allRows];
+    for (const [colKey, colValues] of Object.entries(filters)) {
+      if (colValues.length > 0) {
+        filtered = filtered.filter((row) => colValues.includes(String(row[colKey])));
+      }
+    }
+    table.rows = filtered;
+  });
+</script>
+```
+
+The filter icon appears in the header cell for filterable columns. When a filter is active, the icon highlights with the primary color. Columns with more than 8 unique values show a search bar in the dropdown.
 
 ### Feature: Expandable Rows (Nested Data)
 

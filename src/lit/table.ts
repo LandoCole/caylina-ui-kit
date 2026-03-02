@@ -10,6 +10,8 @@ export interface TableColumn {
   type?: 'text' | 'bold-text' | 'badge' | 'toggle' | 'progress' | 'custom';
   width?: string;
   sortable?: boolean;
+  /** Enable per-column filter dropdown */
+  filterable?: boolean;
   /** Map cell value → badge variant  e.g. { Active: 'success', Inactive: 'danger' } */
   badgeMap?: Record<string, string>;
   /** For progress columns: property key holding max value */
@@ -18,6 +20,11 @@ export interface TableColumn {
   progressSuffix?: string;
   /** Custom render function returning a Lit TemplateResult */
   render?: (value: unknown, row: TableRow) => TemplateResult;
+}
+
+export interface TableColumnFilter {
+  key: string;
+  values: string[];
 }
 
 export interface TableRow {
@@ -215,6 +222,7 @@ export class CaTable extends LitElement {
       user-select: none;
       white-space: nowrap;
       gap: 4px;
+      position: relative;
     }
     .grid-header .cell.sortable {
       cursor: pointer;
@@ -224,12 +232,155 @@ export class CaTable extends LitElement {
     }
     .sort-icon {
       display: inline-flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      gap: 1px;
+      color: var(--ca-text-muted);
+      transition: color var(--ca-transition-fast);
+    }
+    .sort-icon .sort-asc,
+    .sort-icon .sort-desc {
+      display: flex;
+      opacity: 0.4;
+      transition: opacity var(--ca-transition-fast), color var(--ca-transition-fast);
+    }
+    .sort-icon .sort-asc.active,
+    .sort-icon .sort-desc.active {
+      opacity: 1;
+      color: var(--ca-text-primary);
+    }
+    .grid-header .cell.sortable:hover .sort-icon .sort-asc,
+    .grid-header .cell.sortable:hover .sort-icon .sort-desc {
+      opacity: 0.7;
+    }
+    .grid-header .cell.sortable:hover .sort-icon .sort-asc.active,
+    .grid-header .cell.sortable:hover .sort-icon .sort-desc.active {
+      opacity: 1;
+    }
+
+    /* ── Resize handle ── */
+    .resize-handle {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 6px;
+      height: 100%;
+      cursor: col-resize;
+      background: transparent;
+      z-index: 2;
+      transition: background-color var(--ca-transition-fast);
+    }
+    .resize-handle:hover,
+    .resize-handle.resizing {
+      background-color: var(--ca-color-primary);
+    }
+
+    /* ── Column filter icon ── */
+    .filter-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
       opacity: 0.4;
-      transition: opacity var(--ca-transition-fast);
+      cursor: pointer;
+      transition: opacity var(--ca-transition-fast), color var(--ca-transition-fast);
+      padding: 2px;
+      border-radius: var(--ca-radius-sm);
     }
-    .sort-icon.active {
+    .filter-icon:hover {
+      opacity: 0.8;
+    }
+    .filter-icon.active {
       opacity: 1;
+      color: var(--ca-color-primary);
+    }
+    .header-text {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── Column filter dropdown ── */
+    .filter-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 30;
+      background-color: var(--ca-surface-elevated);
+      border: 1px solid var(--ca-border);
+      border-radius: var(--ca-radius-md);
+      box-shadow: var(--ca-shadow-menu);
+      padding: 4px 0;
+      min-width: 180px;
+      max-height: 300px;
+      display: flex;
+      flex-direction: column;
+      text-transform: none;
+      letter-spacing: normal;
+      font-weight: normal;
+    }
+    .filter-dropdown-search {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-bottom: 1px solid var(--ca-border);
+    }
+    .filter-dropdown-search input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: var(--ca-font-family);
+      font-size: var(--ca-font-size-sm);
+      color: var(--ca-text-primary);
+      width: 100%;
+    }
+    .filter-dropdown-search input::placeholder {
+      color: var(--ca-text-muted);
+    }
+    .filter-options {
+      overflow-y: auto;
+      flex: 1;
+      padding: 4px 0;
+    }
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: var(--ca-font-size-sm);
+      color: var(--ca-text-primary);
+      transition: background-color var(--ca-transition-fast);
+    }
+    .filter-option:hover {
+      background-color: var(--ca-surface-hover);
+    }
+    .filter-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 8px;
+      border-top: 1px solid var(--ca-border);
+    }
+    .filter-action-btn {
+      flex: 1;
+      padding: 4px 8px;
+      border: none;
+      border-radius: var(--ca-radius-sm);
+      background: none;
+      cursor: pointer;
+      font-family: var(--ca-font-family);
+      font-size: var(--ca-font-size-xs);
+      font-weight: var(--ca-font-weight-semibold);
+      color: var(--ca-text-secondary);
+      text-align: center;
+      transition: background-color var(--ca-transition-fast), color var(--ca-transition-fast);
+    }
+    .filter-action-btn:hover {
+      background-color: var(--ca-surface-hover);
+      color: var(--ca-text-primary);
     }
 
     /* ── Data rows ── */
@@ -473,6 +624,8 @@ export class CaTable extends LitElement {
   @property({ type: String, reflect: true, attribute: 'row-height' }) rowHeight: 'compact' | 'default' | 'relaxed' = 'default';
   @property({ type: Boolean, reflect: true }) expandable = false;
   @property({ type: Array, attribute: false }) expandedIds: string[] = [];
+  @property({ type: Boolean, reflect: true }) resizable = false;
+  @property({ type: Object, attribute: false }) columnFilters: Record<string, string[]> = {};
 
   /* ── Internal state ── */
   @state() private _openMenuRowId: string | null = null;
@@ -480,20 +633,39 @@ export class CaTable extends LitElement {
   @state() private _dragRowId: string | null = null;
   @state() private _dragOverRowId: string | null = null;
   @state() private _dragOverPosition: 'above' | 'below' | null = null;
+  @state() private _openFilterColKey: string | null = null;
+  @state() private _columnWidths: Map<string, number> = new Map();
+  @state() private _fullRows: TableRow[] = [];
 
   private _searchTimeout: ReturnType<typeof setTimeout> | null = null;
   private _boundCloseMenu = this._closeMenu.bind(this);
+  private _boundCloseFilter = this._closeFilter.bind(this);
   private _dragStartY = 0;
   private _dragRowIndex = -1;
+  private _resizingColKey: string | null = null;
+  private _resizeStartX = 0;
+  private _resizeStartWidth = 0;
+  private _filterSearchQuery: Map<string, string> = new Map();
+
+  protected willUpdate(changedProps: Map<string, unknown>) {
+    if (changedProps.has('rows')) {
+      const hasActiveFilter = Object.values(this.columnFilters).some(v => v && v.length > 0);
+      if (!hasActiveFilter || this._fullRows.length === 0) {
+        this._fullRows = [...this.rows];
+      }
+    }
+  }
 
   connectedCallback() {
     super.connectedCallback();
     document.addEventListener('click', this._boundCloseMenu);
+    document.addEventListener('click', this._boundCloseFilter);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     document.removeEventListener('click', this._boundCloseMenu);
+    document.removeEventListener('click', this._boundCloseFilter);
     if (this._searchTimeout) clearTimeout(this._searchTimeout);
   }
 
@@ -504,7 +676,12 @@ export class CaTable extends LitElement {
     if (this.draggable) parts.push('40px');
     if (this.selectable) parts.push('48px');
     for (const col of this.columns) {
-      parts.push(col.width || 'minmax(120px, 1fr)');
+      const resizedWidth = this._columnWidths.get(col.key);
+      if (resizedWidth) {
+        parts.push(`${resizedWidth}px`);
+      } else {
+        parts.push(col.width || 'minmax(120px, 1fr)');
+      }
     }
     if (this.rowActions.length > 0) parts.push('48px');
     return parts.join(' ');
@@ -682,6 +859,85 @@ export class CaTable extends LitElement {
     this._dragOverPosition = null;
   }
 
+  /* ── Column resize (pointer events) ── */
+  private _handleResizeStart(e: PointerEvent, colKey: string) {
+    e.stopPropagation();
+    e.preventDefault();
+    this._resizingColKey = colKey;
+    this._resizeStartX = e.clientX;
+    // Measure current column width from the header cell
+    const headerCell = this.shadowRoot?.querySelector(`[data-col="${colKey}"]`) as HTMLElement | null;
+    this._resizeStartWidth = headerCell ? headerCell.getBoundingClientRect().width : 120;
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+  }
+
+  private _handleResizeMove(e: PointerEvent) {
+    if (!this._resizingColKey) return;
+    e.preventDefault();
+    const delta = e.clientX - this._resizeStartX;
+    const newWidth = Math.max(60, this._resizeStartWidth + delta);
+    const newMap = new Map(this._columnWidths);
+    newMap.set(this._resizingColKey, newWidth);
+    this._columnWidths = newMap;
+  }
+
+  private _handleResizeEnd(e: PointerEvent) {
+    if (!this._resizingColKey) return;
+    const width = this._columnWidths.get(this._resizingColKey) || 120;
+    this._emit('ca-column-resize', { key: this._resizingColKey, width });
+    this._resizingColKey = null;
+  }
+
+  /* ── Column filter handlers ── */
+  private _toggleFilter(e: Event, colKey: string) {
+    e.stopPropagation();
+    this._openFilterColKey = this._openFilterColKey === colKey ? null : colKey;
+  }
+
+  private _closeFilter() {
+    this._openFilterColKey = null;
+  }
+
+  private _getUniqueValuesForColumn(colKey: string): string[] {
+    const source = this._fullRows.length > 0 ? this._fullRows : this.rows;
+    const values = new Set<string>();
+    for (const row of source) {
+      const val = row[colKey];
+      if (val != null && val !== '') {
+        values.add(String(val));
+      }
+    }
+    return Array.from(values).sort();
+  }
+
+  private _handleFilterToggleValue(colKey: string, value: string) {
+    const current = this.columnFilters[colKey] || [];
+    const idx = current.indexOf(value);
+    let newValues: string[];
+    if (idx >= 0) {
+      newValues = current.filter((v) => v !== value);
+    } else {
+      newValues = [...current, value];
+    }
+    this._emit('ca-column-filter', { key: colKey, values: newValues });
+  }
+
+  private _handleFilterSelectAll(colKey: string) {
+    const allValues = this._getUniqueValuesForColumn(colKey);
+    this._emit('ca-column-filter', { key: colKey, values: allValues });
+  }
+
+  private _handleFilterClear(colKey: string) {
+    this._emit('ca-column-filter', { key: colKey, values: [] });
+  }
+
+  private _handleFilterSearch(colKey: string, e: Event) {
+    const value = (e.target as HTMLInputElement).value;
+    this._filterSearchQuery = new Map(this._filterSearchQuery);
+    this._filterSearchQuery.set(colKey, value);
+    this.requestUpdate();
+  }
+
   /* ── Cell renderers ── */
   private _renderCell(col: TableColumn, row: TableRow): TemplateResult | typeof nothing {
     const value = row[col.key];
@@ -716,15 +972,85 @@ export class CaTable extends LitElement {
   private _renderSortIcon(col: TableColumn) {
     if (!col.sortable) return nothing;
     const isActive = this.sort?.key === col.key;
+    const isAsc = isActive && this.sort?.direction === 'asc';
     const isDesc = isActive && this.sort?.direction === 'desc';
     return html`
-      <span class=${classMap({ 'sort-icon': true, active: !!isActive })}>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          ${isDesc
-            ? html`<path d="M6 2v8M3 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`
-            : html`<path d="M6 10V2M3 5l3-3 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`}
+      <span class="sort-icon">
+        <span class=${classMap({ 'sort-asc': true, active: isAsc })}>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 5L5 1L9 5"/>
+          </svg>
+        </span>
+        <span class=${classMap({ 'sort-desc': true, active: isDesc })}>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 1L5 5L9 1"/>
+          </svg>
+        </span>
+      </span>
+    `;
+  }
+
+  /* ── Filter icon ── */
+  private _renderFilterIcon(col: TableColumn) {
+    if (!col.filterable) return nothing;
+    const hasActiveFilter = (this.columnFilters[col.key]?.length ?? 0) > 0;
+    return html`
+      <span
+        class=${classMap({ 'filter-icon': true, active: hasActiveFilter })}
+        @click=${(e: Event) => { e.stopPropagation(); this._toggleFilter(e, col.key); }}
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
         </svg>
       </span>
+    `;
+  }
+
+  /* ── Filter dropdown ── */
+  private _renderFilterDropdown(col: TableColumn) {
+    if (!col.filterable || this._openFilterColKey !== col.key) return nothing;
+    const uniqueValues = this._getUniqueValuesForColumn(col.key);
+    const activeValues = this.columnFilters[col.key] || [];
+    const searchQuery = (this._filterSearchQuery.get(col.key) || '').toLowerCase();
+    const filteredValues = searchQuery
+      ? uniqueValues.filter((v) => v.toLowerCase().includes(searchQuery))
+      : uniqueValues;
+    const showSearch = uniqueValues.length > 8;
+
+    return html`
+      <div class="filter-dropdown" @click=${(e: Event) => e.stopPropagation()}>
+        ${showSearch
+          ? html`
+              <div class="filter-dropdown-search">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  .value=${this._filterSearchQuery.get(col.key) || ''}
+                  @input=${(e: Event) => this._handleFilterSearch(col.key, e)}
+                />
+              </div>
+            `
+          : nothing}
+        <div class="filter-options">
+          ${filteredValues.map(
+            (val) => html`
+              <div class="filter-option" @click=${() => this._handleFilterToggleValue(col.key, val)}>
+                <ca-checkbox
+                  size="xs"
+                  ?checked=${activeValues.includes(val)}
+                  @ca-change=${(e: Event) => { e.stopPropagation(); this._handleFilterToggleValue(col.key, val); }}
+                ></ca-checkbox>
+                <span>${val}</span>
+              </div>
+            `
+          )}
+        </div>
+        <div class="filter-actions">
+          <button class="filter-action-btn" @click=${() => this._handleFilterSelectAll(col.key)}>Select All</button>
+          <button class="filter-action-btn" @click=${() => this._handleFilterClear(col.key)}>Clear</button>
+        </div>
+      </div>
     `;
   }
 
@@ -825,9 +1151,22 @@ export class CaTable extends LitElement {
             (col) => html`
               <div
                 class=${classMap({ cell: true, sortable: !!col.sortable })}
+                data-col=${col.key}
                 @click=${() => this._handleSort(col)}
               >
-                ${col.heading}${this._renderSortIcon(col)}
+                ${this._renderFilterIcon(col)}
+                <span class="header-text">${col.heading}</span>
+                ${this._renderSortIcon(col)}
+                ${this._renderFilterDropdown(col)}
+                ${this.resizable
+                  ? html`<span
+                      class=${classMap({ 'resize-handle': true, resizing: this._resizingColKey === col.key })}
+                      @pointerdown=${(e: PointerEvent) => this._handleResizeStart(e, col.key)}
+                      @pointermove=${(e: PointerEvent) => this._handleResizeMove(e)}
+                      @pointerup=${(e: PointerEvent) => this._handleResizeEnd(e)}
+                      @click=${(e: Event) => e.stopPropagation()}
+                    ></span>`
+                  : nothing}
               </div>
             `
           )}
