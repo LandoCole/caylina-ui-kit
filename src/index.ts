@@ -37,6 +37,7 @@ import './lit/datepicker.js';
 import './lit/modal.js';
 import './lit/drawer.js';
 import './lit/select.js';
+import './lit/multi-select.js';
 import './lit/sidenav.js';
 import './lit/split-button.js';
 import './lit/textarea.js';

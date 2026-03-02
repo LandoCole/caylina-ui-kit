@@ -265,6 +265,69 @@
     ];
   </script>
 
+  <!-- ─── Multi Select ─── -->
+  <h2>Multi Select</h2>
+  <p style="margin: 0 0 8px; font-size: 13px; color: var(--ca-text-muted);">Default (md):</p>
+  <div class="row">
+    <ca-multi-select label="Technologies" placeholder="Select technologies..." searchable style="width: 320px;" id="demo-multi-select"></ca-multi-select>
+  </div>
+  <p style="margin: 12px 0 8px; font-size: 13px; color: var(--ca-text-muted);">Thin:</p>
+  <div class="row">
+    <ca-multi-select placeholder="Tags..." searchable size="thin" style="width: 260px;" id="demo-multi-thin"></ca-multi-select>
+  </div>
+  <p style="margin: 12px 0 8px; font-size: 13px; color: var(--ca-text-muted);">Sizes:</p>
+  <div class="row" style="align-items: flex-start;">
+    <ca-multi-select placeholder="XS" size="xs" style="width: 160px;" id="demo-multi-xs"></ca-multi-select>
+    <ca-multi-select placeholder="SM" size="sm" style="width: 180px;" id="demo-multi-sm"></ca-multi-select>
+    <ca-multi-select placeholder="MD" size="md" style="width: 200px;" id="demo-multi-md"></ca-multi-select>
+    <ca-multi-select placeholder="LG" size="lg" style="width: 240px;" id="demo-multi-lg"></ca-multi-select>
+  </div>
+  <script type="module">
+    const techOptions = [
+      { value: 'react', label: 'React' },
+      { value: 'vue', label: 'Vue' },
+      { value: 'svelte', label: 'Svelte' },
+      { value: 'angular', label: 'Angular' },
+      { value: 'lit', label: 'Lit' },
+      { value: 'solid', label: 'SolidJS' },
+      { value: 'next', label: 'Next.js' },
+      { value: 'nuxt', label: 'Nuxt' },
+      { value: 'astro', label: 'Astro' },
+    ];
+    const tagOptions = [
+      { value: 'bug', label: 'Bug' },
+      { value: 'feature', label: 'Feature' },
+      { value: 'docs', label: 'Documentation' },
+      { value: 'urgent', label: 'Urgent' },
+      { value: 'enhancement', label: 'Enhancement' },
+    ];
+    const fruitOptions = [
+      { value: 'apple', label: 'Apple' },
+      { value: 'banana', label: 'Banana' },
+      { value: 'cherry', label: 'Cherry' },
+      { value: 'date', label: 'Date' },
+    ];
+
+    // Default multi-select with pre-selection
+    const ms = document.getElementById('demo-multi-select');
+    ms.options = techOptions;
+    ms.value = ['react', 'lit'];
+    ms.addEventListener('ca-change', (e) => { ms.value = e.detail.value; });
+
+    // Thin
+    const msThin = document.getElementById('demo-multi-thin');
+    msThin.options = tagOptions;
+    msThin.value = ['bug', 'urgent'];
+    msThin.addEventListener('ca-change', (e) => { msThin.value = e.detail.value; });
+
+    // Size variants
+    ['xs', 'sm', 'md', 'lg'].forEach((sz) => {
+      const el = document.getElementById('demo-multi-' + sz);
+      el.options = fruitOptions;
+      el.addEventListener('ca-change', (e) => { el.value = e.detail.value; });
+    });
+  </script>
+
   <!-- ─── Avatar ─── -->
   <h2>Avatar</h2>
   <div class="row">
