@@ -253,30 +253,41 @@
 
   <!-- ─── Select ─── -->
   <h2>Select</h2>
-  <div class="row">
-    <ca-select placeholder="Pick a fruit" style="width: 220px;" id="demo-select"></ca-select>
+  <div class="row" style="align-items: flex-start;">
+    <ca-select placeholder="XS" size="xs" style="width: 140px;" id="demo-select-xs"></ca-select>
+    <ca-select placeholder="SM" size="sm" style="width: 160px;" id="demo-select-sm"></ca-select>
+    <ca-select placeholder="Pick a fruit" style="width: 200px;" id="demo-select"></ca-select>
+    <ca-select placeholder="LG" size="lg" style="width: 220px;" id="demo-select-lg"></ca-select>
+    <ca-select placeholder="XL" size="xl" style="width: 240px;" id="demo-select-xl"></ca-select>
   </div>
   <script type="module">
-    document.getElementById('demo-select').options = [
+    const selectFruits = [
       { value: 'apple', label: 'Apple' },
       { value: 'banana', label: 'Banana' },
       { value: 'cherry', label: 'Cherry' },
       { value: 'date', label: 'Date' },
     ];
+    ['xs', 'sm', '', 'lg', 'xl'].forEach((sz) => {
+      const id = sz ? 'demo-select-' + sz : 'demo-select';
+      const el = document.getElementById(id);
+      el.options = selectFruits;
+      el.addEventListener('ca-change', (e) => { el.value = e.detail.value; });
+    });
   </script>
 
   <!-- ─── Multi Select ─── -->
   <h2>Multi Select</h2>
-  <p style="margin: 0 0 8px; font-size: 13px; color: var(--ca-text-muted);">Default (md) with search:</p>
+  <p style="margin: 0 0 8px; font-size: 13px; color: var(--ca-text-muted);">With search:</p>
   <div class="row">
     <ca-multi-select label="Technologies" placeholder="Select technologies..." searchable style="width: 320px;" id="demo-multi-select"></ca-multi-select>
   </div>
   <p style="margin: 12px 0 8px; font-size: 13px; color: var(--ca-text-muted);">Sizes:</p>
   <div class="row" style="align-items: flex-start;">
-    <ca-multi-select placeholder="XS" size="xs" style="width: 160px;" id="demo-multi-xs"></ca-multi-select>
-    <ca-multi-select placeholder="SM" size="sm" style="width: 180px;" id="demo-multi-sm"></ca-multi-select>
+    <ca-multi-select placeholder="XS" size="xs" style="width: 150px;" id="demo-multi-xs"></ca-multi-select>
+    <ca-multi-select placeholder="SM" size="sm" style="width: 170px;" id="demo-multi-sm"></ca-multi-select>
     <ca-multi-select placeholder="MD" size="md" style="width: 200px;" id="demo-multi-md"></ca-multi-select>
-    <ca-multi-select placeholder="LG" size="lg" style="width: 240px;" id="demo-multi-lg"></ca-multi-select>
+    <ca-multi-select placeholder="LG" size="lg" style="width: 230px;" id="demo-multi-lg"></ca-multi-select>
+    <ca-multi-select placeholder="XL" size="xl" style="width: 260px;" id="demo-multi-xl"></ca-multi-select>
   </div>
   <script type="module">
     const techOptions = [
@@ -304,7 +315,7 @@
     ms.addEventListener('ca-change', (e) => { ms.value = e.detail.value; });
 
     // Size variants
-    ['xs', 'sm', 'md', 'lg'].forEach((sz) => {
+    ['xs', 'sm', 'md', 'lg', 'xl'].forEach((sz) => {
       const el = document.getElementById('demo-multi-' + sz);
       el.options = fruitOptions;
       el.addEventListener('ca-change', (e) => { el.value = e.detail.value; });
