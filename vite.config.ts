@@ -10,7 +10,11 @@ export default defineConfig({
       fileName: () => 'caylina-ui.js',
     },
     // Bundle everything — no externals for CDN use
-    rollupOptions: {},
+    rollupOptions: {
+      treeshake: {
+        moduleSideEffects: true,
+      },
+    },
     minify: 'esbuild',
     target: 'es2021',
   },

@@ -14,9 +14,7 @@
     "./tokens.css": "./dist/tokens.css",
     "./caylina-ui.js": "./dist/caylina-ui.js"
   },
-  "sideEffects": [
-    "dist/caylina-ui.js"
-  ],
+  "sideEffects": true,
   "files": [
     "dist",
     "README.md"
