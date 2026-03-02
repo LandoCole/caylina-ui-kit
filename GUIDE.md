@@ -247,8 +247,7 @@ Or scope overrides to a container:
 <ca-button size="sm">Small</ca-button>
 <ca-button size="md">Medium</ca-button>
 <ca-button size="lg">Large</ca-button>
-<ca-button size="thin">Thin</ca-button>
-<ca-button size="full">Full Width</ca-button>
+<ca-button size="xl">Extra Large</ca-button>
 
 <!-- States -->
 <ca-button disabled>Disabled</ca-button>
@@ -628,7 +627,7 @@ Listening for changes:
 
 ```html
 <ca-link href="/about" type="subtle">About Us</ca-link>
-<ca-link href="/terms" type="legal" size="small">Terms of Service</ca-link>
+<ca-link href="/terms" type="legal" size="sm">Terms of Service</ca-link>
 <ca-link href="https://example.com" target="_blank">External Link</ca-link>
 ```
 
