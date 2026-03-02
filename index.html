@@ -365,28 +365,33 @@
 
   <!-- ─── Split Button ─── -->
   <h2>Split Button</h2>
+  <p style="margin: 0 0 4px; font-size: 13px; color: var(--ca-text-muted);">Medium (default):</p>
   <div class="row">
     <ca-split-button label="Save" variant="primary" id="demo-split-button"></ca-split-button>
     <ca-split-button label="Save" variant="secondary" id="demo-split-secondary"></ca-split-button>
     <ca-split-button label="Save" variant="tertiary" id="demo-split-tertiary"></ca-split-button>
   </div>
-  <p style="margin: 8px 0 4px; font-size: 13px; color: var(--ca-text-muted);">Thin:</p>
+  <p style="margin: 8px 0 4px; font-size: 13px; color: var(--ca-text-muted);">Small:</p>
   <div class="row">
-    <ca-split-button label="Save" variant="primary" size="thin" id="demo-split-thin-primary"></ca-split-button>
-    <ca-split-button label="Save" variant="secondary" size="thin" id="demo-split-thin-secondary"></ca-split-button>
-    <ca-split-button label="Save" variant="tertiary" size="thin" id="demo-split-thin-tertiary"></ca-split-button>
+    <ca-split-button label="Save" variant="primary" size="sm" id="demo-split-sm-primary"></ca-split-button>
+    <ca-split-button label="Save" variant="secondary" size="sm" id="demo-split-sm-secondary"></ca-split-button>
+    <ca-split-button label="Save" variant="tertiary" size="sm" id="demo-split-sm-tertiary"></ca-split-button>
+  </div>
+  <p style="margin: 8px 0 4px; font-size: 13px; color: var(--ca-text-muted);">Large:</p>
+  <div class="row">
+    <ca-split-button label="Save" variant="primary" size="lg" id="demo-split-lg-primary"></ca-split-button>
+    <ca-split-button label="Save" variant="secondary" size="lg" id="demo-split-lg-secondary"></ca-split-button>
+    <ca-split-button label="Save" variant="tertiary" size="lg" id="demo-split-lg-tertiary"></ca-split-button>
   </div>
   <script type="module">
     const splitOpts = [
       { value: 'save-draft', label: 'Save as Draft' },
       { value: 'save-publish', label: 'Save & Publish' },
     ];
-    document.getElementById('demo-split-button').options = splitOpts;
-    document.getElementById('demo-split-secondary').options = splitOpts;
-    document.getElementById('demo-split-tertiary').options = splitOpts;
-    document.getElementById('demo-split-thin-primary').options = splitOpts;
-    document.getElementById('demo-split-thin-secondary').options = splitOpts;
-    document.getElementById('demo-split-thin-tertiary').options = splitOpts;
+    ['demo-split-button', 'demo-split-secondary', 'demo-split-tertiary',
+     'demo-split-sm-primary', 'demo-split-sm-secondary', 'demo-split-sm-tertiary',
+     'demo-split-lg-primary', 'demo-split-lg-secondary', 'demo-split-lg-tertiary',
+    ].forEach((id) => { document.getElementById(id).options = splitOpts; });
   </script>
 
   <!-- ─── Date Picker ─── -->
@@ -394,6 +399,14 @@
   <div class="row">
     <ca-datepicker label="Start date" placeholder="Pick a date" style="width: 260px;"></ca-datepicker>
     <ca-datepicker label="Date range" mode="range" placeholder="Select range" style="width: 300px;"></ca-datepicker>
+  </div>
+  <p style="margin: 8px 0 4px; font-size: 13px; color: var(--ca-text-muted);">Sizes:</p>
+  <div class="row" style="align-items: flex-start;">
+    <ca-datepicker placeholder="XS" size="xs" style="width: 160px;"></ca-datepicker>
+    <ca-datepicker placeholder="SM" size="sm" style="width: 180px;"></ca-datepicker>
+    <ca-datepicker placeholder="MD" size="md" style="width: 220px;"></ca-datepicker>
+    <ca-datepicker placeholder="LG" size="lg" style="width: 260px;"></ca-datepicker>
+    <ca-datepicker placeholder="XL" size="xl" style="width: 300px;"></ca-datepicker>
   </div>
 
   <!-- ─── Toast ─── -->

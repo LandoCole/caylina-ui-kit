@@ -111,6 +111,12 @@ export class CaDatepicker extends LitElement {
     }
 
     /* ── Size variants ── */
+    :host([size='xs']) .field {
+      padding: 6px 8px;
+      font-size: 11px;
+      border-radius: 6px;
+      gap: 6px;
+    }
     :host([size='sm']) .field {
       padding: 8px 10px;
       font-size: var(--ca-font-size-xs);
@@ -122,6 +128,12 @@ export class CaDatepicker extends LitElement {
       font-size: var(--ca-font-size-lg);
       border-radius: 10px;
       gap: 12px;
+    }
+    :host([size='xl']) .field {
+      padding: 18px 16px;
+      font-size: 20px;
+      border-radius: 12px;
+      gap: 14px;
     }
 
     /* ── Calendar icon ── */
@@ -136,8 +148,10 @@ export class CaDatepicker extends LitElement {
       height: 100%;
       display: block;
     }
+    :host([size='xs']) .calendar-icon { width: 12px; height: 12px; }
     :host([size='sm']) .calendar-icon { width: 14px; height: 14px; }
     :host([size='lg']) .calendar-icon { width: 20px; height: 20px; }
+    :host([size='xl']) .calendar-icon { width: 22px; height: 22px; }
 
     /* ── Value text ── */
     .value-text {
@@ -167,8 +181,10 @@ export class CaDatepicker extends LitElement {
     .chevron.open {
       transform: rotate(180deg);
     }
+    :host([size='xs']) .chevron { width: 10px; height: 10px; }
     :host([size='sm']) .chevron { width: 12px; height: 12px; }
     :host([size='lg']) .chevron { width: 16px; height: 16px; }
+    :host([size='xl']) .chevron { width: 18px; height: 18px; }
 
     /* ── Error ── */
     .error-text {
@@ -403,7 +419,7 @@ export class CaDatepicker extends LitElement {
 
   /** Size variant. */
   @property({ type: String, reflect: true })
-  size: 'sm' | 'md' | 'lg' = 'md';
+  size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
 
   /** Selected date as ISO "YYYY-MM-DD" (single mode). */
   @property({ type: String })
