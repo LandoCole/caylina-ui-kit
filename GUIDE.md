@@ -170,7 +170,7 @@ The library ships a token system as CSS custom properties. Override any token on
 
 | Token | Default | Purpose |
 |-------|---------|---------|
-| `--ca-font-family` | `"SF Pro", -apple-system, ...` | Global font stack |
+| `--ca-font-family` | `"Inter", -apple-system, ...` | Global font stack |
 | `--ca-font-weight-semibold` | `590` | Semibold weight |
 | `--ca-font-size-xs` | `11px` | Extra small text |
 | `--ca-font-size-sm` | `13px` | Small text |
@@ -230,7 +230,7 @@ Or scope overrides to a container:
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
 | `variant` | `'primary' \| 'secondary' \| 'tertiary'` | `'primary'` | Visual style |
-| `size` | `'thin' \| 'xs' \| 'sm' \| 'md' \| 'lg' \| 'full'` | `'md'` | Button size |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Button size |
 | `disabled` | `boolean` | `false` | Disable interaction |
 | `loading` | `boolean` | `false` | Show loading spinner |
 
@@ -278,7 +278,7 @@ Or scope overrides to a container:
 | `placeholder` | `string` | `''` | Placeholder text |
 | `disabled` | `boolean` | `false` | Disable interaction |
 | `loading` | `boolean` | `false` | Show loading spinner |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Input size |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Input size |
 
 **Events:** `ca-input` (every keystroke), `ca-change` (on blur/commit)
 **Slots:** `icon` (before input), `icon-after` (after input)
@@ -315,7 +315,7 @@ Listening for changes:
 |----------|------|---------|-------------|
 | `checked` | `boolean` | `false` | Checked state |
 | `disabled` | `boolean` | `false` | Disable interaction |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'sm'` | Checkbox size |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Checkbox size |
 | `label` | `string` | `''` | Label text |
 | `subtext` | `string` | `''` | Helper text below label |
 
@@ -344,7 +344,7 @@ Listening for changes:
 |----------|------|---------|-------------|
 | `checked` | `boolean` | `false` | Selected state |
 | `disabled` | `boolean` | `false` | Disable interaction |
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'sm'` | Radio size |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Radio size |
 | `name` | `string` | `''` | Group name |
 | `value` | `string` | `''` | Radio value |
 | `label` | `string` | `''` | Label text |
@@ -439,6 +439,7 @@ Listening for changes:
 | `disabled` | `boolean` | `false` |
 | `value` | `string` | `''` |
 | `placeholder` | `string` | `''` |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
 
 **Events:** `ca-input` — `{ value: string }`
 
@@ -489,7 +490,7 @@ Listening for changes:
 | Property | Type | Default |
 |----------|------|---------|
 | `variant` | `'default' \| 'success' \| 'warning' \| 'danger'` | `'default'` |
-| `size` | `'sm' \| 'md'` | `'sm'` |
+| `size` | `'sm' \| 'md'` | `'md'` |
 | `dot` | `boolean` | `false` |
 
 ```html
@@ -513,7 +514,7 @@ Listening for changes:
 |----------|------|---------|
 | `selected` | `boolean` | `false` |
 | `disabled` | `boolean` | `false` |
-| `size` | `'sm' \| 'md'` | `'sm'` |
+| `size` | `'sm' \| 'md'` | `'md'` |
 
 **Events:** `ca-change` — `{ selected: boolean }`
 
@@ -621,7 +622,7 @@ Listening for changes:
 | `href` | `string` | `''` |
 | `target` | `string` | `''` |
 | `type` | `'subtle' \| 'legal'` | `'subtle'` |
-| `size` | `'medium' \| 'small'` | `'medium'` |
+| `size` | `'md' \| 'sm'` | `'md'` |
 
 **Slots:** default (label), `icon` (after text)
 
@@ -712,7 +713,7 @@ Listening for changes:
 | `value` | `number` | `0` |
 | `max` | `number` | `100` |
 | `show-label` | `boolean` | `false` |
-| `size` | `'sm' \| 'md'` | `'sm'` |
+| `size` | `'sm' \| 'md'` | `'md'` |
 | `labelSuffix` | `string` | `''` |
 
 ```html
@@ -985,7 +986,7 @@ Custom sizes:
 | Property | Type | Default |
 |----------|------|---------|
 | `variant` | `'primary' \| 'secondary' \| 'tertiary'` | `'primary'` |
-| `size` | `'thin' \| 'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
 | `label` | `string` | `''` |
 | `options` | `{ value, label }[]` | `[]` |
 | `value` | `string` | `''` |
