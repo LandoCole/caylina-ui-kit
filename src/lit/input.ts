@@ -33,6 +33,13 @@ export class CaInput extends LitElement {
     .field:focus-within {
       border: 2px solid var(--ca-text-primary);
     }
+    :host([borderless]) .field {
+      border-color: transparent;
+      background-color: transparent;
+    }
+    :host([borderless]) .field:focus-within {
+      border: 2px solid var(--ca-text-primary);
+    }
     .field.has-error {
       border-color: var(--ca-text-danger);
     }
@@ -132,6 +139,7 @@ export class CaInput extends LitElement {
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: Boolean }) loading = false;
   @property({ type: String, reflect: true }) size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
+  @property({ type: Boolean, reflect: true }) borderless = false;
 
   private _handleInput(e: Event) {
     const input = e.target as HTMLInputElement;

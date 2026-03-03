@@ -53,6 +53,7 @@ A comprehensive guide to using and customizing every component in the Caylina UI
    - [Per-Column Filtering](#feature-per-column-filtering)
    - [Expandable Rows](#feature-expandable-rows-nested-data)
    - [Header Actions Slot](#feature-header-actions-slot)
+   - [Editable Cells](#feature-editable-cells-inline-editing)
 6. [Customization Patterns](#customization-patterns)
 
 ---
@@ -290,6 +291,7 @@ Or scope overrides to a container:
 | `disabled` | `boolean` | `false` | Disable interaction |
 | `loading` | `boolean` | `false` | Show loading spinner |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Input size |
+| `borderless` | `boolean` | `false` | Remove border and background (ideal for inline/table editing) |
 
 **Events:** `ca-input` (every keystroke), `ca-change` (on blur/commit)
 **Slots:** `icon` (before input), `icon-after` (after input)
@@ -417,6 +419,7 @@ Listening for changes:
 | `options` | `{ value, label }[]` | `[]` |
 | `value` | `string` | `''` |
 | `loading` | `boolean` | `false` |
+| `borderless` | `boolean` | `false` |
 
 **Events:** `ca-change` — `{ value: string }`
 
@@ -1603,6 +1606,179 @@ Add buttons or controls to the table card header:
   </div>
 </ca-table>
 ```
+
+### Feature: Editable Cells (Inline Editing)
+
+Use `type: 'custom'` with a `render` function to embed interactive components — inputs, selects, multi-selects, toggles — directly inside table cells. No special table variant is needed.
+
+**Key concepts:**
+
+- **`type: 'custom'` + `render`** — The render function receives `(value, row)` and returns a Lit `TemplateResult`. You can return any Caylina component.
+- **`borderless`** — Add the `borderless` attribute to `<ca-input>` and `<ca-select>` so they blend into the table row. The border appears on focus/hover.
+- **Auto-sizing** — `ca-input`, `ca-select`, and `ca-multi-select` automatically stretch to fill the column width when placed inside table cells.
+- **`type: 'toggle'`** — For simple boolean columns, use the built-in `toggle` type instead of a custom render. The table emits `ca-cell-toggle` events.
+- **Sorting, filtering, and resizing** all work alongside editable cells — add `sortable`, `filterable`, and `resizable` as usual.
+
+```html
+<ca-table id="editable-table" heading="Project Tracker" resizable></ca-table>
+<script type="module">
+  import { html } from 'lit';
+
+  const table = document.getElementById('editable-table');
+
+  // Keep a mutable source-of-truth array
+  const allRows = [
+    { id: '1', task: 'Design homepage', assignee: 'alice', priority: 'High', hours: '12', approved: true },
+    { id: '2', task: 'Build API endpoints', assignee: 'bob', priority: 'High', hours: '24', approved: false },
+    { id: '3', task: 'Write unit tests', assignee: 'charlie', priority: 'Medium', hours: '8', approved: false },
+    { id: '4', task: 'Set up CI/CD', assignee: 'alice', priority: 'Low', hours: '4', approved: true },
+    { id: '5', task: 'Database migration', assignee: 'bob', priority: 'Medium', hours: '16', approved: false },
+  ];
+
+  const assigneeOptions = [
+    { value: 'alice', label: 'Alice' },
+    { value: 'bob', label: 'Bob' },
+    { value: 'charlie', label: 'Charlie' },
+  ];
+
+  const priorityOptions = [
+    { value: 'Low', label: 'Low' },
+    { value: 'Medium', label: 'Medium' },
+    { value: 'High', label: 'High' },
+  ];
+
+  // Helper: mutate the source row and refresh the table
+  function updateRow(id, key, value) {
+    const row = allRows.find((r) => r.id === id);
+    if (row) row[key] = value;
+    applyFiltersAndSort();
+  }
+
+  // Helper: filter from full dataset, then sort
+  function applyFiltersAndSort() {
+    const filters = table.columnFilters || {};
+    let result = [...allRows];
+    for (const [colKey, colValues] of Object.entries(filters)) {
+      if (colValues.length > 0) {
+        result = result.filter((row) => colValues.includes(String(row[colKey])));
+      }
+    }
+    if (table.sort) {
+      const { key, direction } = table.sort;
+      result.sort((a, b) => {
+        const cmp = String(a[key]).localeCompare(String(b[key]), undefined, { numeric: true });
+        return direction === 'asc' ? cmp : -cmp;
+      });
+    }
+    table.rows = result;
+  }
+
+  // Column definitions
+  table.columns = [
+    {
+      key: 'task',
+      heading: 'Task',
+      type: 'custom',
+      sortable: true,
+      width: 'minmax(200px, 2fr)',
+      render: (value, row) => html`
+        <ca-input size="sm" borderless
+          .value=${String(value)}
+          @ca-change=${(e) => updateRow(row.id, 'task', e.detail.value)}
+        ></ca-input>
+      `,
+    },
+    {
+      key: 'assignee',
+      heading: 'Assignee',
+      type: 'custom',
+      sortable: true,
+      filterable: true,
+      width: 'minmax(140px, 1fr)',
+      render: (value, row) => html`
+        <ca-select size="sm" borderless
+          .value=${String(value)}
+          .options=${assigneeOptions}
+          @ca-change=${(e) => updateRow(row.id, 'assignee', e.detail.value)}
+        ></ca-select>
+      `,
+    },
+    {
+      key: 'priority',
+      heading: 'Priority',
+      type: 'custom',
+      sortable: true,
+      filterable: true,
+      width: 'minmax(130px, 1fr)',
+      render: (value, row) => html`
+        <ca-select size="sm" borderless
+          .value=${String(value)}
+          .options=${priorityOptions}
+          @ca-change=${(e) => updateRow(row.id, 'priority', e.detail.value)}
+        ></ca-select>
+      `,
+    },
+    {
+      key: 'hours',
+      heading: 'Est. Hours',
+      type: 'custom',
+      sortable: true,
+      width: '120px',
+      render: (value, row) => html`
+        <ca-input size="sm" borderless type="number"
+          .value=${String(value)}
+          @ca-change=${(e) => updateRow(row.id, 'hours', e.detail.value)}
+        ></ca-input>
+      `,
+    },
+    {
+      key: 'approved',
+      heading: 'Approved',
+      type: 'toggle',
+      width: '100px',
+    },
+  ];
+
+  table.rows = [...allRows];
+
+  // Event handlers
+  table.addEventListener('ca-sort', (e) => {
+    table.sort = e.detail;
+    applyFiltersAndSort();
+  });
+
+  table.addEventListener('ca-column-filter', (e) => {
+    const { key, values } = e.detail;
+    table.columnFilters = { ...table.columnFilters, [key]: values };
+    applyFiltersAndSort();
+  });
+
+  table.addEventListener('ca-cell-toggle', (e) => {
+    updateRow(e.detail.row.id, e.detail.key, e.detail.checked);
+  });
+</script>
+```
+
+**How it works step by step:**
+
+1. **Define a mutable `allRows` array** as your source of truth. The table's `rows` property always receives a copy derived from this array.
+
+2. **Write an `updateRow` helper** that mutates the source row in `allRows`, then calls `applyFiltersAndSort()` to refresh the table. Every `ca-change` handler from your inputs/selects calls this.
+
+3. **Write an `applyFiltersAndSort` helper** that starts from the full `allRows`, applies any active column filters, then sorts. This ensures edits, filters, and sorts all compose correctly.
+
+4. **Use `type: 'custom'` with `render`** on each editable column. The render function returns a Lit template containing a Caylina component. Add `borderless` so inputs/selects blend into the row and only show a border on interaction.
+
+5. **For boolean columns**, use the built-in `type: 'toggle'` instead of a custom render — it's simpler and emits `ca-cell-toggle` with `{ key, row, checked }`.
+
+6. **Add `resizable` to the `<ca-table>` element** to enable drag-to-resize column handles. Add `sortable: true` and `filterable: true` on individual columns as needed.
+
+**Tips:**
+
+- Use `size="sm"` on embedded components so they fit comfortably in table rows.
+- The `borderless` attribute works on `<ca-input>`, `<ca-select>`, and `<ca-multi-select>`. The border and background are transparent by default; focus reveals the standard 2px focus ring, and hover reveals the border on selects.
+- Numeric sorting works correctly because `localeCompare` with `{ numeric: true }` handles number strings like `"8"` < `"12"` < `"24"`.
+- Filter dropdowns automatically collect unique values from the full (unfiltered) dataset, so options don't disappear after filtering.
 
 ### Combining Features
 

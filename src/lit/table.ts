@@ -398,6 +398,12 @@ export class CaTable extends LitElement {
       transition: background-color var(--ca-transition-fast);
       min-width: 0;
     }
+    .grid-row .cell > ca-input,
+    .grid-row .cell > ca-select,
+    .grid-row .cell > ca-multi-select {
+      width: 100%;
+      min-width: 0;
+    }
     .grid-row:hover .cell {
       background-color: var(--ca-surface-hover);
     }

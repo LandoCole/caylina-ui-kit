@@ -41,6 +41,17 @@ export class CaSelect extends LitElement {
       outline: none;
       border: 2px solid var(--ca-text-primary);
     }
+    :host([borderless]) .field {
+      border-color: transparent;
+      background-color: transparent;
+    }
+    :host([borderless]) .field:hover {
+      border-color: var(--ca-text-primary);
+    }
+    :host([borderless]) .field:focus-visible,
+    :host([borderless]) .field:focus {
+      border: 2px solid var(--ca-text-primary);
+    }
     .field.loading {
       justify-content: center;
       pointer-events: none;
@@ -205,6 +216,9 @@ export class CaSelect extends LitElement {
 
   @property({ type: Boolean })
   loading = false;
+
+  @property({ type: Boolean, reflect: true })
+  borderless = false;
 
   @state()
   _isOpen = false;

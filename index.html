@@ -683,6 +683,148 @@
     });
   </script>
 
+  <!-- ─── Table (Editable) ─── -->
+  <h2>Table — Editable Cells</h2>
+  <ca-table id="demo-table-editable" heading="Project Tracker" supporting-text="Inline editing with inputs, selects, and toggles." resizable></ca-table>
+  <script type="module">
+    import { html } from 'lit';
+
+    const edTable = document.getElementById('demo-table-editable');
+    const edRows = [
+      { id: '1', task: 'Design homepage', assignee: 'alice', priority: 'High', hours: '12', approved: true },
+      { id: '2', task: 'Build API endpoints', assignee: 'bob', priority: 'High', hours: '24', approved: false },
+      { id: '3', task: 'Write unit tests', assignee: 'charlie', priority: 'Medium', hours: '8', approved: false },
+      { id: '4', task: 'Set up CI/CD', assignee: 'alice', priority: 'Low', hours: '4', approved: true },
+      { id: '5', task: 'Database migration', assignee: 'bob', priority: 'Medium', hours: '16', approved: false },
+    ];
+
+    const assigneeOptions = [
+      { value: 'alice', label: 'Alice' },
+      { value: 'bob', label: 'Bob' },
+      { value: 'charlie', label: 'Charlie' },
+    ];
+
+    const priorityOptions = [
+      { value: 'Low', label: 'Low' },
+      { value: 'Medium', label: 'Medium' },
+      { value: 'High', label: 'High' },
+    ];
+
+    function updateRow(id, key, value) {
+      const row = edRows.find((r) => r.id === id);
+      if (row) row[key] = value;
+      edTable.rows = [...edRows];
+    }
+
+    edTable.columns = [
+      {
+        key: 'task',
+        heading: 'Task',
+        type: 'custom',
+        sortable: true,
+        width: 'minmax(200px, 2fr)',
+        render: (value, row) => html`
+          <ca-input
+            size="sm"
+            borderless
+            .value=${String(value)}
+            @ca-change=${(e) => updateRow(row.id, 'task', e.detail.value)}
+          ></ca-input>
+        `,
+      },
+      {
+        key: 'assignee',
+        heading: 'Assignee',
+        type: 'custom',
+        sortable: true,
+        filterable: true,
+        width: 'minmax(140px, 1fr)',
+        render: (value, row) => html`
+          <ca-select
+            size="sm"
+            borderless
+            .value=${String(value)}
+            .options=${assigneeOptions}
+            @ca-change=${(e) => updateRow(row.id, 'assignee', e.detail.value)}
+          ></ca-select>
+        `,
+      },
+      {
+        key: 'priority',
+        heading: 'Priority',
+        type: 'custom',
+        sortable: true,
+        filterable: true,
+        width: 'minmax(130px, 1fr)',
+        render: (value, row) => html`
+          <ca-select
+            size="sm"
+            borderless
+            .value=${String(value)}
+            .options=${priorityOptions}
+            @ca-change=${(e) => updateRow(row.id, 'priority', e.detail.value)}
+          ></ca-select>
+        `,
+      },
+      {
+        key: 'hours',
+        heading: 'Est. Hours',
+        type: 'custom',
+        sortable: true,
+        width: '120px',
+        render: (value, row) => html`
+          <ca-input
+            size="sm"
+            borderless
+            type="number"
+            .value=${String(value)}
+            @ca-change=${(e) => updateRow(row.id, 'hours', e.detail.value)}
+          ></ca-input>
+        `,
+      },
+      {
+        key: 'approved',
+        heading: 'Approved',
+        type: 'toggle',
+        width: '100px',
+      },
+    ];
+    edTable.rows = [...edRows];
+
+    function applyFiltersAndSort() {
+      const filters = edTable.columnFilters || {};
+      let result = [...edRows];
+      for (const [colKey, colValues] of Object.entries(filters)) {
+        if (colValues.length > 0) {
+          result = result.filter((row) => colValues.includes(String(row[colKey])));
+        }
+      }
+      if (edTable.sort) {
+        const { key: sortKey, direction } = edTable.sort;
+        result.sort((a, b) => {
+          const cmp = String(a[sortKey]).localeCompare(String(b[sortKey]), undefined, { numeric: true });
+          return direction === 'asc' ? cmp : -cmp;
+        });
+      }
+      edTable.rows = result;
+    }
+
+    edTable.addEventListener('ca-sort', (e) => {
+      edTable.sort = e.detail;
+      applyFiltersAndSort();
+    });
+
+    edTable.addEventListener('ca-column-filter', (e) => {
+      const { key, values } = e.detail;
+      edTable.columnFilters = { ...edTable.columnFilters, [key]: values };
+      applyFiltersAndSort();
+    });
+
+    edTable.addEventListener('ca-cell-toggle', (e) => {
+      updateRow(e.detail.row.id, e.detail.key, e.detail.checked);
+    });
+  </script>
+
   <!-- ─── Dark Mode Toggle ─── -->
   <script type="module">
     document.getElementById('theme-toggle-btn').addEventListener('click', () => {
