@@ -50,26 +50,27 @@ A comprehensive guide to using and customizing every component in the Caylina UI
    - [Avatar Group](#avatar-group)
    - [Color Picker](#color-picker)
    - [Estimation Input](#estimation-input)
-6. [Kanban](#kanban)
+6. [Task Table](#task-table)
+7. [Kanban](#kanban)
    - [Kanban Board](#kanban-board)
    - [Kanban Card](#kanban-card)
-7. [Data Visualization](#data-visualization)
+8. [Data Visualization](#data-visualization)
    - [Chart](#chart)
    - [Gantt Chart](#gantt-chart)
-8. [Rich Content](#rich-content)
+9. [Rich Content](#rich-content)
    - [Rich Text Editor](#rich-text-editor)
    - [Comment Thread](#comment-thread)
    - [Activity Timeline](#activity-timeline)
    - [Time Log](#time-log)
-9. [Navigation & Feedback](#navigation--feedback)
-   - [Breadcrumb](#breadcrumb)
-   - [Empty State](#empty-state)
-   - [Skeleton](#skeleton)
-   - [Context Menu](#context-menu)
-   - [Bulk Action Bar](#bulk-action-bar)
-   - [Command Bar](#command-bar)
-   - [Notification Center](#notification-center)
-10. [Table Deep Dive](#table-deep-dive)
+10. [Navigation & Feedback](#navigation--feedback)
+    - [Breadcrumb](#breadcrumb)
+    - [Empty State](#empty-state)
+    - [Skeleton](#skeleton)
+    - [Context Menu](#context-menu)
+    - [Bulk Action Bar](#bulk-action-bar)
+    - [Command Bar](#command-bar)
+    - [Notification Center](#notification-center)
+11. [Table Deep Dive](#table-deep-dive)
    - [Sorting](#feature-sorting)
    - [Selection](#feature-selection)
    - [Drag-to-Reorder](#feature-drag-to-reorder)
@@ -83,7 +84,7 @@ A comprehensive guide to using and customizing every component in the Caylina UI
    - [Expandable Rows](#feature-expandable-rows-nested-data)
    - [Header Actions Slot](#feature-header-actions-slot)
    - [Editable Cells](#feature-editable-cells-inline-editing)
-11. [Customization Patterns](#customization-patterns)
+12. [Customization Patterns](#customization-patterns)
 
 ---
 
@@ -1473,6 +1474,127 @@ Specialized selector components designed for project management workflows. These
 <ca-estimation-input value="8" unit="hours"></ca-estimation-input>
 <ca-estimation-input value="5" unit="points" borderless></ca-estimation-input>
 <ca-estimation-input value="3" unit="days" size="sm"></ca-estimation-input>
+```
+
+---
+
+## Task Table
+
+`<ca-task-table>` — A high-level wrapper around `<ca-table>` designed for grouped task management. Provides built-in modal-based filtering, per-group sorting, cross-group drag-and-drop, inline editing, and row creation. Pass columns and groups to get a fully featured task board.
+
+### Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `columns` | `TaskTableColumn[]` | `[]` | Column definitions (see below) |
+| `groups` | `TaskTableGroup[]` | `[]` | Grouped rows — each group has an id, label, color, and rows |
+| `heading` | `string` | `''` | Card heading text |
+| `supporting-text` | `string` | `''` | Subtitle below the heading |
+| `draggable` | `boolean` | `true` | Enable drag-and-drop reordering between groups |
+| `expandable` | `boolean` | `true` | Enable expand/collapse for rows with `children` |
+| `inline-add` | `boolean` | `true` | Show inline "Add row" input at bottom of each group |
+| `clickable-rows` | `boolean` | `true` | Rows emit click events on click |
+| `selectable` | `boolean` | `false` | Enable checkbox selection on rows |
+
+### Column Definition (`TaskTableColumn`)
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `key` | `string` | — | Data field key |
+| `heading` | `string` | — | Column header label |
+| `type` | `'text' \| 'bold-text' \| 'badge' \| 'editable' \| 'editable-select'` | `'text'` | Cell render type |
+| `width` | `string` | — | CSS width (e.g. `'200px'`, `'1fr'`) |
+| `sortable` | `boolean` | `false` | Allow sorting by this column |
+| `filterable` | `boolean` | `true` | Include this column in the filter modal |
+| `badgeMap` | `Record<string, string>` | — | Map values to badge variants |
+| `options` | `{ value, label }[]` | — | Dropdown options for `editable-select` |
+| `editPlaceholder` | `string` | — | Placeholder for editable cells |
+
+### Group Definition (`TaskTableGroup`)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | `string` | Unique group identifier |
+| `label` | `string` | Display label for the group header |
+| `color` | `string` | Color accent for the group header bar |
+| `rows` | `TaskTableRow[]` | Rows in this group. Each row can have `children` for nested sub-tasks. |
+
+### Events
+
+| Event | Detail | Description |
+|-------|--------|-------------|
+| `ca-task-move` | `{ rowId, fromGroupId, toGroupId, fromIndex, toIndex }` | Row dragged between or within groups |
+| `ca-task-edit` | `{ rowId, groupId, key, value, oldValue }` | Cell value changed via inline edit |
+| `ca-task-create` | `{ groupId, value }` | New row created via inline add |
+| `ca-task-click` | `{ row, groupId }` | Row clicked |
+| `ca-task-expand` | `{ id, expanded }` | Row expanded or collapsed |
+| `ca-task-filter` | `{ filters: Record<string, string[]> }` | Filter selection changed in the filter modal |
+| `ca-task-sort` | `{ key, direction }` | Column sort changed |
+| `ca-group-toggle` | `{ groupId, collapsed }` | Group header collapsed/expanded |
+
+### Filtering
+
+The task table provides a **Filters** button in the card header (no per-column filter icons). Clicking it opens a modal with checkboxes for each filterable column's unique values. Filters are applied across all groups — rows that don't match are hidden. An active filter count badge appears on the button.
+
+### Sorting
+
+Click any sortable column header to sort. Sorting is applied **per-group** — each group's rows are sorted independently. Click again to reverse direction.
+
+### Example
+
+```html
+<ca-task-table id="my-tasks" heading="Sprint Board" supporting-text="Manage your sprint tasks."></ca-task-table>
+<script>
+  const tt = document.getElementById('my-tasks');
+
+  tt.columns = [
+    { key: 'task', heading: 'Task', type: 'editable', sortable: true },
+    { key: 'assignee', heading: 'Assignee', type: 'editable-select', options: [
+      { value: 'Alice', label: 'Alice' },
+      { value: 'Bob', label: 'Bob' },
+    ], sortable: true },
+    { key: 'priority', heading: 'Priority', type: 'editable-select', options: [
+      { value: 'High', label: 'High' },
+      { value: 'Medium', label: 'Medium' },
+      { value: 'Low', label: 'Low' },
+    ], badgeMap: { High: 'danger', Medium: 'warning', Low: 'info' } },
+    { key: 'status', heading: 'Status', type: 'editable-select', options: [
+      { value: 'Todo', label: 'Todo' },
+      { value: 'In Progress', label: 'In Progress' },
+      { value: 'Done', label: 'Done' },
+    ], badgeMap: { Done: 'success', 'In Progress': 'info', Todo: 'neutral' } },
+    { key: 'due', heading: 'Due Date' },
+  ];
+
+  tt.groups = [
+    {
+      id: 'todo', label: 'To Do', color: '#6b7280',
+      rows: [
+        { id: '1', task: 'Design login page', assignee: 'Alice', priority: 'High', status: 'Todo', due: '2026-03-10' },
+        { id: '2', task: 'Write API spec', assignee: 'Bob', priority: 'Medium', status: 'Todo', due: '2026-03-12' },
+      ],
+    },
+    {
+      id: 'in-progress', label: 'In Progress', color: '#3b82f6',
+      rows: [
+        {
+          id: '3', task: 'Implement auth flow', assignee: 'Alice', priority: 'High', status: 'In Progress', due: '2026-03-08',
+          children: [
+            { id: '3a', task: 'OAuth setup', assignee: 'Alice', priority: 'Medium', status: 'In Progress', due: '2026-03-07' },
+            { id: '3b', task: 'Session management', assignee: 'Bob', priority: 'High', status: 'Todo', due: '2026-03-08' },
+          ],
+        },
+      ],
+    },
+  ];
+
+  // Listen for task events
+  tt.addEventListener('ca-task-move', (e) => console.log('Moved:', e.detail));
+  tt.addEventListener('ca-task-edit', (e) => console.log('Edited:', e.detail));
+  tt.addEventListener('ca-task-create', (e) => console.log('Created:', e.detail));
+  tt.addEventListener('ca-task-filter', (e) => console.log('Filtered:', e.detail.filters));
+  tt.addEventListener('ca-task-sort', (e) => console.log('Sorted:', e.detail));
+</script>
 ```
 
 ---
