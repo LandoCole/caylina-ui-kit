@@ -40,7 +40,36 @@ A comprehensive guide to using and customizing every component in the Caylina UI
    - [Side Nav](#side-nav)
    - [Toast](#toast)
    - [Table](#table)
-5. [Table Deep Dive](#table-deep-dive)
+   - [Multi Select](#multi-select)
+5. [PM Selectors](#pm-selectors)
+   - [Status Selector](#status-selector)
+   - [Priority Selector](#priority-selector)
+   - [Phase Selector](#phase-selector)
+   - [Assignee Selector](#assignee-selector)
+   - [Label Selector](#label-selector)
+   - [Avatar Group](#avatar-group)
+   - [Color Picker](#color-picker)
+   - [Estimation Input](#estimation-input)
+6. [Kanban](#kanban)
+   - [Kanban Board](#kanban-board)
+   - [Kanban Card](#kanban-card)
+7. [Data Visualization](#data-visualization)
+   - [Chart](#chart)
+   - [Gantt Chart](#gantt-chart)
+8. [Rich Content](#rich-content)
+   - [Rich Text Editor](#rich-text-editor)
+   - [Comment Thread](#comment-thread)
+   - [Activity Timeline](#activity-timeline)
+   - [Time Log](#time-log)
+9. [Navigation & Feedback](#navigation--feedback)
+   - [Breadcrumb](#breadcrumb)
+   - [Empty State](#empty-state)
+   - [Skeleton](#skeleton)
+   - [Context Menu](#context-menu)
+   - [Bulk Action Bar](#bulk-action-bar)
+   - [Command Bar](#command-bar)
+   - [Notification Center](#notification-center)
+10. [Table Deep Dive](#table-deep-dive)
    - [Sorting](#feature-sorting)
    - [Selection](#feature-selection)
    - [Drag-to-Reorder](#feature-drag-to-reorder)
@@ -54,7 +83,7 @@ A comprehensive guide to using and customizing every component in the Caylina UI
    - [Expandable Rows](#feature-expandable-rows-nested-data)
    - [Header Actions Slot](#feature-header-actions-slot)
    - [Editable Cells](#feature-editable-cells-inline-editing)
-6. [Customization Patterns](#customization-patterns)
+11. [Customization Patterns](#customization-patterns)
 
 ---
 
@@ -420,8 +449,10 @@ Listening for changes:
 | `value` | `string` | `''` |
 | `loading` | `boolean` | `false` |
 | `borderless` | `boolean` | `false` |
+| `searchable` | `boolean` | `false` | Enable type-to-search filtering within options |
+| `allow-create` | `boolean` | `false` | Allow creating new options by typing a custom value |
 
-**Events:** `ca-change` — `{ value: string }`
+**Events:** `ca-change` — `{ value: string }`, `ca-create` — `{ query: string }` (when user creates a new option)
 
 ```html
 <ca-select label="Country" placeholder="Select country" id="country-select"></ca-select>
@@ -435,6 +466,12 @@ Listening for changes:
   ];
   sel.addEventListener('ca-change', (e) => console.log('Selected:', e.detail.value));
 </script>
+
+<!-- Searchable select -->
+<ca-select label="Country" searchable placeholder="Type to search..."></ca-select>
+
+<!-- Creatable select -->
+<ca-select label="Tag" searchable allow-create placeholder="Search or create..."></ca-select>
 ```
 
 ---
@@ -481,6 +518,8 @@ Listening for changes:
 | `min-date` | `string` | `''` |
 | `max-date` | `string` | `''` |
 | `disabled` | `boolean` | `false` |
+| `borderless` | `boolean` | `false` | Remove border and background (ideal for inline/table editing) |
+| `overdue` | `boolean` | `false` | Show the date in red to indicate an overdue state |
 
 **Events:** `ca-change` — single: `{ value }`, range: `{ startDate, endDate }`
 
@@ -493,6 +532,12 @@ Listening for changes:
 
 <!-- Constrained range -->
 <ca-datepicker label="Booking" min-date="2026-03-01" max-date="2026-12-31"></ca-datepicker>
+
+<!-- Borderless (inline editing) -->
+<ca-datepicker borderless placeholder="Due date"></ca-datepicker>
+
+<!-- Overdue state -->
+<ca-datepicker value="2026-02-01" overdue></ca-datepicker>
 ```
 
 ---
@@ -506,6 +551,7 @@ Listening for changes:
 | `variant` | `'default' \| 'success' \| 'warning' \| 'danger'` | `'default'` |
 | `size` | `'sm' \| 'md'` | `'md'` |
 | `dot` | `boolean` | `false` |
+| `color` | `string` | `''` | Custom background color (CSS color value). Overrides `variant`. |
 
 ```html
 <ca-badge>3</ca-badge>
@@ -516,6 +562,10 @@ Listening for changes:
 <ca-badge dot></ca-badge>
 <ca-badge dot variant="success"></ca-badge>
 <ca-badge dot variant="danger"></ca-badge>
+
+<!-- Custom color -->
+<ca-badge color="#6D28D9">Custom</ca-badge>
+<ca-badge color="#0891B2" dot></ca-badge>
 ```
 
 ---
@@ -659,6 +709,7 @@ Listening for changes:
 | `name` | `string` | `''` |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
 | `status` | `'online' \| 'offline' \| 'away' \| undefined` | `undefined` |
+| `color` | `string` | `''` | Custom background color for initials fallback (CSS color value) |
 
 ```html
 <!-- With image -->
@@ -671,6 +722,10 @@ Listening for changes:
 <ca-avatar name="Alice" status="online"></ca-avatar>
 <ca-avatar name="Bob" status="away"></ca-avatar>
 <ca-avatar name="Carol" status="offline"></ca-avatar>
+
+<!-- Custom color for initials -->
+<ca-avatar name="John Smith" color="#6D28D9"></ca-avatar>
+<ca-avatar name="Jane Doe" color="#0891B2"></ca-avatar>
 ```
 
 ---
@@ -729,11 +784,26 @@ Listening for changes:
 | `show-label` | `boolean` | `false` |
 | `size` | `'sm' \| 'md'` | `'md'` |
 | `labelSuffix` | `string` | `''` |
+| `color` | `string` | `''` | Custom bar color (CSS color value). Overrides default primary color. |
+| `segments` | `ProgressSegment[]` | `[]` | Stacked segments for multi-part progress. Each segment: `{ value: number, color: string, label?: string }`. |
 
 ```html
 <ca-progress-bar value="75" max="100" show-label></ca-progress-bar>
 <ca-progress-bar value="37" max="60" show-label label-suffix="times"></ca-progress-bar>
 <ca-progress-bar value="50" max="100" size="md" show-label></ca-progress-bar>
+
+<!-- Custom color -->
+<ca-progress-bar value="60" max="100" color="#10B981"></ca-progress-bar>
+
+<!-- Stacked segments -->
+<ca-progress-bar id="stacked-progress" max="100" show-label></ca-progress-bar>
+<script>
+  document.getElementById('stacked-progress').segments = [
+    { value: 40, color: '#10B981', label: 'Complete' },
+    { value: 25, color: '#F59E0B', label: 'In Progress' },
+    { value: 15, color: '#EF4444', label: 'Blocked' },
+  ];
+</script>
 ```
 
 ---
@@ -943,6 +1013,7 @@ Controlled mode:
 | `size` | `string` | `'40%'` | Width (right) or height (bottom) — any CSS value |
 | `heading` | `string` | `''` | Header title |
 | `backdrop` | `boolean` | `true` | Show semi-transparent backdrop |
+| `no-padding` | `boolean` | `false` | Remove default body padding (useful for full-bleed content) |
 
 **Events:** `ca-close` (ESC, backdrop click, or close button)
 **Slots:** default (body), `header-actions`, `footer`
@@ -1134,6 +1205,789 @@ Quick example:
 
 ---
 
+### Multi Select
+
+`<ca-multi-select>` — Dropdown multi-select with chip display for selected items.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `options` | `{ value, label }[]` | `[]` | Available options |
+| `value` | `string[]` | `[]` | Selected values |
+| `label` | `string` | `''` | Label text above input |
+| `placeholder` | `string` | `'Select...'` | Placeholder text |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Component size |
+| `borderless` | `boolean` | `false` | Remove border and background |
+| `loading` | `boolean` | `false` | Show loading spinner |
+| `allow-create` | `boolean` | `false` | Allow creating new options by typing a custom value |
+
+**Events:** `ca-change` — `{ value: string[] }`, `ca-create` — `{ query: string }` (when user creates a new option)
+
+```html
+<ca-multi-select label="Tags" placeholder="Select tags..." id="tag-select"></ca-multi-select>
+<script>
+  const ms = document.getElementById('tag-select');
+  ms.options = [
+    { value: 'bug', label: 'Bug' },
+    { value: 'feature', label: 'Feature' },
+    { value: 'docs', label: 'Documentation' },
+  ];
+  ms.addEventListener('ca-change', (e) => console.log('Selected:', e.detail.value));
+</script>
+
+<!-- Creatable multi-select -->
+<ca-multi-select label="Labels" allow-create placeholder="Search or create..."></ca-multi-select>
+```
+
+---
+
+## PM Selectors
+
+Specialized selector components designed for project management workflows. These provide rich, task-specific inputs with color coding, avatar support, and inline creation.
+
+### Status Selector
+
+`<ca-status-selector>` — Colored pill dropdown for selecting task statuses. Displays the current status as a color-coded pill and opens a dropdown to change it.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `options` | `ColorPillOption[]` | `[]` | Status options. Each: `{ value, label, color }` |
+| `value` | `string` | `''` | Currently selected status value |
+| `size` | `'sm' \| 'md'` | `'md'` | Selector size |
+| `borderless` | `boolean` | `false` | Remove outer border |
+| `allow-create` | `boolean` | `false` | Allow creating new statuses via text input |
+| `placeholder` | `string` | `'Select status'` | Placeholder text when no value is selected |
+
+**Events:** `ca-change` — `{ value: string }`, `ca-create` — `{ query: string }`
+
+```html
+<ca-status-selector id="status-sel" placeholder="Set status"></ca-status-selector>
+<script>
+  const sel = document.getElementById('status-sel');
+  sel.options = [
+    { value: 'todo', label: 'To Do', color: '#6B7280' },
+    { value: 'in-progress', label: 'In Progress', color: '#3B82F6' },
+    { value: 'review', label: 'In Review', color: '#F59E0B' },
+    { value: 'done', label: 'Done', color: '#10B981' },
+  ];
+  sel.value = 'in-progress';
+  sel.addEventListener('ca-change', (e) => console.log('Status:', e.detail.value));
+</script>
+```
+
+---
+
+### Priority Selector
+
+`<ca-priority-selector>` — Priority selector with icon support. Displays a colored pill with an optional icon for each priority level.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `options` | `ColorPillOption[]` | `[]` | Priority options. Each: `{ value, label, color, icon? }` |
+| `value` | `string` | `''` | Currently selected priority value |
+| `size` | `'sm' \| 'md'` | `'md'` | Selector size |
+| `borderless` | `boolean` | `false` | Remove outer border |
+| `allow-create` | `boolean` | `false` | Allow creating new priorities |
+| `placeholder` | `string` | `'Set priority'` | Placeholder text |
+
+**Events:** `ca-change` — `{ value: string }`, `ca-create` — `{ query: string }`
+
+```html
+<ca-priority-selector id="priority-sel" placeholder="Priority"></ca-priority-selector>
+<script>
+  const sel = document.getElementById('priority-sel');
+  sel.options = [
+    { value: 'urgent', label: 'Urgent', color: '#EF4444' },
+    { value: 'high', label: 'High', color: '#F59E0B' },
+    { value: 'medium', label: 'Medium', color: '#3B82F6' },
+    { value: 'low', label: 'Low', color: '#6B7280' },
+  ];
+  sel.value = 'high';
+  sel.addEventListener('ca-change', (e) => console.log('Priority:', e.detail.value));
+</script>
+```
+
+---
+
+### Phase Selector
+
+`<ca-phase-selector>` — Phase or milestone selector. Uses color-coded pills to represent project phases.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `options` | `ColorPillOption[]` | `[]` | Phase options. Each: `{ value, label, color }` |
+| `value` | `string` | `''` | Currently selected phase value |
+| `size` | `'sm' \| 'md'` | `'md'` | Selector size |
+| `borderless` | `boolean` | `false` | Remove outer border |
+| `allow-create` | `boolean` | `false` | Allow creating new phases |
+| `placeholder` | `string` | `'Set phase'` | Placeholder text |
+
+**Events:** `ca-change` — `{ value: string }`, `ca-create` — `{ query: string }`
+
+```html
+<ca-phase-selector id="phase-sel" placeholder="Phase"></ca-phase-selector>
+<script>
+  const sel = document.getElementById('phase-sel');
+  sel.options = [
+    { value: 'planning', label: 'Planning', color: '#8B5CF6' },
+    { value: 'design', label: 'Design', color: '#EC4899' },
+    { value: 'development', label: 'Development', color: '#3B82F6' },
+    { value: 'qa', label: 'QA', color: '#F59E0B' },
+    { value: 'launch', label: 'Launch', color: '#10B981' },
+  ];
+  sel.value = 'development';
+</script>
+```
+
+---
+
+### Assignee Selector
+
+`<ca-assignee-selector>` — Avatar-based multi-select for assigning team members. Displays selected users as avatars and provides a searchable dropdown.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `members` | `AssigneeMember[]` | `[]` | Available members. Each: `{ value, label, src?, color?, email? }` |
+| `value` | `string[]` | `[]` | Selected member values |
+| `size` | `'sm' \| 'md'` | `'md'` | Selector size |
+| `borderless` | `boolean` | `false` | Remove outer border |
+| `searchable` | `boolean` | `true` | Enable type-to-search filtering |
+
+**Events:** `ca-change` — `{ value: string[] }`
+
+```html
+<ca-assignee-selector id="assignee-sel"></ca-assignee-selector>
+<script>
+  const sel = document.getElementById('assignee-sel');
+  sel.members = [
+    { value: 'alice', label: 'Alice Chen', src: 'https://i.pravatar.cc/80?img=1', email: 'alice@example.com' },
+    { value: 'bob', label: 'Bob Smith', color: '#3B82F6', email: 'bob@example.com' },
+    { value: 'carol', label: 'Carol Davis', src: 'https://i.pravatar.cc/80?img=3' },
+  ];
+  sel.value = ['alice'];
+  sel.addEventListener('ca-change', (e) => console.log('Assignees:', e.detail.value));
+</script>
+```
+
+---
+
+### Label Selector
+
+`<ca-label-selector>` — Color-coded label multi-select with inline creation. Displays labels as colored chips and lets users add or create new labels.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `labels` | `LabelOption[]` | `[]` | Available labels. Each: `{ value, label, color }` |
+| `value` | `string[]` | `[]` | Selected label values |
+| `allow-create` | `boolean` | `false` | Allow creating new labels with a color picker |
+| `size` | `'sm' \| 'md'` | `'md'` | Selector size |
+| `borderless` | `boolean` | `false` | Remove outer border |
+
+**Events:** `ca-change` — `{ value: string[] }`, `ca-create` — `{ label: string, color: string }`
+
+```html
+<ca-label-selector id="label-sel" allow-create></ca-label-selector>
+<script>
+  const sel = document.getElementById('label-sel');
+  sel.labels = [
+    { value: 'bug', label: 'Bug', color: '#EF4444' },
+    { value: 'feature', label: 'Feature', color: '#3B82F6' },
+    { value: 'design', label: 'Design', color: '#EC4899' },
+    { value: 'docs', label: 'Documentation', color: '#8B5CF6' },
+  ];
+  sel.value = ['bug', 'feature'];
+  sel.addEventListener('ca-create', (e) => console.log('New label:', e.detail.label, e.detail.color));
+</script>
+```
+
+---
+
+### Avatar Group
+
+`<ca-avatar-group>` — Stacked avatar display showing multiple team members. Automatically truncates to show a "+N" overflow indicator when exceeding the max count.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `members` | `AvatarGroupMember[]` | `[]` | Members to display. Each: `{ name, src?, color? }` |
+| `max` | `number` | `3` | Maximum avatars to show before overflow |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'sm'` | Avatar size |
+| `interactive` | `boolean` | `false` | Show pointer cursor and enable click events |
+
+**Events:** `ca-click` — emitted when the group is clicked (requires `interactive`)
+
+```html
+<ca-avatar-group id="team-avatars" max="4" size="sm" interactive></ca-avatar-group>
+<script>
+  document.getElementById('team-avatars').members = [
+    { name: 'Alice Chen', src: 'https://i.pravatar.cc/80?img=1' },
+    { name: 'Bob Smith', color: '#3B82F6' },
+    { name: 'Carol Davis', src: 'https://i.pravatar.cc/80?img=3' },
+    { name: 'Dave Wilson', color: '#10B981' },
+    { name: 'Eve Johnson', color: '#F59E0B' },
+  ];
+</script>
+```
+
+---
+
+### Color Picker
+
+`<ca-color-picker>` — Swatch grid color picker with optional custom color input. Presents a grid of preset color swatches for quick selection.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `value` | `string` | `''` | Currently selected color (hex string) |
+| `presets` | `string[]` | (default palette) | Array of hex color strings to display as swatches |
+| `size` | `'sm' \| 'md'` | `'md'` | Swatch size |
+| `allow-custom` | `boolean` | `false` | Show a custom hex input field |
+
+**Events:** `ca-change` — `{ value: string }`
+
+```html
+<ca-color-picker value="#3B82F6" allow-custom></ca-color-picker>
+
+<ca-color-picker id="custom-palette"></ca-color-picker>
+<script>
+  document.getElementById('custom-palette').presets = [
+    '#EF4444', '#F59E0B', '#10B981', '#3B82F6',
+    '#8B5CF6', '#EC4899', '#6B7280', '#1F2937',
+  ];
+</script>
+```
+
+---
+
+### Estimation Input
+
+`<ca-estimation-input>` — Numeric input with a unit suffix for time or point estimates. Provides an inline, compact input suitable for task estimation fields.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `value` | `number` | `0` | Current numeric value |
+| `unit` | `'hours' \| 'points' \| 'days'` | `'hours'` | Unit label displayed after the number |
+| `borderless` | `boolean` | `false` | Remove border and background |
+| `size` | `'sm' \| 'md'` | `'md'` | Input size |
+
+**Events:** `ca-change` — `{ value: number }`
+
+```html
+<ca-estimation-input value="8" unit="hours"></ca-estimation-input>
+<ca-estimation-input value="5" unit="points" borderless></ca-estimation-input>
+<ca-estimation-input value="3" unit="days" size="sm"></ca-estimation-input>
+```
+
+---
+
+## Kanban
+
+Drag-and-drop kanban board components for visual task management workflows.
+
+### Kanban Board
+
+`<ca-kanban-board>` — Drag-and-drop column-based board for organizing tasks into status columns. Supports card creation, reordering, and cross-column dragging.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `columns` | `KanbanColumnData[]` | `[]` | Column definitions with cards. Each: `{ id, title, color?, cards: KanbanCardData[] }` |
+| `allow-create` | `boolean` | `false` | Show "Add card" button at the bottom of each column |
+
+**Events:**
+
+| Event | Detail | Description |
+|-------|--------|-------------|
+| `ca-card-move` | `{ cardId, fromColumnId, toColumnId, toIndex }` | Card dragged to a new position |
+| `ca-card-click` | `{ card, columnId }` | Card clicked |
+| `ca-card-create` | `{ columnId, title }` | New card created via inline input |
+
+```html
+<ca-kanban-board id="board" allow-create></ca-kanban-board>
+<script>
+  document.getElementById('board').columns = [
+    {
+      id: 'todo', title: 'To Do', color: '#6B7280',
+      cards: [
+        { id: 'task-1', title: 'Design homepage', taskKey: 'CA-101', priorityColor: '#F59E0B' },
+        { id: 'task-2', title: 'Write API docs', taskKey: 'CA-102' },
+      ],
+    },
+    {
+      id: 'progress', title: 'In Progress', color: '#3B82F6',
+      cards: [
+        { id: 'task-3', title: 'Build auth flow', taskKey: 'CA-103', priorityColor: '#EF4444' },
+      ],
+    },
+    {
+      id: 'done', title: 'Done', color: '#10B981',
+      cards: [],
+    },
+  ];
+</script>
+```
+
+---
+
+### Kanban Card
+
+`<ca-kanban-card>` — Individual card for use within a kanban board. Displays task metadata including labels, assignees, and counts.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `title` | `string` | `''` | Card title |
+| `task-key` | `string` | `''` | Task identifier (e.g. "CA-101") |
+| `priority-color` | `string` | `''` | Left-border color indicating priority |
+| `due-date` | `string` | `''` | Due date string |
+| `overdue` | `boolean` | `false` | Show due date in red |
+| `labels` | `{ label, color }[]` | `[]` | Color-coded label chips |
+| `assignees` | `{ name, src?, color? }[]` | `[]` | Assignee avatars |
+| `comments-count` | `number` | `0` | Comment count indicator |
+| `attachments-count` | `number` | `0` | Attachment count indicator |
+
+**Events:** `ca-click`
+
+```html
+<ca-kanban-card
+  title="Design homepage"
+  task-key="CA-101"
+  priority-color="#F59E0B"
+  due-date="Mar 15"
+  comments-count="3"
+  attachments-count="2"
+></ca-kanban-card>
+```
+
+---
+
+## Data Visualization
+
+Charts and timeline components for visualizing project data and progress.
+
+### Chart
+
+`<ca-chart>` — SVG-based chart supporting bar, line, pie, and doughnut types. Lightweight and themeable without external chart library dependencies.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `type` | `'bar' \| 'line' \| 'pie' \| 'doughnut'` | `'bar'` | Chart type |
+| `data` | `ChartData` | `{}` | Chart data. `{ labels: string[], datasets: [{ label, data: number[], color? }] }` |
+| `show-legend` | `boolean` | `false` | Display a legend below the chart |
+
+**Events:** `ca-segment-click` — `{ datasetIndex, dataIndex, value, label }`
+
+```html
+<ca-chart id="status-chart" type="doughnut" show-legend></ca-chart>
+<script>
+  document.getElementById('status-chart').data = {
+    labels: ['To Do', 'In Progress', 'Done'],
+    datasets: [{
+      label: 'Tasks',
+      data: [12, 8, 24],
+      color: ['#6B7280', '#3B82F6', '#10B981'],
+    }],
+  };
+</script>
+
+<ca-chart id="velocity-chart" type="bar" show-legend></ca-chart>
+<script>
+  document.getElementById('velocity-chart').data = {
+    labels: ['Sprint 1', 'Sprint 2', 'Sprint 3', 'Sprint 4'],
+    datasets: [
+      { label: 'Planned', data: [20, 25, 22, 28], color: '#3B82F6' },
+      { label: 'Completed', data: [18, 24, 22, 26], color: '#10B981' },
+    ],
+  };
+</script>
+```
+
+---
+
+### Gantt Chart
+
+`<ca-gantt-chart>` — Timeline view with horizontal task bars and drag-to-resize support. Displays tasks across a time axis with dependency visualization.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `tasks` | `GanttTask[]` | `[]` | Task bars. Each: `{ id, title, startDate, endDate, color?, progress?, group? }` |
+| `view-mode` | `'day' \| 'week' \| 'month'` | `'week'` | Time axis granularity |
+| `show-today-marker` | `boolean` | `true` | Show a vertical marker at today's date |
+
+**Events:**
+
+| Event | Detail | Description |
+|-------|--------|-------------|
+| `ca-task-resize` | `{ id, startDate, endDate }` | Task bar dragged to new dates |
+| `ca-task-click` | `{ task }` | Task bar clicked |
+| `ca-range-change` | `{ startDate, endDate }` | Visible date range changed (scroll/zoom) |
+
+```html
+<ca-gantt-chart id="project-gantt" view-mode="week" show-today-marker></ca-gantt-chart>
+<script>
+  document.getElementById('project-gantt').tasks = [
+    { id: '1', title: 'Research', startDate: '2026-03-01', endDate: '2026-03-07', color: '#8B5CF6', progress: 100 },
+    { id: '2', title: 'Design', startDate: '2026-03-05', endDate: '2026-03-14', color: '#EC4899', progress: 60 },
+    { id: '3', title: 'Development', startDate: '2026-03-10', endDate: '2026-03-28', color: '#3B82F6', progress: 20 },
+    { id: '4', title: 'QA Testing', startDate: '2026-03-25', endDate: '2026-04-04', color: '#F59E0B', progress: 0 },
+  ];
+</script>
+```
+
+---
+
+## Rich Content
+
+Components for rich text editing, comments, activity feeds, and time tracking.
+
+### Rich Text Editor
+
+`<ca-rich-text-editor>` — WYSIWYG rich text editor with configurable toolbar. Supports formatting, lists, links, mentions, and HTML output.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `value` | `string` | `''` | Current content (HTML string) |
+| `placeholder` | `string` | `'Start typing...'` | Placeholder text |
+| `toolbar` | `string[]` | `['bold','italic','underline','strike','link','ol','ul','mention']` | Toolbar buttons to display |
+| `readonly` | `boolean` | `false` | Disable editing |
+| `min-height` | `string` | `'120px'` | Minimum editor height (CSS value) |
+
+**Events:** `ca-change` — `{ value: string }`, `ca-mention` — `{ query: string }` (triggered when user types `@`)
+
+```html
+<ca-rich-text-editor
+  placeholder="Describe the task..."
+  min-height="200px"
+></ca-rich-text-editor>
+
+<!-- Read-only display -->
+<ca-rich-text-editor id="task-desc" readonly></ca-rich-text-editor>
+<script>
+  document.getElementById('task-desc').value = '<p>This task involves <strong>building</strong> the new dashboard.</p>';
+</script>
+```
+
+---
+
+### Comment Thread
+
+`<ca-comment-thread>` — Threaded comment list with an input area for new comments. Supports editing and deleting existing comments.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `comments` | `Comment[]` | `[]` | Comment data. Each: `{ id, user: { name, src?, color? }, text, timestamp, edited? }` |
+| `current-user` | `CommentUser` | `{}` | Current user info for the input avatar: `{ name, src?, color? }` |
+
+**Events:**
+
+| Event | Detail | Description |
+|-------|--------|-------------|
+| `ca-submit` | `{ text }` | New comment submitted |
+| `ca-edit` | `{ id, text }` | Existing comment edited |
+| `ca-delete` | `{ id }` | Comment deleted |
+
+```html
+<ca-comment-thread id="task-comments"></ca-comment-thread>
+<script>
+  const thread = document.getElementById('task-comments');
+  thread.currentUser = { name: 'Alice Chen', src: 'https://i.pravatar.cc/80?img=1' };
+  thread.comments = [
+    {
+      id: 'c1',
+      user: { name: 'Bob Smith', color: '#3B82F6' },
+      text: 'Can we move this to next sprint?',
+      timestamp: '2026-03-02T10:30:00Z',
+    },
+    {
+      id: 'c2',
+      user: { name: 'Alice Chen', src: 'https://i.pravatar.cc/80?img=1' },
+      text: 'Sure, I will reprioritize.',
+      timestamp: '2026-03-02T11:00:00Z',
+      edited: true,
+    },
+  ];
+  thread.addEventListener('ca-submit', (e) => console.log('New comment:', e.detail.text));
+</script>
+```
+
+---
+
+### Activity Timeline
+
+`<ca-activity-timeline>` — Vertical timeline displaying activity log entries. Supports infinite scroll with a load-more trigger.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `entries` | `ActivityTimelineEntry[]` | `[]` | Activity entries. Each: `{ id, user: { name, src?, color? }, action, timestamp, details? }` |
+| `loading` | `boolean` | `false` | Show loading indicator at the bottom |
+
+**Events:** `ca-load-more` — emitted when scrolled near the bottom (for infinite scroll)
+
+```html
+<ca-activity-timeline id="task-activity"></ca-activity-timeline>
+<script>
+  document.getElementById('task-activity').entries = [
+    { id: 'a1', user: { name: 'Alice Chen' }, action: 'changed status to In Progress', timestamp: '2026-03-02T14:00:00Z' },
+    { id: 'a2', user: { name: 'Bob Smith' }, action: 'added label Bug', timestamp: '2026-03-02T13:30:00Z', details: 'Priority set to High' },
+    { id: 'a3', user: { name: 'Carol Davis' }, action: 'created this task', timestamp: '2026-03-01T09:00:00Z' },
+  ];
+</script>
+```
+
+---
+
+### Time Log
+
+`<ca-time-log>` — Time entry list with optional add-entry support. Displays logged time with user, duration, date, and billable status.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `entries` | `TimeLogEntry[]` | `[]` | Time entries. Each: `{ id, user: { name, src?, color? }, duration, date, description?, billable? }` |
+| `allow-add` | `boolean` | `false` | Show an "Add time" button |
+| `total-logged` | `string` | `''` | Total logged time display string (e.g. "16h 30m") |
+
+**Events:** `ca-add` — add button clicked, `ca-delete` — `{ id }` — entry deleted
+
+```html
+<ca-time-log id="task-time" allow-add total-logged="12h 30m"></ca-time-log>
+<script>
+  document.getElementById('task-time').entries = [
+    { id: 't1', user: { name: 'Alice Chen' }, duration: '4h', date: '2026-03-02', description: 'Frontend implementation', billable: true },
+    { id: 't2', user: { name: 'Bob Smith' }, duration: '2h 30m', date: '2026-03-01', description: 'Code review', billable: true },
+    { id: 't3', user: { name: 'Alice Chen' }, duration: '6h', date: '2026-02-28', description: 'Research & planning', billable: false },
+  ];
+</script>
+```
+
+---
+
+## Navigation & Feedback
+
+Navigation aids, loading states, context menus, and user feedback components.
+
+### Breadcrumb
+
+`<ca-breadcrumb>` — Navigation breadcrumb trail. Displays a hierarchical path with clickable segments for navigation.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `items` | `BreadcrumbItem[]` | `[]` | Breadcrumb items. Each: `{ label, href?, id? }` |
+| `separator` | `string` | `'/'` | Separator character between items |
+
+**Events:** `ca-navigate` — `{ item }` — breadcrumb segment clicked
+
+```html
+<ca-breadcrumb id="nav-crumbs"></ca-breadcrumb>
+<script>
+  document.getElementById('nav-crumbs').items = [
+    { label: 'Projects', id: 'projects' },
+    { label: 'Caylina UI', id: 'caylina' },
+    { label: 'Sprint 4', id: 'sprint-4' },
+    { label: 'CA-203' },
+  ];
+</script>
+```
+
+---
+
+### Empty State
+
+`<ca-empty-state>` — Illustrated empty placeholder displayed when content is absent. Provides a heading, description, and optional call-to-action button.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `heading` | `string` | `''` | Heading text |
+| `description` | `string` | `''` | Descriptive body text |
+| `action-label` | `string` | `''` | Label for the action button (hidden if empty) |
+
+**Events:** `ca-action` — action button clicked
+**Slots:** default — custom illustration or icon
+
+```html
+<ca-empty-state
+  heading="No tasks yet"
+  description="Create your first task to get started with this project."
+  action-label="Create Task"
+>
+  <svg slot="default" width="120" height="120" viewBox="0 0 120 120"><!-- illustration --></svg>
+</ca-empty-state>
+```
+
+---
+
+### Skeleton
+
+`<ca-skeleton>` — Loading placeholder that mimics content shapes during data fetching. Provides visual feedback to indicate content is loading.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `variant` | `'text' \| 'circle' \| 'rect'` | `'text'` | Shape variant |
+| `width` | `string` | `'100%'` | Width (CSS value) |
+| `height` | `string` | `'1em'` | Height (CSS value) |
+| `animation` | `'pulse' \| 'wave'` | `'pulse'` | Animation style |
+
+```html
+<!-- Text skeleton -->
+<ca-skeleton width="80%"></ca-skeleton>
+<ca-skeleton width="60%"></ca-skeleton>
+
+<!-- Circle (avatar placeholder) -->
+<ca-skeleton variant="circle" width="40px" height="40px"></ca-skeleton>
+
+<!-- Rectangle (card placeholder) -->
+<ca-skeleton variant="rect" width="100%" height="200px" animation="wave"></ca-skeleton>
+```
+
+---
+
+### Context Menu
+
+`<ca-context-menu>` — Positioned right-click context menu. Opens at specific coordinates and displays a list of actions with optional icons and danger states.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `items` | `ContextMenuItem[]` | `[]` | Menu items. Each: `{ id, label, icon?, danger?, divider? }` |
+| `open` | `boolean` | `false` | Controls visibility |
+| `x` | `number` | `0` | Horizontal position (px) |
+| `y` | `number` | `0` | Vertical position (px) |
+
+**Events:** `ca-select` — `{ id }` — menu item selected, `ca-close` — menu closed (click outside or ESC)
+
+```html
+<ca-context-menu id="row-menu"></ca-context-menu>
+<script>
+  const menu = document.getElementById('row-menu');
+  menu.items = [
+    { id: 'edit', label: 'Edit' },
+    { id: 'duplicate', label: 'Duplicate' },
+    { id: 'move', label: 'Move to...' },
+    { divider: true },
+    { id: 'delete', label: 'Delete', danger: true },
+  ];
+
+  document.querySelector('table').addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    menu.x = e.clientX;
+    menu.y = e.clientY;
+    menu.open = true;
+  });
+
+  menu.addEventListener('ca-select', (e) => console.log('Action:', e.detail.id));
+  menu.addEventListener('ca-close', () => menu.open = false);
+</script>
+```
+
+---
+
+### Bulk Action Bar
+
+`<ca-bulk-action-bar>` — Floating action bar displayed when multiple items are selected. Provides batch operations with a selection count indicator.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `count` | `number` | `0` | Number of selected items |
+| `open` | `boolean` | `false` | Controls visibility |
+| `actions` | `BulkAction[]` | `[]` | Available actions. Each: `{ id, label, icon? }` |
+
+**Events:** `ca-action` — `{ id }` — action button clicked, `ca-clear` — clear selection button clicked
+
+```html
+<ca-bulk-action-bar id="bulk-bar"></ca-bulk-action-bar>
+<script>
+  const bar = document.getElementById('bulk-bar');
+  bar.actions = [
+    { id: 'assign', label: 'Assign' },
+    { id: 'label', label: 'Add Label' },
+    { id: 'move', label: 'Move' },
+    { id: 'delete', label: 'Delete' },
+  ];
+
+  // Show the bar when table rows are selected
+  document.querySelector('ca-table').addEventListener('ca-select', (e) => {
+    bar.count = e.detail.selectedIds.length;
+    bar.open = bar.count > 0;
+  });
+
+  bar.addEventListener('ca-action', (e) => console.log('Bulk action:', e.detail.id));
+  bar.addEventListener('ca-clear', () => bar.open = false);
+</script>
+```
+
+---
+
+### Command Bar
+
+`<ca-command-bar>` — Command palette (Cmd+K / Ctrl+K) for keyboard-driven navigation and actions. Provides fuzzy search across commands grouped by category.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `open` | `boolean` | `false` | Controls visibility |
+| `commands` | `CommandBarItem[]` | `[]` | Available commands. Each: `{ id, label, icon?, group?, shortcut? }` |
+| `placeholder` | `string` | `'Type a command...'` | Search input placeholder |
+
+**Events:** `ca-select` — `{ id }` — command selected, `ca-search` — `{ query }` — search input changed, `ca-close` — dialog closed
+
+```html
+<ca-command-bar id="cmd-bar"></ca-command-bar>
+<script>
+  const cmdBar = document.getElementById('cmd-bar');
+  cmdBar.commands = [
+    { id: 'new-task', label: 'Create New Task', group: 'Actions', shortcut: 'Ctrl+N' },
+    { id: 'search-tasks', label: 'Search Tasks', group: 'Actions', shortcut: 'Ctrl+F' },
+    { id: 'board', label: 'Go to Board', group: 'Navigation' },
+    { id: 'backlog', label: 'Go to Backlog', group: 'Navigation' },
+    { id: 'settings', label: 'Open Settings', group: 'Navigation', shortcut: 'Ctrl+,' },
+  ];
+
+  // Toggle with keyboard shortcut
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      cmdBar.open = !cmdBar.open;
+    }
+  });
+
+  cmdBar.addEventListener('ca-select', (e) => {
+    console.log('Command:', e.detail.id);
+    cmdBar.open = false;
+  });
+  cmdBar.addEventListener('ca-close', () => cmdBar.open = false);
+</script>
+```
+
+---
+
+### Notification Center
+
+`<ca-notification-center>` — Bell icon button with a dropdown notification list. Displays unread count badge and supports mark-as-read and clear-all actions.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `notifications` | `NotificationItem[]` | `[]` | Notification items. Each: `{ id, title, body?, timestamp, read, type? }` |
+| `unread-count` | `number` | `0` | Badge count on the bell icon |
+| `open` | `boolean` | `false` | Controls dropdown visibility |
+
+**Events:**
+
+| Event | Detail | Description |
+|-------|--------|-------------|
+| `ca-read` | `{ id }` | Notification marked as read |
+| `ca-click` | `{ id }` | Notification clicked |
+| `ca-clear-all` | — | Clear all button clicked |
+
+```html
+<ca-notification-center id="notif-center"></ca-notification-center>
+<script>
+  const center = document.getElementById('notif-center');
+  center.notifications = [
+    { id: 'n1', title: 'Task assigned to you', body: 'Alice assigned CA-203 to you', timestamp: '2026-03-03T09:00:00Z', read: false, type: 'assignment' },
+    { id: 'n2', title: 'Comment on CA-187', body: 'Bob commented: "Looks good!"', timestamp: '2026-03-02T16:30:00Z', read: false, type: 'comment' },
+    { id: 'n3', title: 'Sprint 4 started', timestamp: '2026-03-01T08:00:00Z', read: true, type: 'system' },
+  ];
+  center.unreadCount = 2;
+  center.addEventListener('ca-click', (e) => console.log('Notification clicked:', e.detail.id));
+  center.addEventListener('ca-read', (e) => console.log('Marked read:', e.detail.id));
+  center.addEventListener('ca-clear-all', () => console.log('Cleared all'));
+</script>
+```
+
+---
+
 ## Table Deep Dive
 
 The `<ca-table>` component is the most feature-rich component in the library. This section covers every feature in depth.
@@ -1162,6 +2016,10 @@ The `<ca-table>` component is the most feature-rich component in the library. Th
 | `expandedIds` | `string[]` | `[]` | Currently expanded row IDs |
 | `resizable` | `boolean` | `false` | Enable column resize handles |
 | `columnFilters` | `Record<string, string[]>` | `{}` | Active filter values per column |
+| `groups` | `TableGroup[]` | `[]` | Grouped row sections. Each group: `{ id, label, rows, collapsed? }`. |
+| `inline-add` | `boolean` | `false` | Show an "Add row" button at the bottom of the table (or per group) |
+| `virtual-scroll` | `boolean` | `false` | Enable virtual scrolling for large datasets (renders only visible rows) |
+| `clickable-rows` | `boolean` | `false` | Make entire rows clickable (pointer cursor, hover highlight) |
 
 **Slots:** `header-actions` — buttons in the card header
 
@@ -1181,6 +2039,9 @@ The `<ca-table>` component is the most feature-rich component in the library. Th
 | `ca-expand` | `{ id, expanded, expandedIds }` | Expand/collapse arrow clicked |
 | `ca-column-filter` | `{ key, values }` | Column filter checkbox toggled |
 | `ca-column-resize` | `{ key, width }` | Column resize handle released |
+| `ca-group-toggle` | `{ id, collapsed }` | Group header expand/collapse toggled |
+| `ca-row-click` | `{ row }` | Row clicked (requires `clickable-rows`) |
+| `ca-row-create` | `{ groupId? }` | Inline add row button clicked |
 
 ### Types
 
@@ -1224,6 +2085,13 @@ interface TablePagination {
 interface TableSort {
   key: string;
   direction: 'asc' | 'desc';
+}
+
+interface TableGroup {
+  id: string;
+  label: string;
+  rows: TableRow[];
+  collapsed?: boolean;
 }
 ```
 

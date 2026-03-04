@@ -57,6 +57,20 @@ export class CaBadge extends LitElement {
   @property({ type: String, reflect: true }) size: 'sm' | 'md' = 'md';
   @property({ type: Boolean, reflect: true }) dot = false;
 
+  /** Arbitrary background color (overrides variant). */
+  @property({ type: String }) color = '';
+
+  updated(changedProperties: Map<string, unknown>) {
+    super.updated?.(changedProperties);
+    if (changedProperties.has('color')) {
+      if (this.color) {
+        this.style.backgroundColor = this.color;
+      } else {
+        this.style.removeProperty('background-color');
+      }
+    }
+  }
+
   render() {
     return this.dot ? html`` : html`<slot></slot>`;
   }

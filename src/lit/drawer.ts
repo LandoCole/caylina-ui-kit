@@ -92,6 +92,9 @@ export class CaDrawer extends LitElement {
       overflow-y: auto;
       padding: var(--ca-space-lg);
     }
+    :host([no-padding]) .body {
+      padding: 0;
+    }
 
     .footer {
       border-top: 1px solid var(--ca-border);
@@ -119,6 +122,9 @@ export class CaDrawer extends LitElement {
   @property({ type: String }) size = '40%';
   @property({ type: String }) heading = '';
   @property({ type: Boolean }) backdrop = true;
+
+  /** Remove body padding. */
+  @property({ type: Boolean, reflect: true, attribute: 'no-padding' }) noPadding = false;
 
   @query('.panel') private _panel!: HTMLElement;
 

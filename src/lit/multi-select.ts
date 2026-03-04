@@ -279,6 +279,24 @@ export class CaMultiSelect extends LitElement {
       color: var(--ca-text-muted);
       font-size: var(--ca-font-size-sm);
     }
+    .create-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 10px 12px;
+      background: none;
+      border: none;
+      border-top: 1px solid var(--ca-border);
+      cursor: pointer;
+      font-family: var(--ca-font-family);
+      font-size: var(--ca-font-size-sm);
+      color: var(--ca-color-primary);
+      text-align: left;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+    .create-btn:hover { background-color: var(--ca-surface-hover); }
 
     /* ── Clear all ── */
     .clear-btn {
@@ -340,6 +358,10 @@ export class CaMultiSelect extends LitElement {
 
   @property({ type: Number, attribute: 'max-visible-chips' })
   maxVisibleChips = 3;
+
+  /** Show "Create" option when search has no exact match. */
+  @property({ type: Boolean, attribute: 'allow-create' })
+  allowCreate = false;
 
   /* ── State ── */
 
@@ -567,8 +589,30 @@ export class CaMultiSelect extends LitElement {
                 `;
               })}
         </div>
+        ${this.allowCreate && this._searchQuery && this._filteredOptions.length === 0
+          ? html`
+              <button class="create-btn" @click=${(e: Event) => { e.stopPropagation(); this._handleCreate(); }}>
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                  <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                Create "${this._searchQuery}"
+              </button>
+            `
+          : nothing}
       </div>
     `;
+  }
+
+  private _handleCreate() {
+    const q = this._searchQuery;
+    this._searchQuery = '';
+    this.dispatchEvent(
+      new CustomEvent('ca-create', {
+        detail: { value: q },
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 }
 

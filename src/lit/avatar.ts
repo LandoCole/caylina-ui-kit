@@ -102,6 +102,10 @@ export class CaAvatar extends LitElement {
   @property({ type: String })
   status?: 'online' | 'offline' | 'away';
 
+  /** Dynamic background color (overrides default primary). */
+  @property({ type: String })
+  color = '';
+
   @state()
   _imgError = false;
 
@@ -127,7 +131,8 @@ export class CaAvatar extends LitElement {
     const initials = this._getInitials(this.name);
 
     return html`
-      <div class="avatar" role="img" aria-label=${this.alt || this.name || 'avatar'}>
+      <div class="avatar" role="img" aria-label=${this.alt || this.name || 'avatar'}
+        style=${this.color ? `background-color: ${this.color}` : ''}>
         ${showImage
           ? html`
               <img

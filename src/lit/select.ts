@@ -125,18 +125,60 @@ export class CaSelect extends LitElement {
       transform: rotate(180deg);
     }
     .dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      z-index: 10;
-      margin-top: 4px;
+      position: fixed;
+      z-index: 9999;
       background-color: var(--ca-surface);
       border: 1px solid var(--ca-border-strong);
       border-radius: 8px;
       box-shadow: var(--ca-shadow-menu);
       overflow: hidden;
+      max-height: 280px;
+      display: flex;
+      flex-direction: column;
     }
+    .search-wrapper {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--ca-border);
+      flex-shrink: 0;
+    }
+    .search-input {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: var(--ca-font-family);
+      font-size: var(--ca-font-size-md);
+      color: var(--ca-text-primary);
+      box-sizing: border-box;
+    }
+    .search-input::placeholder { color: var(--ca-text-muted); }
+    .options-list {
+      overflow-y: auto;
+      flex: 1;
+    }
+    .no-results {
+      padding: 12px;
+      text-align: center;
+      color: var(--ca-text-muted);
+      font-size: var(--ca-font-size-sm);
+    }
+    .create-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 10px 12px;
+      background: none;
+      border: none;
+      border-top: 1px solid var(--ca-border);
+      cursor: pointer;
+      font-family: var(--ca-font-family);
+      font-size: var(--ca-font-size-sm);
+      color: var(--ca-color-primary);
+      text-align: left;
+      box-sizing: border-box;
+    }
+    .create-btn:hover { background-color: var(--ca-surface-hover); }
     .option {
       display: flex;
       align-items: center;
@@ -220,8 +262,22 @@ export class CaSelect extends LitElement {
   @property({ type: Boolean, reflect: true })
   borderless = false;
 
+  /** Enable search/filter in dropdown. */
+  @property({ type: Boolean })
+  searchable = false;
+
+  /** Show "Create" option when search has no match. */
+  @property({ type: Boolean, attribute: 'allow-create' })
+  allowCreate = false;
+
   @state()
   _isOpen = false;
+
+  @state()
+  private _searchQuery = '';
+
+  @state()
+  private _dropdownPos: { top: number; left: number; width: number } = { top: 0, left: 0, width: 0 };
 
   @query('.field')
   _fieldEl!: HTMLElement;
@@ -238,6 +294,12 @@ export class CaSelect extends LitElement {
     document.removeEventListener('click', this._boundClickOutside);
   }
 
+  protected updated(changed: Map<string, unknown>) {
+    if (changed.has('_isOpen') && this._isOpen) {
+      this._updateDropdownPos();
+    }
+  }
+
   private _handleClickOutside(e: MouseEvent) {
     if (!this._isOpen) return;
     const path = e.composedPath();
@@ -249,6 +311,21 @@ export class CaSelect extends LitElement {
   private _toggleOpen() {
     if (this.loading) return;
     this._isOpen = !this._isOpen;
+    if (this._isOpen) {
+      this._updateDropdownPos();
+    } else {
+      this._searchQuery = '';
+    }
+  }
+
+  private _updateDropdownPos() {
+    if (!this._fieldEl) return;
+    const rect = this._fieldEl.getBoundingClientRect();
+    this._dropdownPos = {
+      top: rect.bottom + 4,
+      left: rect.left,
+      width: rect.width,
+    };
   }
 
   private _handleKeyDown(e: KeyboardEvent) {
@@ -262,6 +339,7 @@ export class CaSelect extends LitElement {
 
   private _handleSelect(option: SelectOption) {
     this._isOpen = false;
+    this._searchQuery = '';
     this.dispatchEvent(
       new CustomEvent('ca-change', {
         detail: { value: option.value },
@@ -269,6 +347,29 @@ export class CaSelect extends LitElement {
         composed: true,
       })
     );
+  }
+
+  private _handleCreate() {
+    this._isOpen = false;
+    const q = this._searchQuery;
+    this._searchQuery = '';
+    this.dispatchEvent(
+      new CustomEvent('ca-create', {
+        detail: { value: q },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  private _handleSearchInput(e: Event) {
+    this._searchQuery = (e.target as HTMLInputElement).value;
+  }
+
+  private get _filteredOptions(): SelectOption[] {
+    if (!this._searchQuery) return this.options;
+    const q = this._searchQuery.toLowerCase();
+    return this.options.filter((o) => o.label.toLowerCase().includes(q));
   }
 
   private get _selectedLabel(): string | undefined {
@@ -323,40 +424,69 @@ export class CaSelect extends LitElement {
       </div>
       ${this._isOpen
         ? html`
-            <div class="dropdown" role="listbox">
-              ${this.options.map(
-                (option) => html`
-                  <button
-                    class=${classMap({
-                      option: true,
-                      selected: option.value === this.value,
-                    })}
-                    role="option"
-                    aria-selected=${option.value === this.value}
-                    @click=${() => this._handleSelect(option)}
-                  >
-                    <span class="option-text">${option.label}</span>
-                    ${option.value === this.value
-                      ? html`
-                          <svg
-                            class="check-icon"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M5 13L9 17L19 7"
-                              stroke="currentColor"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        `
-                      : null}
-                  </button>
-                `
-              )}
+            <div class="dropdown" role="listbox" style="top:${this._dropdownPos.top}px;left:${this._dropdownPos.left}px;width:${this._dropdownPos.width}px;">
+              ${this.searchable
+                ? html`
+                    <div class="search-wrapper">
+                      <input
+                        class="search-input"
+                        type="text"
+                        placeholder="Search..."
+                        .value=${this._searchQuery}
+                        @input=${this._handleSearchInput}
+                        @click=${(e: Event) => e.stopPropagation()}
+                        @keydown=${(e: KeyboardEvent) => { if (e.key === 'Escape') { this._isOpen = false; this._searchQuery = ''; } }}
+                      />
+                    </div>
+                  `
+                : null}
+              <div class="options-list">
+                ${this._filteredOptions.length === 0
+                  ? html`<div class="no-results">No results</div>`
+                  : this._filteredOptions.map(
+                    (option) => html`
+                      <button
+                        class=${classMap({
+                          option: true,
+                          selected: option.value === this.value,
+                        })}
+                        role="option"
+                        aria-selected=${option.value === this.value}
+                        @click=${() => this._handleSelect(option)}
+                      >
+                        <span class="option-text">${option.label}</span>
+                        ${option.value === this.value
+                          ? html`
+                              <svg
+                                class="check-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M5 13L9 17L19 7"
+                                  stroke="currentColor"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            `
+                          : null}
+                      </button>
+                    `
+                  )}
+              </div>
+              ${this.allowCreate && this._searchQuery && this._filteredOptions.length === 0
+                ? html`
+                    <button class="create-btn" @click=${() => this._handleCreate()}>
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      </svg>
+                      Create "${this._searchQuery}"
+                    </button>
+                  `
+                : null}
             </div>
           `
         : null}

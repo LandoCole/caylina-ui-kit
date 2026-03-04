@@ -67,6 +67,21 @@ export class CaDatepicker extends LitElement {
       pointer-events: none;
     }
 
+    :host([borderless]) .field {
+      border-color: transparent;
+      background-color: transparent;
+    }
+    :host([borderless]) .field:hover:not(.disabled) {
+      border-color: var(--_border);
+    }
+
+    :host([overdue]) .field {
+      color: var(--ca-text-danger);
+    }
+    :host([overdue]) .value-text {
+      color: var(--ca-text-danger);
+    }
+
     /* ── Label ── */
     .label {
       font-weight: var(--ca-font-weight-semibold);
@@ -456,6 +471,14 @@ export class CaDatepicker extends LitElement {
   /** Disabled state. */
   @property({ type: Boolean, reflect: true })
   disabled = false;
+
+  /** Borderless style for inline/table use. */
+  @property({ type: Boolean, reflect: true })
+  borderless = false;
+
+  /** Show overdue visual styling when date is past. */
+  @property({ type: Boolean, reflect: true })
+  overdue = false;
 
   // ── Internal state ─────────────────────────────────────────────────
 

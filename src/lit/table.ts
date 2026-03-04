@@ -7,7 +7,7 @@ import { classMap } from 'lit/directives/class-map.js';
 export interface TableColumn {
   key: string;
   heading: string;
-  type?: 'text' | 'bold-text' | 'badge' | 'toggle' | 'progress' | 'custom';
+  type?: 'text' | 'bold-text' | 'badge' | 'toggle' | 'progress' | 'custom' | 'editable' | 'editable-select';
   width?: string;
   sortable?: boolean;
   /** Enable per-column filter dropdown */
@@ -20,6 +20,10 @@ export interface TableColumn {
   progressSuffix?: string;
   /** Custom render function returning a Lit TemplateResult */
   render?: (value: unknown, row: TableRow) => TemplateResult;
+  /** For editable-select: dropdown options */
+  options?: { value: string; label: string }[];
+  /** For editable: placeholder text when editing */
+  editPlaceholder?: string;
 }
 
 export interface TableColumnFilter {
@@ -53,6 +57,16 @@ export interface TablePagination {
 export interface TableSort {
   key: string;
   direction: 'asc' | 'desc';
+}
+
+export interface TableGroup {
+  id: string;
+  label: string;
+  color?: string;
+  rows: TableRow[];
+  /** Progress segments for group header bar */
+  progress?: { value: number; color: string }[];
+  progressMax?: number;
 }
 
 /* ── Component ── */
@@ -609,6 +623,130 @@ export class CaTable extends LitElement {
       font-size: var(--ca-font-size-sm);
       border-bottom: 1px solid var(--ca-border);
     }
+
+    /* ── Group header ── */
+    .group-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      background-color: var(--ca-surface-active);
+      border-bottom: 1px solid var(--ca-border);
+      cursor: pointer;
+      user-select: none;
+      transition: background-color var(--ca-transition-fast);
+    }
+    .group-header:hover {
+      background-color: var(--ca-surface-hover);
+    }
+    .group-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+      color: var(--ca-text-secondary);
+      transition: transform var(--ca-transition-fast);
+      flex-shrink: 0;
+    }
+    .group-toggle.collapsed {
+      transform: rotate(-90deg);
+    }
+    .group-color-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .group-label {
+      font-weight: var(--ca-font-weight-semibold);
+      font-size: var(--ca-font-size-md);
+      color: var(--ca-text-primary);
+    }
+    .group-count {
+      font-size: var(--ca-font-size-xs);
+      color: var(--ca-text-secondary);
+    }
+    .group-progress {
+      flex: 1;
+      max-width: 200px;
+      margin-left: auto;
+    }
+
+    /* ── Inline add row ── */
+    .add-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border-bottom: 1px solid var(--ca-border);
+    }
+    .add-row-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: var(--ca-font-family);
+      font-size: var(--ca-font-size-sm);
+      color: var(--ca-text-primary);
+    }
+    .add-row-input::placeholder { color: var(--ca-text-muted); }
+    .add-row-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border: 1px dashed var(--ca-border-strong);
+      border-radius: var(--ca-radius-sm);
+      background: none;
+      cursor: pointer;
+      font-family: var(--ca-font-family);
+      font-size: var(--ca-font-size-xs);
+      color: var(--ca-text-muted);
+      transition: color var(--ca-transition-fast), border-color var(--ca-transition-fast);
+    }
+    .add-row-btn:hover {
+      color: var(--ca-text-primary);
+      border-color: var(--ca-text-primary);
+    }
+
+    /* ── Virtual scroll container ── */
+    .virtual-scroll-container {
+      overflow-y: auto;
+      max-height: var(--ca-table-max-height, 600px);
+    }
+
+    /* ── Clickable rows ── */
+    .grid-row.clickable {
+      cursor: pointer;
+    }
+    .grid-row.clickable:hover {
+      background-color: var(--ca-surface-hover);
+    }
+
+    /* ── Editable cells ── */
+    .cell-editable {
+      cursor: pointer;
+      border-radius: var(--ca-radius-sm);
+      padding: 2px 4px;
+      margin: -2px -4px;
+    }
+    .cell-editable:hover {
+      background-color: var(--ca-surface-hover);
+    }
+    .cell-editable-editing {
+      padding: 0;
+      margin: -4px -4px;
+    }
+    .cell-editable-editing ca-input,
+    .cell-editable-editing ca-select {
+      --ca-input-height: 28px;
+      font-size: var(--ca-font-size-sm);
+    }
   `;
 
   /* ── Properties ── */
@@ -632,6 +770,17 @@ export class CaTable extends LitElement {
   @property({ type: Array, attribute: false }) expandedIds: string[] = [];
   @property({ type: Boolean, reflect: true }) resizable = false;
   @property({ type: Object, attribute: false }) columnFilters: Record<string, string[]> = {};
+  /** Make rows clickable, emitting ca-row-click. */
+  @property({ type: Boolean, reflect: true, attribute: 'clickable-rows' }) clickableRows = false;
+
+  /** Grouped mode: array of groups with rows. When set, `rows` is ignored. */
+  @property({ type: Array, attribute: false }) groups: TableGroup[] = [];
+
+  /** Show inline "Add row" input at the bottom of each group (or at the bottom when ungrouped). */
+  @property({ type: Boolean, reflect: true, attribute: 'inline-add' }) inlineAdd = false;
+
+  /** Enable virtual scrolling for large datasets (500+ rows). */
+  @property({ type: Boolean, reflect: true, attribute: 'virtual-scroll' }) virtualScroll = false;
 
   /* ── Internal state ── */
   @state() private _openMenuRowId: string | null = null;
@@ -642,6 +791,12 @@ export class CaTable extends LitElement {
   @state() private _openFilterColKey: string | null = null;
   @state() private _columnWidths: Map<string, number> = new Map();
   @state() private _fullRows: TableRow[] = [];
+  @state() private _collapsedGroupIds: Set<string> = new Set();
+  @state() private _addRowGroupId: string | null = null;
+  @state() private _addRowValue = '';
+  @state() private _virtualScrollTop = 0;
+  @state() private _editingCell: { rowId: string; key: string } | null = null;
+  private _editOriginalValue: unknown = null;
 
   private _searchTimeout: ReturnType<typeof setTimeout> | null = null;
   private _boundCloseMenu = this._closeMenu.bind(this);
@@ -659,6 +814,27 @@ export class CaTable extends LitElement {
       if (!hasActiveFilter || this._fullRows.length === 0) {
         this._fullRows = [...this.rows];
       }
+    }
+  }
+
+  protected updated(changedProps: Map<string, unknown>) {
+    if (changedProps.has('_editingCell') && this._editingCell) {
+      this.updateComplete.then(() => {
+        const input = this.shadowRoot?.querySelector('.cell-editable-editing ca-input') as any;
+        if (input) {
+          input.updateComplete?.then(() => {
+            const inner = input.shadowRoot?.querySelector('input');
+            inner?.focus();
+            inner?.select();
+          });
+        }
+        const select = this.shadowRoot?.querySelector('.cell-editable-editing ca-select') as any;
+        if (select) {
+          select.updateComplete?.then(() => {
+            select._isOpen = true;
+          });
+        }
+      });
     }
   }
 
@@ -847,17 +1023,51 @@ export class CaTable extends LitElement {
       return;
     }
 
-    const fromIndex = this._dragRowIndex;
-    const targetIndex = this.rows.findIndex((r) => r.id === this._dragOverRowId);
-    let toIndex = targetIndex;
-    if (this._dragOverPosition === 'below') toIndex += 1;
-    if (fromIndex < toIndex) toIndex -= 1;
+    // Group-aware drag-and-drop
+    if (this.groups.length > 0) {
+      let fromGroupId = '';
+      let fromIndex = -1;
+      let toGroupId = '';
+      let toIndex = -1;
 
-    if (fromIndex !== toIndex && toIndex >= 0) {
-      const newRows = [...this.rows];
-      const [moved] = newRows.splice(fromIndex, 1);
-      newRows.splice(toIndex, 0, moved);
-      this._emit('ca-reorder', { rowId: this._dragRowId, fromIndex, toIndex, rows: newRows });
+      for (const g of this.groups) {
+        const fi = g.rows.findIndex((r) => r.id === this._dragRowId);
+        if (fi >= 0) { fromGroupId = g.id; fromIndex = fi; }
+        const ti = g.rows.findIndex((r) => r.id === this._dragOverRowId);
+        if (ti >= 0) {
+          toGroupId = g.id;
+          toIndex = ti;
+          if (this._dragOverPosition === 'below') toIndex += 1;
+        }
+      }
+
+      if (fromGroupId && toGroupId && fromIndex >= 0 && toIndex >= 0) {
+        // Adjust index when moving within same group
+        if (fromGroupId === toGroupId && fromIndex < toIndex) toIndex -= 1;
+        if (!(fromGroupId === toGroupId && fromIndex === toIndex)) {
+          this._emit('ca-reorder', {
+            rowId: this._dragRowId,
+            fromGroupId,
+            toGroupId,
+            fromIndex,
+            toIndex,
+          });
+        }
+      }
+    } else {
+      // Flat (ungrouped) drag-and-drop
+      const fromIndex = this._dragRowIndex;
+      const targetIndex = this.rows.findIndex((r) => r.id === this._dragOverRowId);
+      let toIndex = targetIndex;
+      if (this._dragOverPosition === 'below') toIndex += 1;
+      if (fromIndex < toIndex) toIndex -= 1;
+
+      if (fromIndex !== toIndex && toIndex >= 0) {
+        const newRows = [...this.rows];
+        const [moved] = newRows.splice(fromIndex, 1);
+        newRows.splice(toIndex, 0, moved);
+        this._emit('ca-reorder', { rowId: this._dragRowId, fromIndex, toIndex, rows: newRows });
+      }
     }
 
     this._dragRowId = null;
@@ -966,12 +1176,123 @@ export class CaTable extends LitElement {
         return html`<ca-progress-bar value=${Number(value) || 0} max=${max} show-label labelSuffix=${col.progressSuffix || ''}></ca-progress-bar>`;
       }
 
+      case 'editable': {
+        const isEditing = this._editingCell?.rowId === row.id && this._editingCell?.key === col.key;
+        if (isEditing) {
+          return html`
+            <div class="cell-editable-editing" @click=${(e: Event) => e.stopPropagation()}>
+              <ca-input
+                size="sm"
+                borderless
+                .value=${String(value ?? '')}
+                placeholder=${col.editPlaceholder || ''}
+                @keydown=${(e: KeyboardEvent) => this._handleEditKeyDown(e, row.id, col.key)}
+                @blur=${(e: FocusEvent) => this._handleEditBlur(e, row.id, col.key)}
+              ></ca-input>
+            </div>
+          `;
+        }
+        return html`
+          <span class="cell-editable cell-text" @click=${(e: Event) => { e.stopPropagation(); this._startEditing(row.id, col.key, value); }}>
+            ${value ?? ''}
+          </span>
+        `;
+      }
+
+      case 'editable-select': {
+        const isEditing = this._editingCell?.rowId === row.id && this._editingCell?.key === col.key;
+        if (isEditing) {
+          return html`
+            <div class="cell-editable-editing" @click=${(e: Event) => e.stopPropagation()}>
+              <ca-select
+                size="sm"
+                borderless
+                .options=${col.options || []}
+                .value=${String(value ?? '')}
+                @ca-change=${(e: CustomEvent) => this._handleSelectChange(e, row.id, col.key)}
+                @blur=${(e: FocusEvent) => this._handleEditBlur(e, row.id, col.key)}
+              ></ca-select>
+            </div>
+          `;
+        }
+        if (col.badgeMap) {
+          const variant = col.badgeMap[String(value)] || 'default';
+          return html`
+            <span class="cell-editable" @click=${(e: Event) => { e.stopPropagation(); this._startEditing(row.id, col.key, value); }}>
+              <ca-badge variant=${variant} size="sm">${value}</ca-badge>
+            </span>
+          `;
+        }
+        return html`
+          <span class="cell-editable cell-text" @click=${(e: Event) => { e.stopPropagation(); this._startEditing(row.id, col.key, value); }}>
+            ${value ?? ''}
+          </span>
+        `;
+      }
+
       case 'custom':
         return col.render ? col.render(value, row) : html`${value ?? ''}`;
 
       default:
         return html`<span class="cell-text">${value ?? ''}</span>`;
     }
+  }
+
+  /* ── Inline editing handlers ── */
+
+  private _startEditing(rowId: string, key: string, currentValue: unknown) {
+    this._editOriginalValue = currentValue;
+    this._editingCell = { rowId, key };
+  }
+
+  private _commitEdit(rowId: string, key: string, newValue: unknown) {
+    const oldValue = this._editOriginalValue;
+    this._editingCell = null;
+    this._editOriginalValue = null;
+    if (newValue !== oldValue) {
+      this.dispatchEvent(
+        new CustomEvent('ca-cell-edit', {
+          detail: { rowId, key, value: newValue, oldValue },
+          bubbles: true,
+          composed: true,
+        })
+      );
+    }
+  }
+
+  private _cancelEdit() {
+    this._editingCell = null;
+    this._editOriginalValue = null;
+  }
+
+  private _handleEditKeyDown(e: KeyboardEvent, rowId: string, key: string) {
+    if (e.key === 'Enter' || e.key === 'Tab') {
+      e.preventDefault();
+      const input = e.target as HTMLElement;
+      const caInput = input.closest('ca-input') as any;
+      const val = caInput?.value ?? (input as HTMLInputElement).value;
+      this._commitEdit(rowId, key, val);
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      this._cancelEdit();
+    }
+  }
+
+  private _handleEditBlur(e: FocusEvent, rowId: string, key: string) {
+    // Don't commit if focus is moving to another element within the same cell (e.g. select dropdown)
+    const related = e.relatedTarget as HTMLElement | null;
+    if (related && (e.target as HTMLElement)?.closest('.cell-editable-editing')?.contains(related)) {
+      return;
+    }
+    const target = e.target as any;
+    const caInput = target.closest?.('ca-input') as any;
+    if (caInput) {
+      this._commitEdit(rowId, key, caInput.value);
+    }
+  }
+
+  private _handleSelectChange(e: CustomEvent, rowId: string, key: string) {
+    this._commitEdit(rowId, key, e.detail.value);
   }
 
   /* ── Sort icon ── */
@@ -1060,17 +1381,170 @@ export class CaTable extends LitElement {
     `;
   }
 
+  /* ── Group methods ── */
+
+  private _handleGroupToggle(group: TableGroup) {
+    const newSet = new Set(this._collapsedGroupIds);
+    if (newSet.has(group.id)) {
+      newSet.delete(group.id);
+    } else {
+      newSet.add(group.id);
+    }
+    this._collapsedGroupIds = newSet;
+    this.dispatchEvent(
+      new CustomEvent('ca-group-toggle', {
+        detail: { groupId: group.id, collapsed: newSet.has(group.id) },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  private _handleRowClick(row: TableRow) {
+    this.dispatchEvent(
+      new CustomEvent('ca-row-click', {
+        detail: { row },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  private _handleInlineAddKeyDown(e: KeyboardEvent, groupId?: string) {
+    if (e.key === 'Enter' && this._addRowValue.trim()) {
+      this.dispatchEvent(
+        new CustomEvent('ca-row-create', {
+          detail: { value: this._addRowValue.trim(), groupId },
+          bubbles: true,
+          composed: true,
+        })
+      );
+      this._addRowValue = '';
+    } else if (e.key === 'Escape') {
+      this._addRowValue = '';
+      this._addRowGroupId = null;
+    }
+  }
+
+  private _renderGroupHeader(group: TableGroup) {
+    const isCollapsed = this._collapsedGroupIds.has(group.id);
+    return html`
+      <div class="group-header" @click=${() => this._handleGroupToggle(group)}>
+        <span class=${classMap({ 'group-toggle': true, collapsed: isCollapsed })}>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        ${group.color ? html`<span class="group-color-dot" style="background-color: ${group.color}"></span>` : nothing}
+        <span class="group-label">${group.label}</span>
+        <span class="group-count">${group.rows.length}</span>
+        ${Array.isArray(group.progress) && group.progressMax
+          ? html`<ca-progress-bar class="group-progress" .segments=${group.progress} .max=${group.progressMax} .value=${group.progress.reduce((a: number, s: {value: number}) => a + s.value, 0)} size="sm"></ca-progress-bar>`
+          : nothing}
+      </div>
+    `;
+  }
+
+  private _renderInlineAdd(groupId?: string) {
+    if (!this.inlineAdd) return nothing;
+    return html`
+      <div class="add-row">
+        <button class="add-row-btn" @click=${() => {
+          this._addRowGroupId = groupId ?? '__ungrouped__';
+          this.updateComplete.then(() => {
+            this.shadowRoot?.querySelector<HTMLInputElement>('.add-row-input')?.focus();
+          });
+        }}>
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+            <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Add task
+        </button>
+        ${this._addRowGroupId === (groupId ?? '__ungrouped__')
+          ? html`
+              <input
+                class="add-row-input"
+                type="text"
+                placeholder="Task name..."
+                .value=${this._addRowValue}
+                @input=${(e: Event) => { this._addRowValue = (e.target as HTMLInputElement).value; }}
+                @keydown=${(e: KeyboardEvent) => this._handleInlineAddKeyDown(e, groupId)}
+                @blur=${() => { this._addRowGroupId = null; }}
+              />
+            `
+          : nothing}
+      </div>
+    `;
+  }
+
+  private _renderGroupedGrid(hasActions: boolean) {
+    return html`
+      ${this.groups.map((group) => {
+        const isCollapsed = this._collapsedGroupIds.has(group.id);
+        return html`
+          ${this._renderGroupHeader(group)}
+          ${!isCollapsed
+            ? html`
+                <div class="grid" style="grid-template-columns:${this._gridTemplateCols}"
+                  @pointermove=${this._handleDragMove}
+                  @pointerup=${this._handleDragEnd}
+                >
+                  <!-- Header row -->
+                  <div class="grid-header">
+                    ${this.expandable ? html`<div class="cell"></div>` : nothing}
+                    ${this.draggable ? html`<div class="cell"></div>` : nothing}
+                    ${this.selectable
+                      ? html`<div class="cell cell-checkbox">
+                          <ca-checkbox size="xs" @ca-change=${this._handleSelectAll}></ca-checkbox>
+                        </div>`
+                      : nothing}
+                    ${this.columns.map(
+                      (col) => html`
+                        <div class=${classMap({ cell: true, sortable: !!col.sortable })} data-col=${col.key} @click=${() => this._handleSort(col)}>
+                          ${this._renderFilterIcon(col)}
+                          <span class="header-text">${col.heading}</span>
+                          ${this._renderSortIcon(col)}
+                          ${this._renderFilterDropdown(col)}
+                        </div>
+                      `
+                    )}
+                    ${hasActions ? html`<div class="cell"></div>` : nothing}
+                  </div>
+                  <!-- Rows -->
+                  ${group.rows.length === 0
+                    ? html`<div class="empty" style="grid-column:1/-1">No tasks in this group</div>`
+                    : group.rows.map((row, i) => html`
+                        ${this._renderRow(row, i, hasActions)}
+                        ${this.expandable && (row.children?.length ?? 0) > 0 && this.expandedIds.includes(row.id)
+                          ? row.children!.map((child, ci) => this._renderChildRow(child, ci, hasActions))
+                          : nothing}
+                      `)}
+                </div>
+                ${this._renderInlineAdd(group.id)}
+              `
+            : nothing}
+        `;
+      })}
+    `;
+  }
+
   /* ── Main render ── */
   render() {
     const hasHeader = this.heading || this.supportingText;
     const hasToolbar = this.filterTabs.length > 0 || this.showSearch || this.showFilters;
     const hasActions = this.rowActions.length > 0;
+    const isGrouped = this.groups.length > 0;
 
     return html`
       <div class="wrapper">
         ${hasHeader ? this._renderHeader() : nothing}
         ${hasToolbar ? this._renderToolbar() : nothing}
-        ${this._renderGrid(hasActions)}
+        ${isGrouped
+          ? this._renderGroupedGrid(hasActions)
+          : html`
+              ${this._renderGrid(hasActions)}
+              ${this.inlineAdd ? this._renderInlineAdd() : nothing}
+            `}
         ${this.pagination ? this._renderPagination() : nothing}
       </div>
     `;
@@ -1209,8 +1683,10 @@ export class CaTable extends LitElement {
           dragging: isDragging,
           'drag-over-above': isDragOverAbove,
           'drag-over-below': isDragOverBelow,
+          clickable: !this.selectable && !this.draggable,
         })}
         data-row-id=${row.id}
+        @click=${() => this._handleRowClick(row)}
       >
         ${this.expandable
           ? html`
