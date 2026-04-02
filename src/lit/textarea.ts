@@ -12,10 +12,12 @@ export class CaTextarea extends LitElement {
       font-family: var(--ca-font-family);
     }
     .label {
-      font-size: var(--ca-font-size-sm);
-      font-weight: var(--ca-font-weight-semibold);
-      color: var(--ca-text-primary);
+      font-family: var(--ca-font-family);
+      font-weight: 400;
+      font-size: 12px;
+      color: var(--ca-text-muted);
       line-height: 1;
+      padding: 10px 12px 0 12px;
     }
     .field {
       border: 1px solid var(--ca-border-input);
@@ -83,6 +85,7 @@ export class CaTextarea extends LitElement {
       font-size: var(--ca-font-size-xs);
     }
     :host([size='xs']) .field { border-radius: 6px; }
+    :host([size='xs']) .label { font-size: 9px; padding: 6px 8px 0 8px; }
 
     /* Size: sm */
     :host([size='sm']) textarea {
@@ -90,6 +93,7 @@ export class CaTextarea extends LitElement {
       font-size: var(--ca-font-size-xs);
     }
     :host([size='sm']) .field { border-radius: 6px; }
+    :host([size='sm']) .label { font-size: 10px; padding: 8px 10px 0 10px; }
 
     /* Size: lg */
     :host([size='lg']) textarea {
@@ -97,6 +101,7 @@ export class CaTextarea extends LitElement {
       font-size: var(--ca-font-size-lg);
     }
     :host([size='lg']) .field { border-radius: 10px; }
+    :host([size='lg']) .label { font-size: 13px; padding: 14px 14px 0 14px; }
 
     /* Size: xl */
     :host([size='xl']) textarea {
@@ -104,6 +109,12 @@ export class CaTextarea extends LitElement {
       font-size: 20px;
     }
     :host([size='xl']) .field { border-radius: 12px; }
+    :host([size='xl']) .label { font-size: 14px; padding: 18px 16px 0 16px; }
+
+    /* Reduce textarea top padding when label is present */
+    .has-label textarea {
+      padding-top: 4px;
+    }
   `;
 
   @property({ type: String, reflect: true })
@@ -173,8 +184,8 @@ export class CaTextarea extends LitElement {
     const isOver = this.maxlength !== undefined && this._charCount > this.maxlength;
 
     return html`
-      ${this.label ? html`<label class="label">${this.label}</label>` : null}
-      <div class=${classMap({ field: true, disabled: this.disabled })}>
+      <div class=${classMap({ field: true, disabled: this.disabled, 'has-label': !!this.label })}>
+        ${this.label ? html`<label class="label">${this.label}</label>` : null}
         <textarea
           .value=${this.value}
           rows=${this.rows}

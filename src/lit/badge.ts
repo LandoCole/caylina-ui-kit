@@ -14,8 +14,9 @@ export class CaBadge extends LitElement {
       line-height: 1;
       white-space: nowrap;
       box-sizing: border-box;
-      color: var(--ca-color-white);
-      background-color: var(--ca-color-secondary);
+      color: var(--ca-color-secondary);
+      background-color: color-mix(in srgb, var(--ca-color-secondary) 15%, transparent);
+      border: 1px solid color-mix(in srgb, var(--ca-color-secondary) 40%, transparent);
     }
 
     /* Sizes */
@@ -23,18 +24,19 @@ export class CaBadge extends LitElement {
       font-size: var(--ca-font-size-xs);
       min-width: 18px;
       height: 18px;
-      padding: 2px 6px;
+      padding: 2px 10px;
     }
     :host, :host([size='md']) {
       font-size: var(--ca-font-size-sm);
       min-width: 22px;
       height: 22px;
-      padding: 2px 8px;
+      padding: 2px 12px;
     }
 
     /* Dot mode */
     :host([dot]) {
       padding: 0;
+      border: none;
     }
     :host([dot][size='sm']) {
       width: 8px;
@@ -48,9 +50,21 @@ export class CaBadge extends LitElement {
     }
 
     /* Variants */
-    :host([variant='success']) { background-color: var(--ca-color-success); }
-    :host([variant='warning']) { background-color: var(--ca-color-warning); }
-    :host([variant='danger']) { background-color: var(--ca-color-danger); }
+    :host([variant='success']) {
+      color: var(--ca-color-success);
+      background-color: color-mix(in srgb, var(--ca-color-success) 15%, transparent);
+      border-color: color-mix(in srgb, var(--ca-color-success) 40%, transparent);
+    }
+    :host([variant='warning']) {
+      color: var(--ca-color-warning);
+      background-color: color-mix(in srgb, var(--ca-color-warning) 15%, transparent);
+      border-color: color-mix(in srgb, var(--ca-color-warning) 40%, transparent);
+    }
+    :host([variant='danger']) {
+      color: var(--ca-color-danger);
+      background-color: color-mix(in srgb, var(--ca-color-danger) 15%, transparent);
+      border-color: color-mix(in srgb, var(--ca-color-danger) 40%, transparent);
+    }
   `;
 
   @property({ type: String, reflect: true }) variant: 'default' | 'success' | 'warning' | 'danger' = 'default';
@@ -64,9 +78,13 @@ export class CaBadge extends LitElement {
     super.updated?.(changedProperties);
     if (changedProperties.has('color')) {
       if (this.color) {
-        this.style.backgroundColor = this.color;
+        this.style.color = this.color;
+        this.style.backgroundColor = `color-mix(in srgb, ${this.color} 15%, transparent)`;
+        this.style.borderColor = `color-mix(in srgb, ${this.color} 40%, transparent)`;
       } else {
+        this.style.removeProperty('color');
         this.style.removeProperty('background-color');
+        this.style.removeProperty('border-color');
       }
     }
   }

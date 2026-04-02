@@ -12,10 +12,18 @@ export class CaInput extends LitElement {
       gap: 6px;
       font-family: var(--ca-font-family);
     }
+    .text-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
     .label {
-      font-size: var(--ca-font-size-sm);
-      font-weight: var(--ca-font-weight-semibold);
-      color: var(--ca-text-primary);
+      font-family: var(--ca-font-family);
+      font-weight: 400;
+      font-size: 12px;
+      color: var(--ca-text-muted);
       line-height: 1;
     }
     .field {
@@ -104,18 +112,21 @@ export class CaInput extends LitElement {
       border-radius: 6px;
       gap: 6px;
     }
+    :host([size='xs']) .label { font-size: 9px; }
     /* Size: sm */
     :host([size='sm']) .field {
       padding: 8px 10px;
       font-size: var(--ca-font-size-xs);
       border-radius: 6px;
     }
+    :host([size='sm']) .label { font-size: 10px; }
     /* Size: lg */
     :host([size='lg']) .field {
       padding: 14px 14px;
       font-size: var(--ca-font-size-lg);
       border-radius: 10px;
     }
+    :host([size='lg']) .label { font-size: 13px; }
     /* Size: xl */
     :host([size='xl']) .field {
       padding: 18px 16px;
@@ -123,6 +134,7 @@ export class CaInput extends LitElement {
       border-radius: 12px;
       gap: 10px;
     }
+    :host([size='xl']) .label { font-size: 14px; }
 
     /* Disabled */
     :host([disabled]) {
@@ -168,19 +180,21 @@ export class CaInput extends LitElement {
   render() {
     const hasError = !!this.error;
     return html`
-      ${this.label ? html`<label class="label">${this.label}</label>` : nothing}
       <div class=${classMap({ field: true, 'has-error': hasError })}>
         <span class="icon"><slot name="icon"></slot></span>
-        <input
-          class="native"
-          type=${this.type}
-          .value=${this.value}
-          placeholder=${ifDefined(this.placeholder || undefined)}
-          ?disabled=${this.disabled}
-          aria-invalid=${ifDefined(hasError ? 'true' : undefined)}
-          @input=${this._handleInput}
-          @change=${this._handleChange}
-        />
+        <div class="text-area">
+          ${this.label ? html`<label class="label">${this.label}</label>` : nothing}
+          <input
+            class="native"
+            type=${this.type}
+            .value=${this.value}
+            placeholder=${ifDefined(this.placeholder || undefined)}
+            ?disabled=${this.disabled}
+            aria-invalid=${ifDefined(hasError ? 'true' : undefined)}
+            @input=${this._handleInput}
+            @change=${this._handleChange}
+          />
+        </div>
         ${this.loading
           ? html`<span class="loader"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>`
           : html`<span class="icon-after"><slot name="icon-after"></slot></span>`}

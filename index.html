@@ -1136,6 +1136,14 @@
     <ca-time-log id="time-log-1" allow-add style="max-width: 480px;"></ca-time-log>
   </div>
 
+  <!-- ─── ETA Range ─── -->
+  <h2>ETA Range</h2>
+  <div class="col">
+    <ca-card style="max-width: 560px;">
+      <ca-eta-range id="eta-range-1" heading="ETA Ranges" frequency="quarterly"></ca-eta-range>
+    </ca-card>
+  </div>
+
   <!-- ─── Command Bar ─── -->
   <h2>Command Bar</h2>
   <div class="col">
@@ -1147,6 +1155,128 @@
   <h2>Notification Center</h2>
   <div class="col">
     <ca-notification-center id="notif-center-1" unread-count="3" style="max-width: 400px;"></ca-notification-center>
+  </div>
+
+  <!-- ─── Process Card ─── -->
+  <h2>Process Card</h2>
+  <div class="col" style="max-width: 700px;">
+    <!-- Pending -->
+    <ca-process-card
+      id="pc-pending"
+      heading="Q4 Financial Report.pdf"
+      status="pending"
+    >
+      <svg slot="icon" width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <div style="color: var(--ca-text-muted); font-size: 13px;">No data yet — waiting to begin processing.</div>
+    </ca-process-card>
+
+    <!-- Processing: Step 1 -->
+    <ca-process-card
+      id="pc-upload"
+      heading="Subscription Agreement.pdf"
+      status="processing"
+      current-step="upload"
+    >
+      <svg slot="icon" width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ca-color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <div style="color: var(--ca-text-muted); font-size: 13px;">Upload in progress...</div>
+    </ca-process-card>
+
+    <!-- Processing: Step 3 -->
+    <ca-process-card
+      id="pc-metadata"
+      heading="JPM Offering Memo Doc.pdf"
+      status="processing"
+      current-step="extract-metadata"
+    >
+      <svg slot="icon" width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ca-color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <div>
+        <div style="font-size: 12px; font-weight: 590; color: var(--ca-text-secondary); margin-bottom: 10px;">Document Metadata</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div>
+            <label style="font-size: 10px; color: var(--ca-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Document Title</label>
+            <ca-input size="sm" value="JPM Offering Memorandum"></ca-input>
+          </div>
+          <div>
+            <label style="font-size: 10px; color: var(--ca-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Document Type</label>
+            <ca-input size="sm" value="PPM"></ca-input>
+          </div>
+          <div>
+            <label style="font-size: 10px; color: var(--ca-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Data Date</label>
+            <ca-input size="sm" placeholder="Extracting..." disabled></ca-input>
+          </div>
+          <div>
+            <label style="font-size: 10px; color: var(--ca-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Overall Entity</label>
+            <ca-input size="sm" placeholder="Extracting..." disabled></ca-input>
+          </div>
+        </div>
+      </div>
+    </ca-process-card>
+
+    <!-- Complete -->
+    <ca-process-card
+      id="pc-complete"
+      heading="JPM Offering Memo Doc.pdf"
+      status="complete"
+      subheading="Complete — review metadata"
+    >
+      <svg slot="icon" width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ca-color-success)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <ca-button slot="actions" variant="secondary" size="xs">Replace</ca-button>
+      <div>
+        <div style="font-size: 12px; font-weight: 590; color: var(--ca-text-secondary); margin-bottom: 10px;">Document Metadata</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px;">
+          <div>
+            <label style="font-size: 10px; color: var(--ca-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Document Title</label>
+            <ca-input size="sm" value="JPM Offering Memorandum"></ca-input>
+          </div>
+          <div>
+            <label style="font-size: 10px; color: var(--ca-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Document Type</label>
+            <ca-input size="sm" value="PPM"></ca-input>
+          </div>
+          <div>
+            <label style="font-size: 10px; color: var(--ca-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Data Date</label>
+            <ca-input size="sm" value="2026-03-15"></ca-input>
+          </div>
+          <div>
+            <label style="font-size: 10px; color: var(--ca-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Overall Entity</label>
+            <ca-input size="sm" value="J.P. Morgan U.S. Credit Fund IV"></ca-input>
+          </div>
+        </div>
+        <div style="font-size: 12px; font-weight: 590; color: var(--ca-text-secondary); margin-bottom: 8px;">Extracted Entities <span style="font-weight: 400; color: var(--ca-text-muted);">— 4 found</span></div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="display: flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid var(--ca-color-success); border-radius: var(--ca-radius-md); background: color-mix(in srgb, var(--ca-color-success) 5%, var(--ca-surface));">
+            <span style="font-size: 12px; color: var(--ca-text-primary); flex: 1;">J.P. Morgan Chase & Co.</span>
+            <ca-badge variant="success" size="sm">Linked</ca-badge>
+            <ca-button variant="tertiary" size="xs">Change</ca-button>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid var(--ca-border); border-radius: var(--ca-radius-md);">
+            <span style="font-size: 12px; color: var(--ca-text-primary); flex: 1;">Morgan Stanley Advisors</span>
+            <ca-input size="sm" placeholder="Search by ID or name..." style="width: 160px;"></ca-input>
+            <ca-button variant="danger" size="xs">Drop</ca-button>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid var(--ca-border); border-radius: var(--ca-radius-md); opacity: 0.5;">
+            <span style="font-size: 12px; color: var(--ca-text-muted); flex: 1; text-decoration: line-through;">SEC Filing Reference</span>
+            <span style="font-size: 10px; color: var(--ca-text-muted);">Dropped</span>
+            <ca-button variant="tertiary" size="xs">Restore</ca-button>
+          </div>
+        </div>
+      </div>
+    </ca-process-card>
+
+    <!-- Error -->
+    <ca-process-card
+      id="pc-error"
+      heading="corrupted_file.pdf"
+      status="error"
+      subheading="Failed — could not extract text"
+      current-step="extract-text"
+    >
+      <svg slot="icon" width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ca-color-danger)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <div>
+        <p style="font-size: 13px; color: var(--ca-color-danger); margin: 0 0 8px;">The document could not be processed. The file may be corrupted or in an unsupported format.</p>
+        <ca-button variant="secondary" size="sm">Retry</ca-button>
+        <ca-button variant="secondary" size="sm">Replace Document</ca-button>
+      </div>
+    </ca-process-card>
   </div>
 
   <!-- ─── Kanban Board ─── -->
@@ -1281,6 +1411,13 @@
       { id: 't3', user: 'Alice Martin', duration: 90, description: 'Wrote fix and tests', date: '2026-03-02' },
     ];
 
+    const etaPeriods = [
+      { label: "Q1 '26", periodStart: '2026-01-01', periodEnd: '2026-03-31', earliestDate: '2026-01-15', latestDate: '2026-02-20' },
+      { label: "Q2 '26", periodStart: '2026-04-01', periodEnd: '2026-06-30', earliestDate: '2026-04-03', latestDate: '2026-05-25' },
+      { label: "Q3 '26", periodStart: '2026-07-01', periodEnd: '2026-09-30', earliestDate: '2026-07-10', latestDate: '2026-08-28' },
+      { label: "Q4 '26", periodStart: '2026-10-01', periodEnd: '2026-12-31', earliestDate: '2026-10-05', latestDate: '2026-11-15' },
+    ];
+
     const commands = [
       { id: 'create-task', label: 'Create Task', icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>', section: 'Actions' },
       { id: 'search-tasks', label: 'Search Tasks', icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>', section: 'Actions' },
@@ -1349,6 +1486,7 @@
       whenReady('activity-tl-1'),
       whenReady('comment-thread-1'),
       whenReady('time-log-1'),
+      whenReady('eta-range-1'),
       whenReady('cmd-bar-1'),
       whenReady('notif-center-1'),
       whenReady('kanban-1'),
@@ -1367,6 +1505,7 @@
       actTl,
       commentThread,
       timeLog,
+      etaRange,
       cmdBar,
       notifCenter,
       kanban,
@@ -1437,6 +1576,9 @@
       // Time Log
       if (timeLog) timeLog.entries = timeLogEntries;
 
+      // ETA Range
+      if (etaRange) etaRange.periods = etaPeriods;
+
       // Command Bar
       if (cmdBar) {
         cmdBar.commands = commands;
@@ -1450,6 +1592,104 @@
 
       // Kanban Board
       if (kanban) kanban.columns = kanbanColumns;
+    });
+  </script>
+
+  <!-- ─── Side Nav ─── -->
+  <h2>Side Nav</h2>
+  <div style="display:flex;height:500px;border:1px solid var(--ca-border);border-radius:var(--ca-radius-lg);overflow:hidden;">
+    <ca-sidenav id="demo-nav" active-id="dashboard">
+      <div slot="logo" style="display:flex;align-items:center;gap:10px;">
+        <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;">C</div>
+        <span style="font-size:15px;font-weight:600;letter-spacing:-0.3px;">Caylina</span>
+      </div>
+
+      <div slot="profile" style="display:flex;align-items:center;gap:10px;">
+        <img src="https://i.pravatar.cc/36?u=jane" alt="Jane" style="width:36px;height:36px;border-radius:50%;" />
+        <div>
+          <div style="font-size:13px;font-weight:500;">Jane Doe</div>
+          <div style="font-size:11px;color:var(--ca-text-secondary);">Admin</div>
+        </div>
+      </div>
+    </ca-sidenav>
+    <div style="flex:1;padding:24px;display:flex;align-items:center;justify-content:center;color:var(--ca-text-secondary);">
+      Main content area
+    </div>
+  </div>
+  <script type="module">
+    (() => {
+      const nav = document.getElementById('demo-nav');
+
+      const iconDashboard = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>';
+      const iconProjects = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>';
+      const iconSettings = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>';
+      const iconAccount = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+      const iconLogout = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>';
+
+      nav.sections = [
+        {
+          items: [
+            { id: 'dashboard', label: 'Dashboard', icon: iconDashboard },
+            { id: 'projects', label: 'Projects', icon: iconProjects },
+            {
+              id: 'settings', label: 'Settings', icon: iconSettings,
+              children: [
+                { id: 'general', label: 'General' },
+                { id: 'security', label: 'Security' },
+              ],
+            },
+          ],
+        },
+      ];
+
+      nav.profileActions = [
+        { id: 'account', label: 'Account Settings', icon: iconAccount },
+        { id: 'logout', label: 'Log Out', icon: iconLogout, danger: true },
+      ];
+
+      nav.addEventListener('ca-navigate', (e) => {
+        nav.activeId = e.detail.id;
+      });
+
+      nav.addEventListener('ca-toggle', () => {
+        nav.collapsed = !nav.collapsed;
+      });
+
+      nav.addEventListener('ca-profile-action', (e) => {
+        console.log('Profile action:', e.detail.id);
+      });
+    })();
+  </script>
+
+  <!-- ─── Process Card Setup ─── -->
+  <script type="module">
+    const processSteps = [
+      { key: 'upload', label: 'Uploading' },
+      { key: 'extract-text', label: 'Extracting text' },
+      { key: 'extract-metadata', label: 'Extracting metadata' },
+    ];
+
+    // Set steps on all process cards
+    ['pc-pending', 'pc-upload', 'pc-metadata', 'pc-complete', 'pc-error'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        customElements.whenDefined('ca-process-card').then(() => {
+          el.steps = processSteps;
+        });
+      }
+    });
+
+    // Accordion behavior: only one expanded at a time
+    const cards = document.querySelectorAll('ca-process-card');
+    cards.forEach(card => {
+      card.addEventListener('ca-toggle', (e) => {
+        if (e.detail.expanded) {
+          cards.forEach(c => { if (c !== card) c.expanded = false; });
+          card.expanded = true;
+        } else {
+          card.expanded = false;
+        }
+      });
     });
   </script>
 

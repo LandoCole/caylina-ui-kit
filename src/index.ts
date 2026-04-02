@@ -68,6 +68,10 @@ import './lit/rich-text-editor.js';
 import './lit/comment-thread.js';
 import './lit/activity-timeline.js';
 import './lit/time-log.js';
+import './lit/eta-range.js';
+
+// Process / Workflow
+import './lit/process-card.js';
 
 // Navigation & Feedback
 import './lit/breadcrumb.js';
@@ -128,6 +132,7 @@ export type { AvatarGroupMember } from './lit/avatar-group.js';
 export type { ActivityTimelineEntry } from './lit/activity-timeline.js';
 export type { Comment, CommentUser } from './lit/comment-thread.js';
 export type { TimeLogEntry } from './lit/time-log.js';
+export type { EtaPeriod, EtaFrequency } from './lit/eta-range.js';
 
 // Re-export command/notification types
 export type { CommandBarItem } from './lit/command-bar.js';
@@ -139,8 +144,19 @@ export type { ContextMenuItem } from './lit/context-menu.js';
 // Re-export bulk action types
 export type { BulkAction } from './lit/bulk-action-bar.js';
 
+// Re-export process card types
+export type { ProcessStep } from './lit/process-card.js';
+
 // Re-export breadcrumb types
 export type { BreadcrumbItem } from './lit/breadcrumb.js';
 
 // Re-export progress bar types
 export type { ProgressSegment } from './lit/progress-bar.js';
+
+// Re-export sidenav types
+export type {
+  SideNavProfileAction,
+  SideNavChild,
+  SideNavItem,
+  SideNavSection,
+} from './lit/sidenav.js';

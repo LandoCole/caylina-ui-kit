@@ -15,20 +15,22 @@ export interface SideNavSection {
     items: SideNavItem[];
     grow?: boolean;
 }
-export interface SideNavProfile {
-    name: string;
-    role?: string;
-    avatar?: string;
+export interface SideNavProfileAction {
+    id: string;
+    label: string;
+    icon?: string;
+    danger?: boolean;
 }
 export declare class CaSidenav extends LitElement {
     static styles: import("lit").CSSResult;
     collapsed: boolean;
     activeId: string;
-    profile: SideNavProfile | null;
     sections: SideNavSection[];
+    profileActions: SideNavProfileAction[];
     private _openDropdowns;
     private _tooltip;
     private _popover;
+    private _profilePopover;
     private _boundClickOutside;
     connectedCallback(): void;
     disconnectedCallback(): void;
@@ -40,12 +42,14 @@ export declare class CaSidenav extends LitElement {
     private _handleMouseEnter;
     private _handleMouseLeave;
     private _handleItemClick;
-    private _renderProfile;
+    private _toggleProfilePopover;
+    private _handleProfileAction;
     private _renderSubItems;
     private _renderItem;
     private _renderSection;
     private _renderTooltip;
     private _renderPopover;
+    private _renderProfilePopover;
     private _getItemLabel;
     render(): import("lit-html").TemplateResult<1>;
 }

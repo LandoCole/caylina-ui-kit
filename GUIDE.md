@@ -1099,25 +1099,42 @@ Custom sizes:
 
 ### Side Nav
 
-`<ca-sidenav>` — Sidebar navigation with collapsible sections and user profile.
+`<ca-sidenav>` — Sidebar navigation with logo area, collapsible sections, and user profile.
 
 | Property | Type | Default |
 |----------|------|---------|
 | `collapsed` | `boolean` | `false` |
 | `active-id` | `string` | `''` |
-| `profile` | `{ name, role?, avatar? } \| null` | `null` |
 | `sections` | `SideNavSection[]` | `[]` |
+| `profileActions` | `SideNavProfileAction[]` | `[]` |
+
+**Slots:**
+- `logo` — Logo/brand content at the top
+- `profile` — User profile content at the bottom
 
 `SideNavSection`: `{ title?, items: SideNavItem[], grow? }`
 `SideNavItem`: `{ id, label, icon?, children?: SideNavChild[], danger? }`
+`SideNavProfileAction`: `{ id, label, icon?, danger? }`
 
-**Events:** `ca-navigate` — `{ id }`, `ca-toggle` (collapse toggled)
+**Events:** `ca-navigate` — `{ id }`, `ca-toggle` (collapse toggled), `ca-profile-action` — `{ id }` (profile menu item clicked)
 
 ```html
-<ca-sidenav id="nav" active-id="dashboard" style="height:100vh;"></ca-sidenav>
+<ca-sidenav id="nav" active-id="dashboard" style="height:100vh;">
+  <div slot="logo" style="display:flex;align-items:center;gap:10px;">
+    <img src="/logo.svg" alt="Acme" width="32" height="32" />
+    <span>Acme App</span>
+  </div>
+
+  <div slot="profile" style="display:flex;align-items:center;gap:10px;">
+    <img src="https://i.pravatar.cc/36" alt="Jane" style="width:36px;height:36px;border-radius:50%;" />
+    <div>
+      <div style="font-size:13px;font-weight:500;">Jane Doe</div>
+      <div style="font-size:11px;color:var(--ca-text-secondary);">Admin</div>
+    </div>
+  </div>
+</ca-sidenav>
 <script>
   const nav = document.getElementById('nav');
-  nav.profile = { name: 'Jane Doe', role: 'Admin', avatar: 'https://i.pravatar.cc/40' };
   nav.sections = [
     {
       items: [
@@ -1132,15 +1149,16 @@ Custom sizes:
         },
       ],
     },
-    {
-      grow: true, // pushes this section to the bottom
-      items: [
-        { id: 'logout', label: 'Log Out', danger: true },
-      ],
-    },
+  ];
+  nav.profileActions = [
+    { id: 'account', label: 'Account Settings', icon: '<svg>...</svg>' },
+    { id: 'logout', label: 'Log Out', icon: '<svg>...</svg>', danger: true },
   ];
   nav.addEventListener('ca-navigate', (e) => {
     nav.activeId = e.detail.id;
+  });
+  nav.addEventListener('ca-profile-action', (e) => {
+    if (e.detail.id === 'logout') { /* handle logout */ }
   });
 </script>
 ```

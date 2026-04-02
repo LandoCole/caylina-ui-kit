@@ -22,10 +22,11 @@ export interface SideNavSection {
   grow?: boolean;
 }
 
-export interface SideNavProfile {
-  name: string;
-  role?: string;
-  avatar?: string;
+export interface SideNavProfileAction {
+  id: string;
+  label: string;
+  icon?: string;
+  danger?: boolean;
 }
 
 const chevronDownSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>`;
@@ -33,6 +34,8 @@ const chevronDownSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 
 const collapseSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4l-4 4 4 4"/></svg>`;
 
 const expandSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>`;
+
+const kebabSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg>`;
 
 @customElement('ca-sidenav')
 export class CaSidenav extends LitElement {
@@ -58,54 +61,48 @@ export class CaSidenav extends LitElement {
       align-items: center;
     }
 
-    /* Profile */
-    .profile {
+    /* Logo area */
+    .logo-area {
       display: flex;
       align-items: center;
-      gap: 12px;
       width: 100%;
     }
-    .avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      object-fit: cover;
-      flex-shrink: 0;
+    .logo-expanded {
+      display: contents;
     }
-    .avatar-placeholder {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background-color: var(--ca-surface-active);
-      flex-shrink: 0;
+    .logo-collapsed {
+      display: none;
     }
-    .profile-text {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      flex: 1;
-      min-width: 0;
+    :host([collapsed]) .logo-area {
+      justify-content: center;
     }
-    .profile-role {
-      font-size: 10px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      line-height: 12px;
-      color: var(--ca-text-secondary);
+    :host([collapsed]) .logo-expanded {
+      display: none;
     }
-    .profile-name {
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-      color: var(--ca-text-primary);
+    :host([collapsed]) .logo-collapsed {
+      display: contents;
     }
+
+    /* Divider */
     .divider-line {
       width: 100%;
       height: 2px;
       border-radius: 2px;
       background-color: var(--ca-surface-active);
       flex-shrink: 0;
+    }
+
+    /* Nav sections wrapper — flex-grow pins profile to bottom */
+    .nav-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+    }
+    :host([collapsed]) .nav-sections {
+      align-items: center;
     }
 
     /* Sections */
@@ -135,8 +132,7 @@ export class CaSidenav extends LitElement {
       color: var(--ca-text-secondary);
     }
     :host([collapsed]) .section-title {
-      padding: 0;
-      text-align: center;
+      display: none;
     }
     :host([collapsed]) .section {
       align-items: center;
@@ -319,6 +315,56 @@ export class CaSidenav extends LitElement {
       height: 16px;
     }
 
+    /* Profile area */
+    .profile-area {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+    :host([collapsed]) .profile-area {
+      justify-content: center;
+    }
+    .profile-slot-wrapper {
+      flex: 1;
+      min-width: 0;
+    }
+    :host([collapsed]) .profile-slot-wrapper {
+      display: none;
+    }
+    :host([collapsed]) .kebab-btn {
+      display: none;
+    }
+    .profile-avatar {
+      flex-shrink: 0;
+    }
+
+    /* Kebab button */
+    .kebab-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      border-radius: var(--ca-radius-md);
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: var(--ca-text-secondary);
+      transition: background-color 0.15s ease;
+      flex-shrink: 0;
+    }
+    .kebab-btn:hover {
+      background-color: var(--ca-surface-hover);
+    }
+    .kebab-btn:focus-visible {
+      outline: 2px solid var(--ca-text-primary);
+      outline-offset: -2px;
+    }
+    .kebab-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
     /* Tooltip */
     .tooltip {
       position: absolute;
@@ -369,6 +415,7 @@ export class CaSidenav extends LitElement {
     .popover-link {
       display: flex;
       align-items: center;
+      gap: 8px;
       padding: 8px 12px;
       border-radius: var(--ca-radius-md);
       border: none;
@@ -392,6 +439,42 @@ export class CaSidenav extends LitElement {
       background-color: var(--ca-surface-active);
       color: var(--ca-text-primary);
     }
+    .popover-link.danger {
+      color: var(--ca-text-danger);
+    }
+    .popover-link .nav-icon {
+      width: 16px;
+      height: 16px;
+    }
+    .popover-link .nav-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Profile popover — expanded mode (above profile) */
+    .profile-popover {
+      position: absolute;
+      bottom: 80px;
+      left: 24px;
+      right: 24px;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 8px;
+      background-color: var(--ca-surface-elevated);
+      border: 1px solid var(--ca-border);
+      border-radius: var(--ca-radius-lg);
+      box-shadow: 0px 100px 80px 0px rgba(0, 0, 0, 0.07),
+        0px 41.778px 33.422px 0px rgba(0, 0, 0, 0.05);
+    }
+    /* Profile popover — collapsed mode (to the right) */
+    :host([collapsed]) .profile-popover {
+      bottom: auto;
+      left: calc(100% + 8px);
+      right: auto;
+      width: 172px;
+    }
   `;
 
   @property({ type: Boolean, reflect: true })
@@ -400,11 +483,11 @@ export class CaSidenav extends LitElement {
   @property({ type: String, attribute: 'active-id' })
   activeId = '';
 
-  @property({ type: Object })
-  profile: SideNavProfile | null = null;
-
   @property({ type: Array })
   sections: SideNavSection[] = [];
+
+  @property({ type: Array })
+  profileActions: SideNavProfileAction[] = [];
 
   @state()
   private _openDropdowns: Set<string> = new Set();
@@ -414,6 +497,9 @@ export class CaSidenav extends LitElement {
 
   @state()
   private _popover: { id: string; top: number; items: SideNavChild[] } | null = null;
+
+  @state()
+  private _profilePopover = false;
 
   private _boundClickOutside = this._handleClickOutside.bind(this);
 
@@ -428,8 +514,9 @@ export class CaSidenav extends LitElement {
   }
 
   private _handleClickOutside(e: MouseEvent) {
-    if (this._popover && !this.contains(e.target as Node)) {
-      this._popover = null;
+    if (!this.contains(e.target as Node)) {
+      if (this._popover) this._popover = null;
+      if (this._profilePopover) this._profilePopover = false;
     }
   }
 
@@ -489,13 +576,11 @@ export class CaSidenav extends LitElement {
   private _handleMouseLeave() {
     if (!this.collapsed) return;
     this._tooltip = null;
-    // Don't close popover on mouse leave - let click-outside handle it
   }
 
   private _handleItemClick(item: SideNavItem) {
     if (item.children && item.children.length > 0) {
       if (this.collapsed) {
-        // In collapsed mode, clicking toggles popover (handled by mouseenter)
         return;
       }
       this._toggleDropdown(item.id);
@@ -504,27 +589,19 @@ export class CaSidenav extends LitElement {
     }
   }
 
-  private _renderProfile() {
-    if (!this.profile) return nothing;
+  private _toggleProfilePopover() {
+    this._profilePopover = !this._profilePopover;
+  }
 
-    return html`
-      <div class="profile">
-        ${this.profile.avatar
-          ? html`<img class="avatar" src=${this.profile.avatar} alt=${this.profile.name} />`
-          : html`<div class="avatar-placeholder"></div>`}
-        ${!this.collapsed
-          ? html`
-              <div class="profile-text">
-                ${this.profile.role
-                  ? html`<span class="profile-role">${this.profile.role}</span>`
-                  : nothing}
-                <span class="profile-name">${this.profile.name}</span>
-              </div>
-            `
-          : nothing}
-      </div>
-      <div class="divider-line"></div>
-    `;
+  private _handleProfileAction(id: string) {
+    this.dispatchEvent(
+      new CustomEvent('ca-profile-action', {
+        detail: { id },
+        bubbles: true,
+        composed: true,
+      })
+    );
+    this._profilePopover = false;
   }
 
   private _renderSubItems(item: SideNavItem) {
@@ -654,6 +731,31 @@ export class CaSidenav extends LitElement {
     `;
   }
 
+  private _renderProfilePopover() {
+    if (!this._profilePopover || this.profileActions.length === 0) return nothing;
+
+    return html`
+      <div class="profile-popover">
+        ${this.profileActions.map(
+          (action) => html`
+            <button
+              class=${classMap({
+                'popover-link': true,
+                danger: !!action.danger,
+              })}
+              @click=${() => this._handleProfileAction(action.id)}
+            >
+              ${action.icon
+                ? html`<span class="nav-icon">${unsafeHTML(action.icon)}</span>`
+                : nothing}
+              ${action.label}
+            </button>
+          `
+        )}
+      </div>
+    `;
+  }
+
   private _getItemLabel(id: string): string {
     for (const section of this.sections) {
       for (const item of section.items) {
@@ -673,8 +775,38 @@ export class CaSidenav extends LitElement {
         ${this.collapsed ? unsafeHTML(expandSvg) : unsafeHTML(collapseSvg)}
       </button>
 
-      ${this._renderProfile()}
-      ${this.sections.map((section, i) => this._renderSection(section, i))}
+      <div class="logo-area">
+        <span class="logo-expanded"><slot name="logo"></slot></span>
+        <span class="logo-collapsed"><slot name="logo-collapsed"></slot></span>
+      </div>
+      <div class="divider-line"></div>
+
+      <div class="nav-sections">
+        ${this.sections.map((section, i) => this._renderSection(section, i))}
+      </div>
+
+      <div class="divider-line"></div>
+      <div class="profile-area">
+        <div class="profile-avatar">
+          <slot name="profile-avatar"></slot>
+        </div>
+        <div class="profile-slot-wrapper">
+          <slot name="profile"></slot>
+        </div>
+        ${this.profileActions.length > 0
+          ? html`
+              <button
+                class="kebab-btn"
+                @click=${this._toggleProfilePopover}
+                aria-label="User menu"
+              >
+                ${unsafeHTML(kebabSvg)}
+              </button>
+            `
+          : nothing}
+      </div>
+
+      ${this._renderProfilePopover()}
       ${this._renderTooltip()}
       ${this._renderPopover()}
     `;

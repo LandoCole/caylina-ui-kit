@@ -82,11 +82,19 @@ export class CaDatepicker extends LitElement {
       color: var(--ca-text-danger);
     }
 
-    /* ── Label ── */
+    /* ── Label (inner) ── */
+    .text-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
     .label {
-      font-weight: var(--ca-font-weight-semibold);
-      font-size: var(--ca-font-size-sm);
-      color: var(--_color);
+      font-family: var(--ca-font-family);
+      font-weight: 400;
+      font-size: 12px;
+      color: var(--ca-text-muted);
       line-height: 1;
     }
 
@@ -132,24 +140,28 @@ export class CaDatepicker extends LitElement {
       border-radius: 6px;
       gap: 6px;
     }
+    :host([size='xs']) .label { font-size: 9px; }
     :host([size='sm']) .field {
       padding: 8px 10px;
       font-size: var(--ca-font-size-xs);
       border-radius: 6px;
       gap: 8px;
     }
+    :host([size='sm']) .label { font-size: 10px; }
     :host([size='lg']) .field {
       padding: 14px 14px;
       font-size: var(--ca-font-size-lg);
       border-radius: 10px;
       gap: 12px;
     }
+    :host([size='lg']) .label { font-size: 13px; }
     :host([size='xl']) .field {
       padding: 18px 16px;
       font-size: 20px;
       border-radius: 12px;
       gap: 14px;
     }
+    :host([size='xl']) .label { font-size: 14px; }
 
     /* ── Calendar icon ── */
     .calendar-icon {
@@ -170,7 +182,6 @@ export class CaDatepicker extends LitElement {
 
     /* ── Value text ── */
     .value-text {
-      flex: 1;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -900,8 +911,6 @@ export class CaDatepicker extends LitElement {
     const grid = this._grid;
 
     return html`
-      ${this.label ? html`<label class="label">${this.label}</label>` : nothing}
-
       <!-- Trigger field -->
       <div
         class=${classMap({ field: true, disabled: this.disabled })}
@@ -915,9 +924,12 @@ export class CaDatepicker extends LitElement {
         @keydown=${this._handleFieldKeydown}
       >
         <span class="calendar-icon">${calendarIconSvg}</span>
-        <span class=${classMap({ 'value-text': true, placeholder: !text })}>
-          ${text || this.placeholder}
-        </span>
+        <div class="text-area">
+          ${this.label ? html`<span class="label">${this.label}</span>` : nothing}
+          <span class=${classMap({ 'value-text': true, placeholder: !text })}>
+            ${text || this.placeholder}
+          </span>
+        </div>
         <span class=${classMap({ chevron: true, open: this._isOpen })}>
           ${chevronDownSvg}
         </span>
