@@ -75,6 +75,7 @@ import './lit/process-card.js';
 
 // Navigation & Feedback
 import './lit/breadcrumb.js';
+import './lit/page-nav.js';
 import './lit/empty-state.js';
 import './lit/skeleton.js';
 import './lit/context-menu.js';
@@ -152,6 +153,9 @@ export type { BreadcrumbItem } from './lit/breadcrumb.js';
 
 // Re-export progress bar types
 export type { ProgressSegment } from './lit/progress-bar.js';
+
+// Re-export page nav types
+export type { PageNavItem } from './lit/page-nav.js';
 
 // Re-export sidenav types
 export type {
