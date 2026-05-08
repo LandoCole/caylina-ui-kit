@@ -3,8 +3,8 @@
 @layer caylina.tokens {
   :root {
     /* ── Brand Colors (constant across themes) ── */
-    --ca-color-primary: #212529;
-    --ca-color-primary-pressed: #14171A;
+    --ca-color-primary: #728EC7;
+    --ca-color-primary-pressed: #657EAB;
     --ca-color-secondary: #222222;
     --ca-color-secondary-hover: rgba(34, 34, 34, 0.05);
     --ca-color-white: #FFFFFF;
