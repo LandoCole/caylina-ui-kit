@@ -39,6 +39,8 @@ const expandSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" f
 
 const kebabSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg>`;
 
+const sectionDotSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="1.6 2"><circle cx="7" cy="7" r="5.5"/></svg>`;
+
 @customElement('ca-sidenav')
 export class CaSidenav extends LitElement {
   static styles = css`
@@ -85,6 +87,30 @@ export class CaSidenav extends LitElement {
       display: contents;
     }
 
+    /* Logo image (via prop or slotted <img>) */
+    .logo-img {
+      max-height: var(--ca-sidenav-logo-height, 32px);
+      width: auto;
+      display: block;
+    }
+    .logo-img-collapsed {
+      width: var(--ca-sidenav-icon-size, 32px);
+      height: var(--ca-sidenav-icon-size, 32px);
+      object-fit: contain;
+      display: block;
+    }
+    .logo-expanded ::slotted(img) {
+      max-height: var(--ca-sidenav-logo-height, 32px);
+      width: auto;
+      display: block;
+    }
+    .logo-collapsed ::slotted(img) {
+      width: var(--ca-sidenav-icon-size, 32px);
+      height: var(--ca-sidenav-icon-size, 32px);
+      object-fit: contain;
+      display: block;
+    }
+
     /* Divider */
     .divider-line {
       width: 100%;
@@ -114,23 +140,34 @@ export class CaSidenav extends LitElement {
       width: 100%;
     }
     .section + .section {
-      border-top: 1px solid var(--ca-border);
-      padding-top: 24px;
+      padding-top: 8px;
     }
     .section-grow {
       flex: 1;
       min-height: 0;
     }
     .section-title {
-      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 12px 4px 12px;
+      color: var(--ca-text-muted);
+    }
+    .section-title-icon {
+      display: inline-flex;
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+    .section-title-icon svg {
+      width: 14px;
+      height: 14px;
     }
     .section-title span {
-      font-size: 10px;
+      font-size: 13px;
       font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      line-height: 12px;
-      color: var(--ca-text-secondary);
+      line-height: 1.2;
+      color: var(--ca-text-muted);
     }
     :host([collapsed]) .section-title {
       display: none;
@@ -146,7 +183,7 @@ export class CaSidenav extends LitElement {
       gap: 12px;
       padding: 10px 12px;
       border-radius: var(--ca-radius-md);
-      border: none;
+      border: 1px solid transparent;
       background: none;
       cursor: pointer;
       width: 100%;
@@ -157,15 +194,17 @@ export class CaSidenav extends LitElement {
       line-height: 20px;
       letter-spacing: -0.28px;
       color: var(--ca-text-secondary);
-      transition: background-color 0.15s ease, color 0.15s ease;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
       box-sizing: border-box;
     }
     .nav-link:hover {
       background-color: var(--ca-surface-hover);
     }
     .nav-link.active {
-      background-color: var(--ca-surface-active);
+      background-color: var(--ca-surface);
+      border-color: var(--ca-border);
       color: var(--ca-text-primary);
+      box-shadow: var(--ca-shadow-sm);
     }
     .nav-link.danger {
       color: var(--ca-text-danger);
@@ -501,6 +540,18 @@ export class CaSidenav extends LitElement {
   @property({ type: Array })
   profileActions: SideNavProfileAction[] = [];
 
+  /** URL for the expanded-state logo image. If unset, the `logo` slot is used. */
+  @property({ type: String, attribute: 'logo-src' })
+  logoSrc = '';
+
+  /** URL for the collapsed-state icon image. Falls back to `logoSrc` if unset. If both unset, the `logo-collapsed` slot is used. */
+  @property({ type: String, attribute: 'logo-collapsed-src' })
+  logoCollapsedSrc = '';
+
+  /** Alt text for both logo images. */
+  @property({ type: String, attribute: 'logo-alt' })
+  logoAlt = '';
+
   @state()
   private _openDropdowns: Set<string> = new Set();
 
@@ -699,6 +750,7 @@ export class CaSidenav extends LitElement {
         ${section.title
           ? html`
               <div class="section-title">
+                <span class="section-title-icon">${unsafeHTML(sectionDotSvg)}</span>
                 <span>${section.title}</span>
               </div>
             `
@@ -791,8 +843,16 @@ export class CaSidenav extends LitElement {
       </button>
 
       <div class="logo-area">
-        <span class="logo-expanded"><slot name="logo"></slot></span>
-        <span class="logo-collapsed"><slot name="logo-collapsed"></slot></span>
+        <span class="logo-expanded">
+          ${this.logoSrc
+            ? html`<img class="logo-img" src=${this.logoSrc} alt=${this.logoAlt} />`
+            : html`<slot name="logo"></slot>`}
+        </span>
+        <span class="logo-collapsed">
+          ${this.logoCollapsedSrc || this.logoSrc
+            ? html`<img class="logo-img logo-img-collapsed" src=${this.logoCollapsedSrc || this.logoSrc} alt=${this.logoAlt} />`
+            : html`<slot name="logo-collapsed"></slot>`}
+        </span>
       </div>
       <div class="divider-line"></div>
 

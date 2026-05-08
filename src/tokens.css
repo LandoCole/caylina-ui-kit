@@ -185,6 +185,33 @@
 
     --ca-toggle-active: #008A05;
 
+    /* ── Status pill bg/fg pairs (dark mode) ── */
+    --ca-color-status-todo: #9CA3AF;
+    --ca-color-status-in-progress: #60A5FA;
+    --ca-color-status-done: #4ADE80;
+
+    --ca-color-status-todo-bg: rgba(156, 163, 175, 0.15);
+    --ca-color-status-todo-fg: #C4CAD3;
+    --ca-color-status-in-progress-bg: rgba(96, 165, 250, 0.16);
+    --ca-color-status-in-progress-fg: #93C5FD;
+    --ca-color-status-done-bg: rgba(74, 222, 128, 0.15);
+    --ca-color-status-done-fg: #86EFAC;
+
+    /* ── Priority pill bg/fg pairs (dark mode) ── */
+    --ca-color-priority-urgent: #F87171;
+    --ca-color-priority-high: #FB923C;
+    --ca-color-priority-medium: #FACC15;
+    --ca-color-priority-low: #9CA3AF;
+
+    --ca-color-priority-urgent-bg: rgba(248, 113, 113, 0.15);
+    --ca-color-priority-urgent-fg: #FCA5A5;
+    --ca-color-priority-high-bg: rgba(251, 146, 60, 0.16);
+    --ca-color-priority-high-fg: #FDBA74;
+    --ca-color-priority-medium-bg: rgba(250, 204, 21, 0.16);
+    --ca-color-priority-medium-fg: #FDE047;
+    --ca-color-priority-low-bg: rgba(156, 163, 175, 0.15);
+    --ca-color-priority-low-fg: #C4CAD3;
+
     --ca-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.3);
     --ca-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.25);
     --ca-shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.3);

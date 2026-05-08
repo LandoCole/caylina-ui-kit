@@ -29,6 +29,12 @@ export declare class CaSidenav extends LitElement {
     activeId: string;
     sections: SideNavSection[];
     profileActions: SideNavProfileAction[];
+    /** URL for the expanded-state logo image. If unset, the `logo` slot is used. */
+    logoSrc: string;
+    /** URL for the collapsed-state icon image. Falls back to `logoSrc` if unset. If both unset, the `logo-collapsed` slot is used. */
+    logoCollapsedSrc: string;
+    /** Alt text for both logo images. */
+    logoAlt: string;
     private _openDropdowns;
     private _tooltip;
     private _popover;

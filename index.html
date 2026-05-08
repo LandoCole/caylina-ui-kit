@@ -1687,22 +1687,29 @@
 
   <!-- ─── Side Nav ─── -->
   <h2>Side Nav</h2>
-  <div style="display:flex;height:500px;border:1px solid var(--ca-border);border-radius:var(--ca-radius-lg);overflow:hidden;">
-    <ca-sidenav id="demo-nav" active-id="dashboard">
+  <div style="display:flex;height:720px;border:1px solid var(--ca-border);border-radius:var(--ca-radius-lg);overflow:hidden;background:var(--ca-bg-page);">
+    <ca-sidenav id="demo-nav" active-id="team-members">
       <div slot="logo" style="display:flex;align-items:center;gap:10px;">
-        <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;">C</div>
-        <span style="font-size:15px;font-weight:600;letter-spacing:-0.3px;">Caylina</span>
+        <div style="width:30px;height:30px;border-radius:8px;background:#1A1A1A;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;font-family:var(--ca-font-family-display);letter-spacing:-0.5px;">T</div>
+        <span style="font-size:16px;font-weight:600;letter-spacing:-0.3px;font-family:var(--ca-font-family-display);">FlowAI</span>
       </div>
 
-      <div slot="profile" style="display:flex;align-items:center;gap:10px;">
-        <img src="https://i.pravatar.cc/36?u=jane" alt="Jane" style="width:36px;height:36px;border-radius:50%;" />
-        <div>
-          <div style="font-size:13px;font-weight:500;">Jane Doe</div>
-          <div style="font-size:11px;color:var(--ca-text-secondary);">Admin</div>
+      <div slot="logo-collapsed">
+        <div style="width:30px;height:30px;border-radius:8px;background:#1A1A1A;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;font-family:var(--ca-font-family-display);letter-spacing:-0.5px;">T</div>
+      </div>
+
+      <div slot="profile" style="display:flex;align-items:center;gap:10px;min-width:0;">
+        <div style="min-width:0;flex:1;">
+          <div style="font-size:13px;font-weight:600;color:var(--ca-text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Tanjim Islam</div>
+          <div style="font-size:11px;color:var(--ca-text-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">tanjim@gr8rstudio.com</div>
         </div>
       </div>
+
+      <div slot="profile-avatar">
+        <ca-avatar size="sm" name="Tanjim Islam" src="https://i.pravatar.cc/36?u=tanjim"></ca-avatar>
+      </div>
     </ca-sidenav>
-    <div style="flex:1;padding:24px;display:flex;align-items:center;justify-content:center;color:var(--ca-text-secondary);">
+    <div style="flex:1;padding:24px;display:flex;align-items:center;justify-content:center;color:var(--ca-text-secondary);background:var(--ca-bg-page);">
       Main content area
     </div>
   </div>
@@ -1710,24 +1717,45 @@
     (() => {
       const nav = document.getElementById('demo-nav');
 
-      const iconDashboard = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>';
-      const iconProjects = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>';
-      const iconSettings = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>';
+      const iconDashboard = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>';
+      const iconWorkflowLibrary = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6h7M6 8.5v7M18 8.5v7M8.5 18h7"/></svg>';
+      const iconWorkflowCanvas = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg>';
+      const iconTemplates = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 5v10l-8 5-8-5V7z"/><path d="M12 12l8-5M12 12v10M12 12L4 7"/></svg>';
+      const iconAnalytics = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-7"/></svg>';
+      const iconTeamMembers = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M9 11a4 4 0 100-8 4 4 0 000 8zm0 2c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z"/><path d="M16 11a3 3 0 100-6 3 3 0 000 6zm.5 2c-.84 0-1.62.187-2.317.516A6.973 6.973 0 0117 18v1h4v-1c0-2.761-2.015-5-4.5-5z" opacity="0.6"/></svg>';
+      const iconIntegrations = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l-3 6h6z" fill="currentColor"/><circle cx="12" cy="14" r="6"/><path d="M12 11v3l2 2"/></svg>';
+      const iconSettings = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>';
+      const iconHelp = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+      const iconAppearance = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>';
       const iconAccount = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
       const iconLogout = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>';
 
+      // Accessories — small badges and emoji icons displayed on the right of nav items
+      const acc28 = '<ca-badge size="sm">28</ca-badge>';
+      const accFire = '<span style="font-size:15px;line-height:1;">🔥</span>';
+      const acc35 = '<ca-badge size="sm" variant="success">35+</ca-badge>';
+      const accSun = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
+
       nav.sections = [
         {
+          title: 'Workspaces',
           items: [
             { id: 'dashboard', label: 'Dashboard', icon: iconDashboard },
-            { id: 'projects', label: 'Projects', icon: iconProjects },
-            {
-              id: 'settings', label: 'Settings', icon: iconSettings,
-              children: [
-                { id: 'general', label: 'General' },
-                { id: 'security', label: 'Security' },
-              ],
-            },
+            { id: 'workflow-library', label: 'Workflow Library', icon: iconWorkflowLibrary, accessory: acc28 },
+            { id: 'workflow-canvas', label: 'Workflow Canvas', icon: iconWorkflowCanvas, accessory: accFire },
+            { id: 'templates', label: 'Templates', icon: iconTemplates },
+            { id: 'analytics', label: 'Analytics', icon: iconAnalytics },
+            { id: 'team-members', label: 'Team Members', icon: iconTeamMembers, accessory: acc35 },
+            { id: 'integrations', label: 'Integrations', icon: iconIntegrations },
+          ],
+        },
+        {
+          title: 'Agent Managements',
+          grow: true,
+          items: [
+            { id: 'settings', label: 'Settings', icon: iconSettings },
+            { id: 'help', label: 'Help & Support', icon: iconHelp },
+            { id: 'appearance', label: 'Appearance', icon: iconAppearance, accessory: accSun },
           ],
         },
       ];

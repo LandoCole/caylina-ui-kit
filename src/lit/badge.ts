@@ -15,9 +15,10 @@ export class CaBadge extends LitElement {
       line-height: 1;
       white-space: nowrap;
       box-sizing: border-box;
-      color: var(--ca-text-primary);
-      background-color: var(--ca-surface-active);
-      border: none;
+      /* Default = soft blue (info/neutral) */
+      color: var(--ca-color-status-in-progress-fg, #2C5F8E);
+      background-color: var(--ca-color-status-in-progress-bg, #E5EEF7);
+      border: 1px solid color-mix(in srgb, var(--ca-color-status-in-progress, #4F7AB8) 30%, transparent);
     }
 
     /* Sizes */
@@ -50,18 +51,21 @@ export class CaBadge extends LitElement {
       min-width: 10px;
     }
 
-    /* Variants — soft tinted pills (no border, color-mix bg) */
+    /* Variants — soft tinted pills with matching colored borders */
     :host([variant='success']) {
       color: var(--ca-color-status-done-fg, var(--ca-color-success));
       background-color: var(--ca-color-status-done-bg, color-mix(in srgb, var(--ca-color-success) 14%, transparent));
+      border-color: color-mix(in srgb, var(--ca-color-success) 30%, transparent);
     }
     :host([variant='warning']) {
       color: var(--ca-color-priority-medium-fg, var(--ca-color-warning));
       background-color: var(--ca-color-priority-medium-bg, color-mix(in srgb, var(--ca-color-warning) 18%, transparent));
+      border-color: color-mix(in srgb, var(--ca-color-warning) 35%, transparent);
     }
     :host([variant='danger']) {
       color: var(--ca-color-priority-urgent-fg, var(--ca-color-danger));
       background-color: var(--ca-color-priority-urgent-bg, color-mix(in srgb, var(--ca-color-danger) 14%, transparent));
+      border-color: color-mix(in srgb, var(--ca-color-danger) 30%, transparent);
     }
 
     /* Dot variant retains solid color */
@@ -90,13 +94,16 @@ export class CaBadge extends LitElement {
         if (this.dot) {
           this.style.backgroundColor = this.color;
           this.style.removeProperty('color');
+          this.style.removeProperty('border-color');
         } else {
           this.style.color = `color-mix(in srgb, ${this.color} 75%, var(--ca-text-primary))`;
           this.style.backgroundColor = `color-mix(in srgb, ${this.color} 14%, transparent)`;
+          this.style.borderColor = `color-mix(in srgb, ${this.color} 30%, transparent)`;
         }
       } else {
         this.style.removeProperty('color');
         this.style.removeProperty('background-color');
+        this.style.removeProperty('border-color');
       }
     }
   }
