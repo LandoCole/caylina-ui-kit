@@ -104,7 +104,8 @@ export class CaDatepicker extends LitElement {
       align-items: center;
       gap: 10px;
       width: 100%;
-      padding: 10px 12px;
+      min-height: var(--ca-control-height-md);
+      padding: 6px 12px;
       border: 1px solid var(--_border);
       border-radius: var(--_radius);
       background-color: var(--_bg);
@@ -135,30 +136,34 @@ export class CaDatepicker extends LitElement {
 
     /* ── Size variants ── */
     :host([size='xs']) .field {
-      padding: 6px 8px;
-      font-size: 11px;
-      border-radius: 6px;
+      min-height: var(--ca-control-height-xs);
+      padding: 2px 8px;
+      font-size: var(--ca-font-size-xs);
+      border-radius: var(--ca-radius-md);
       gap: 6px;
     }
     :host([size='xs']) .label { font-size: 9px; }
     :host([size='sm']) .field {
-      padding: 8px 10px;
+      min-height: var(--ca-control-height-sm);
+      padding: 4px 10px;
       font-size: var(--ca-font-size-xs);
-      border-radius: 6px;
+      border-radius: var(--ca-radius-md);
       gap: 8px;
     }
     :host([size='sm']) .label { font-size: 10px; }
     :host([size='lg']) .field {
-      padding: 14px 14px;
-      font-size: var(--ca-font-size-lg);
-      border-radius: 10px;
+      min-height: var(--ca-control-height-lg);
+      padding: 8px 14px;
+      font-size: var(--ca-font-size-md);
+      border-radius: var(--ca-radius-md);
       gap: 12px;
     }
     :host([size='lg']) .label { font-size: 13px; }
     :host([size='xl']) .field {
-      padding: 18px 16px;
-      font-size: 20px;
-      border-radius: 12px;
+      min-height: var(--ca-control-height-xl);
+      padding: 10px 16px;
+      font-size: var(--ca-font-size-lg);
+      border-radius: var(--ca-radius-lg);
       gap: 14px;
     }
     :host([size='xl']) .label { font-size: 14px; }

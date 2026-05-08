@@ -9,6 +9,8 @@ export interface SideNavItem {
     icon?: string;
     children?: SideNavChild[];
     danger?: boolean;
+    /** Optional right-aligned accessory — raw HTML string (badge, icon, etc.) */
+    accessory?: string;
 }
 export interface SideNavSection {
     title?: string;

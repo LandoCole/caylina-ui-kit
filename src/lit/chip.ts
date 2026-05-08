@@ -12,13 +12,14 @@ export class CaChip extends LitElement {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 10px 20px;
-      border-radius: 50px;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--ca-radius-full);
       border: 1px solid var(--ca-border);
       background-color: var(--ca-surface);
       font-family: var(--ca-font-family);
-      font-weight: 400;
-      font-size: 14px;
+      font-weight: var(--ca-font-weight-medium, 500);
+      font-size: var(--ca-font-size-sm);
       line-height: 1;
       color: var(--ca-text-primary);
       cursor: pointer;
@@ -28,25 +29,29 @@ export class CaChip extends LitElement {
     }
     /* Size: sm */
     :host([size='sm']) .chip {
-      padding: 6px 12px;
-      font-size: 12px;
+      padding: 4px 10px;
+      font-size: var(--ca-font-size-xs);
     }
     .chip:hover {
-      border-color: var(--ca-text-primary);
+      background-color: var(--ca-surface-hover);
+      border-color: var(--ca-border-strong);
     }
     .chip:active {
-      border-color: var(--ca-text-primary);
-      transform: scale(0.96);
+      transform: scale(0.97);
     }
     .chip:focus-visible {
       outline: none;
-      box-shadow: 0 0 0 3px var(--ca-surface), 0 0 0 5px var(--ca-text-primary);
+      box-shadow: 0 0 0 2px var(--ca-surface), 0 0 0 4px var(--ca-text-primary);
       border-color: var(--ca-text-primary);
     }
     .chip.selected {
       background-color: var(--ca-color-secondary);
       border-color: var(--ca-color-secondary);
       color: var(--ca-color-secondary-text, var(--ca-color-white));
+    }
+    .chip.selected:hover {
+      background-color: var(--ca-color-secondary);
+      opacity: 0.92;
     }
     :host([disabled]) .chip {
       opacity: 0.5;

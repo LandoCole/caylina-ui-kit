@@ -23,7 +23,8 @@ export class CaButton extends LitElement {
       transition: background-color var(--ca-transition-fast), border-color var(--ca-transition-fast), opacity var(--ca-transition-fast);
       box-sizing: border-box;
       text-decoration: none;
-      padding: 14px 24px;
+      min-height: var(--ca-control-height-md);
+      padding: 0 14px;
       font-size: var(--ca-font-size-sm);
       border-radius: var(--ca-radius-button);
     }
@@ -31,17 +32,21 @@ export class CaButton extends LitElement {
       outline: none;
     }
 
-    /* Sizes */
-    .button.xs { padding: 6px 12px; font-size: var(--ca-font-size-xs); }
-    .button.sm { padding: 8px 16px; font-size: var(--ca-font-size-sm); }
-    .button.md { padding: 14px 24px; font-size: var(--ca-font-size-sm); }
-    .button.lg { padding: 16px 32px; font-size: var(--ca-font-size-lg); }
-    .button.xl { padding: 20px 40px; font-size: var(--ca-font-size-lg); }
+    /* Sizes — height comes from --ca-control-height-*; padding is horizontal only */
+    .button.xs { min-height: var(--ca-control-height-xs); padding: 0 10px; font-size: var(--ca-font-size-xs); }
+    .button.sm { min-height: var(--ca-control-height-sm); padding: 0 12px; font-size: var(--ca-font-size-sm); }
+    .button.md { min-height: var(--ca-control-height-md); padding: 0 14px; font-size: var(--ca-font-size-sm); }
+    .button.lg { min-height: var(--ca-control-height-lg); padding: 0 18px; font-size: var(--ca-font-size-md); }
+    .button.xl { min-height: var(--ca-control-height-xl); padding: 0 22px; font-size: var(--ca-font-size-lg); }
 
     /* Primary */
     .button.primary {
       background-color: var(--ca-color-primary);
       color: var(--ca-color-white);
+      box-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.14),
+        inset 0 -1px 0 0 rgba(0, 0, 0, 0.18),
+        var(--ca-shadow-sm);
     }
     .button.primary:hover:not(:disabled):not(.loading) {
       background-color: var(--ca-color-primary-pressed);
@@ -53,24 +58,29 @@ export class CaButton extends LitElement {
     .button.primary.loading {
       background-color: var(--ca-color-disabled);
       color: var(--ca-color-disabled-text);
+      box-shadow: none;
       cursor: not-allowed;
     }
 
     /* Secondary */
     .button.secondary {
-      background-color: var(--ca-color-secondary);
-      color: var(--ca-color-secondary-text, var(--ca-color-white));
+      background-color: var(--ca-surface);
+      color: var(--ca-text-primary);
+      border: 1px solid var(--ca-border);
+      box-shadow: var(--ca-shadow-sm);
     }
     .button.secondary:hover:not(:disabled):not(.loading) {
-      opacity: 0.8;
+      background-color: var(--ca-surface-hover);
     }
     .button.secondary:focus-visible {
-      border: 2px solid var(--ca-color-focus-ring);
+      border: 2px solid var(--ca-text-primary);
     }
     .button.secondary:disabled,
     .button.secondary.loading {
       background-color: var(--ca-color-disabled);
       color: var(--ca-color-disabled-text);
+      border-color: var(--ca-color-disabled);
+      box-shadow: none;
       cursor: not-allowed;
     }
 

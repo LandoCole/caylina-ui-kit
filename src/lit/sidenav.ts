@@ -14,6 +14,8 @@ export interface SideNavItem {
   icon?: string;
   children?: SideNavChild[];
   danger?: boolean;
+  /** Optional right-aligned accessory — raw HTML string (badge, icon, etc.) */
+  accessory?: string;
 }
 
 export interface SideNavSection {
@@ -47,7 +49,7 @@ export class CaSidenav extends LitElement {
       padding: 24px;
       background-color: var(--ca-surface);
       border-right: 1px solid var(--ca-border);
-      font-family: "Inter", var(--ca-font-family);
+      font-family: var(--ca-font-family);
       position: relative;
       box-sizing: border-box;
       height: 100%;
@@ -86,9 +88,8 @@ export class CaSidenav extends LitElement {
     /* Divider */
     .divider-line {
       width: 100%;
-      height: 2px;
-      border-radius: 2px;
-      background-color: var(--ca-surface-active);
+      height: 1px;
+      background-color: var(--ca-border);
       flex-shrink: 0;
     }
 
@@ -113,7 +114,7 @@ export class CaSidenav extends LitElement {
       width: 100%;
     }
     .section + .section {
-      border-top: 2px solid var(--ca-surface-active);
+      border-top: 1px solid var(--ca-border);
       padding-top: 24px;
     }
     .section-grow {
@@ -194,6 +195,17 @@ export class CaSidenav extends LitElement {
       flex: 1;
       min-width: 0;
     }
+    .nav-accessory {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--ca-text-muted);
+    }
+    .nav-accessory svg {
+      width: 16px;
+      height: 16px;
+    }
     .nav-chevron {
       display: flex;
       align-items: center;
@@ -224,8 +236,8 @@ export class CaSidenav extends LitElement {
       left: 20px;
       top: 0;
       bottom: 16px;
-      width: 2px;
-      background-color: var(--ca-surface-active);
+      width: 1px;
+      background-color: var(--ca-border);
     }
     .sub-list {
       display: flex;
@@ -272,8 +284,8 @@ export class CaSidenav extends LitElement {
       transform: translateY(-50%);
       width: 13px;
       height: 8px;
-      border-left: 2px solid var(--ca-surface-active);
-      border-bottom: 2px solid var(--ca-surface-active);
+      border-left: 1px solid var(--ca-border);
+      border-bottom: 1px solid var(--ca-border);
       border-bottom-left-radius: 8px;
     }
     .item-group {
@@ -654,6 +666,9 @@ export class CaSidenav extends LitElement {
             : nothing}
           ${!this.collapsed
             ? html`<span class="nav-label">${item.label}</span>`
+            : nothing}
+          ${item.accessory && !this.collapsed
+            ? html`<span class="nav-accessory">${unsafeHTML(item.accessory)}</span>`
             : nothing}
           ${hasChildren && !this.collapsed
             ? html`

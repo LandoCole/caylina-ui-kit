@@ -22,9 +22,10 @@ export class CaSelect extends LitElement {
       align-items: center;
       gap: 12px;
       width: 100%;
-      padding: 10px 12px;
+      min-height: var(--ca-control-height-md);
+      padding: 6px 12px;
       border: 1px solid var(--ca-border-strong);
-      border-radius: 8px;
+      border-radius: var(--ca-radius-md);
       background-color: var(--ca-surface);
       font-family: var(--ca-font-family);
       font-size: var(--ca-font-size-md);
@@ -56,37 +57,37 @@ export class CaSelect extends LitElement {
       justify-content: center;
       pointer-events: none;
     }
-    :host([size='xs']) .field { padding: 6px 8px; gap: 8px; font-size: var(--ca-font-size-xs); border-radius: 6px; }
+    :host([size='xs']) .field { min-height: var(--ca-control-height-xs); padding: 2px 8px; gap: 8px; font-size: var(--ca-font-size-xs); border-radius: var(--ca-radius-md); }
     :host([size='xs']) .label { font-size: 9px; }
     :host([size='xs']) .value { font-size: var(--ca-font-size-xs); }
     :host([size='xs']) .chevron { width: 12px; height: 12px; }
-    :host([size='xs']) .dropdown { border-radius: 6px; }
+    :host([size='xs']) .dropdown { border-radius: var(--ca-radius-md); }
     :host([size='xs']) .option { padding: 6px 8px; font-size: var(--ca-font-size-xs); gap: 8px; }
     :host([size='xs']) .check-icon { width: 14px; height: 14px; }
 
-    :host([size='sm']) .field { padding: 8px 10px; gap: 10px; font-size: var(--ca-font-size-sm); border-radius: 6px; }
+    :host([size='sm']) .field { min-height: var(--ca-control-height-sm); padding: 4px 10px; gap: 10px; font-size: var(--ca-font-size-sm); border-radius: var(--ca-radius-md); }
     :host([size='sm']) .label { font-size: 10px; }
     :host([size='sm']) .value { font-size: var(--ca-font-size-sm); }
     :host([size='sm']) .chevron { width: 14px; height: 14px; }
-    :host([size='sm']) .dropdown { border-radius: 6px; }
+    :host([size='sm']) .dropdown { border-radius: var(--ca-radius-md); }
     :host([size='sm']) .option { padding: 8px 10px; font-size: var(--ca-font-size-sm); gap: 10px; }
     :host([size='sm']) .check-icon { width: 18px; height: 18px; }
 
-    :host([size='lg']) .field { padding: 14px 14px; gap: 14px; font-size: var(--ca-font-size-lg); border-radius: 10px; }
+    :host([size='lg']) .field { min-height: var(--ca-control-height-lg); padding: 8px 14px; gap: 14px; font-size: var(--ca-font-size-md); border-radius: var(--ca-radius-md); }
     :host([size='lg']) .label { font-size: 13px; }
-    :host([size='lg']) .value { font-size: var(--ca-font-size-lg); }
+    :host([size='lg']) .value { font-size: var(--ca-font-size-md); }
     :host([size='lg']) .chevron { width: 18px; height: 18px; }
-    :host([size='lg']) .dropdown { border-radius: 10px; }
-    :host([size='lg']) .option { padding: 14px 14px; font-size: var(--ca-font-size-lg); gap: 14px; }
-    :host([size='lg']) .check-icon { width: 26px; height: 26px; }
+    :host([size='lg']) .dropdown { border-radius: var(--ca-radius-md); }
+    :host([size='lg']) .option { padding: 12px 14px; font-size: var(--ca-font-size-md); gap: 14px; }
+    :host([size='lg']) .check-icon { width: 22px; height: 22px; }
 
-    :host([size='xl']) .field { padding: 18px 16px; gap: 16px; font-size: 20px; border-radius: 12px; }
+    :host([size='xl']) .field { min-height: var(--ca-control-height-xl); padding: 10px 16px; gap: 16px; font-size: var(--ca-font-size-lg); border-radius: var(--ca-radius-lg); }
     :host([size='xl']) .label { font-size: 14px; }
-    :host([size='xl']) .value { font-size: 20px; }
+    :host([size='xl']) .value { font-size: var(--ca-font-size-lg); }
     :host([size='xl']) .chevron { width: 20px; height: 20px; }
-    :host([size='xl']) .dropdown { border-radius: 12px; }
-    :host([size='xl']) .option { padding: 18px 16px; font-size: 20px; gap: 16px; }
-    :host([size='xl']) .check-icon { width: 28px; height: 28px; }
+    :host([size='xl']) .dropdown { border-radius: var(--ca-radius-lg); }
+    :host([size='xl']) .option { padding: 14px 16px; font-size: var(--ca-font-size-lg); gap: 16px; }
+    :host([size='xl']) .check-icon { width: 26px; height: 26px; }
     .text-area {
       flex: 1;
       display: flex;

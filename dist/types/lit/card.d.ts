@@ -2,6 +2,9 @@ import { LitElement } from 'lit';
 export declare class CaCard extends LitElement {
     static styles: import("lit").CSSResult;
     padding: 'none' | 'sm' | 'md' | 'lg';
+    elevated: boolean;
+    flat: boolean;
+    interactive: boolean;
     render(): import("lit-html").TemplateResult<1>;
 }
 declare global {

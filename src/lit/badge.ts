@@ -8,29 +8,30 @@ export class CaBadge extends LitElement {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 4px;
       border-radius: var(--ca-radius-full);
       font-family: var(--ca-font-family);
-      font-weight: var(--ca-font-weight-semibold);
+      font-weight: var(--ca-font-weight-medium, 500);
       line-height: 1;
       white-space: nowrap;
       box-sizing: border-box;
-      color: var(--ca-color-secondary);
-      background-color: color-mix(in srgb, var(--ca-color-secondary) 15%, transparent);
-      border: 1px solid color-mix(in srgb, var(--ca-color-secondary) 40%, transparent);
+      color: var(--ca-text-primary);
+      background-color: var(--ca-surface-active);
+      border: none;
     }
 
     /* Sizes */
     :host([size='sm']) {
       font-size: var(--ca-font-size-xs);
-      min-width: 18px;
-      height: 18px;
-      padding: 2px 10px;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 8px;
     }
     :host, :host([size='md']) {
-      font-size: var(--ca-font-size-sm);
-      min-width: 22px;
-      height: 22px;
-      padding: 2px 12px;
+      font-size: var(--ca-font-size-xs);
+      min-width: 24px;
+      height: 24px;
+      padding: 0 10px;
     }
 
     /* Dot mode */
@@ -49,21 +50,29 @@ export class CaBadge extends LitElement {
       min-width: 10px;
     }
 
-    /* Variants */
+    /* Variants — soft tinted pills (no border, color-mix bg) */
     :host([variant='success']) {
-      color: var(--ca-color-success);
-      background-color: color-mix(in srgb, var(--ca-color-success) 15%, transparent);
-      border-color: color-mix(in srgb, var(--ca-color-success) 40%, transparent);
+      color: var(--ca-color-status-done-fg, var(--ca-color-success));
+      background-color: var(--ca-color-status-done-bg, color-mix(in srgb, var(--ca-color-success) 14%, transparent));
     }
     :host([variant='warning']) {
-      color: var(--ca-color-warning);
-      background-color: color-mix(in srgb, var(--ca-color-warning) 15%, transparent);
-      border-color: color-mix(in srgb, var(--ca-color-warning) 40%, transparent);
+      color: var(--ca-color-priority-medium-fg, var(--ca-color-warning));
+      background-color: var(--ca-color-priority-medium-bg, color-mix(in srgb, var(--ca-color-warning) 18%, transparent));
     }
     :host([variant='danger']) {
-      color: var(--ca-color-danger);
-      background-color: color-mix(in srgb, var(--ca-color-danger) 15%, transparent);
-      border-color: color-mix(in srgb, var(--ca-color-danger) 40%, transparent);
+      color: var(--ca-color-priority-urgent-fg, var(--ca-color-danger));
+      background-color: var(--ca-color-priority-urgent-bg, color-mix(in srgb, var(--ca-color-danger) 14%, transparent));
+    }
+
+    /* Dot variant retains solid color */
+    :host([dot][variant='success']) {
+      background-color: var(--ca-color-success);
+    }
+    :host([dot][variant='warning']) {
+      background-color: var(--ca-color-warning);
+    }
+    :host([dot][variant='danger']) {
+      background-color: var(--ca-color-danger);
     }
   `;
 
@@ -78,13 +87,16 @@ export class CaBadge extends LitElement {
     super.updated?.(changedProperties);
     if (changedProperties.has('color')) {
       if (this.color) {
-        this.style.color = this.color;
-        this.style.backgroundColor = `color-mix(in srgb, ${this.color} 15%, transparent)`;
-        this.style.borderColor = `color-mix(in srgb, ${this.color} 40%, transparent)`;
+        if (this.dot) {
+          this.style.backgroundColor = this.color;
+          this.style.removeProperty('color');
+        } else {
+          this.style.color = `color-mix(in srgb, ${this.color} 75%, var(--ca-text-primary))`;
+          this.style.backgroundColor = `color-mix(in srgb, ${this.color} 14%, transparent)`;
+        }
       } else {
         this.style.removeProperty('color');
         this.style.removeProperty('background-color');
-        this.style.removeProperty('border-color');
       }
     }
   }

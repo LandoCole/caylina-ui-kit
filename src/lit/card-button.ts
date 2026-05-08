@@ -14,7 +14,7 @@ export class CaCardButton extends LitElement {
       border: none;
       background: none;
       cursor: pointer;
-      border-radius: 14px;
+      border-radius: var(--ca-radius-lg);
       box-sizing: border-box;
     }
     .wrapper:focus-visible {
@@ -25,28 +25,29 @@ export class CaCardButton extends LitElement {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 40px;
+      gap: 32px;
       width: 166px;
       padding: 16px;
-      border-radius: 12px;
+      border-radius: var(--ca-radius-lg);
       border: 1px solid var(--ca-border);
       background-color: var(--ca-surface);
+      box-shadow: var(--ca-shadow-sm);
       box-sizing: border-box;
-      transition: border-color var(--ca-transition-fast), background-color var(--ca-transition-fast);
+      transition: border-color var(--ca-transition-fast), background-color var(--ca-transition-fast), box-shadow var(--ca-transition-fast);
     }
     .wrapper:hover .inner {
-      border-color: var(--ca-text-primary);
+      border-color: var(--ca-border-strong);
+      box-shadow: var(--ca-shadow-md);
     }
     .wrapper:active .inner {
-      border-color: var(--ca-text-primary);
       transform: scale(0.97);
     }
     .wrapper:focus-visible .inner {
-      border-color: var(--ca-border);
+      border-color: var(--ca-text-primary);
     }
     .inner.selected {
       background-color: var(--ca-surface-hover);
-      border: 1px solid var(--ca-text-primary);
+      border-color: var(--ca-text-primary);
     }
     .icon-slot {
       display: flex;
@@ -75,25 +76,25 @@ export class CaCardButton extends LitElement {
     }
 
     /* xs */
-    :host([size='xs']) .inner { width: 100px; gap: 16px; padding: 10px; border-radius: 8px; }
+    :host([size='xs']) .inner { width: 100px; gap: 14px; padding: 10px; border-radius: var(--ca-radius-md); }
     :host([size='xs']) .icon-slot { width: 20px; height: 20px; }
     :host([size='xs']) .icon-slot ::slotted(svg) { width: 20px; height: 20px; }
     :host([size='xs']) .label { font-size: var(--ca-font-size-xs); }
 
     /* sm */
-    :host([size='sm']) .inner { width: 130px; gap: 24px; padding: 12px; border-radius: 10px; }
+    :host([size='sm']) .inner { width: 130px; gap: 20px; padding: 12px; border-radius: var(--ca-radius-md); }
     :host([size='sm']) .icon-slot { width: 24px; height: 24px; }
     :host([size='sm']) .icon-slot ::slotted(svg) { width: 24px; height: 24px; }
     :host([size='sm']) .label { font-size: var(--ca-font-size-sm); }
 
     /* lg */
-    :host([size='lg']) .inner { width: 200px; gap: 48px; padding: 20px; border-radius: 14px; }
+    :host([size='lg']) .inner { width: 200px; gap: 40px; padding: 20px; border-radius: var(--ca-radius-lg); }
     :host([size='lg']) .icon-slot { width: 40px; height: 40px; }
     :host([size='lg']) .icon-slot ::slotted(svg) { width: 40px; height: 40px; }
     :host([size='lg']) .label { font-size: 18px; }
 
     /* xl */
-    :host([size='xl']) .inner { width: 240px; gap: 56px; padding: 24px; border-radius: 16px; }
+    :host([size='xl']) .inner { width: 240px; gap: 48px; padding: 24px; border-radius: var(--ca-radius-xl); }
     :host([size='xl']) .icon-slot { width: 48px; height: 48px; }
     :host([size='xl']) .icon-slot ::slotted(svg) { width: 48px; height: 48px; }
     :host([size='xl']) .label { font-size: 20px; }
