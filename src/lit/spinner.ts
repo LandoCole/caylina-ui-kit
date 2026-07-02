@@ -18,7 +18,7 @@ export class CaSpinner extends LitElement {
     }
     .dot {
       border-radius: 50%;
-      background-color: var(--ca-text-secondary);
+      background-color: var(--ca-color-primary);
       animation: pulse 1.4s ease-in-out infinite;
     }
     .dot:nth-child(2) { animation-delay: 0.2s; }
@@ -28,9 +28,9 @@ export class CaSpinner extends LitElement {
     .circle {
       display: block;
       border-radius: 50%;
-      border: 2px solid var(--ca-text-secondary);
-      border-top-color: transparent;
-      animation: spin 0.8s linear infinite;
+      border: 2.5px solid var(--ca-surface-active);
+      border-top-color: var(--ca-color-primary);
+      animation: spin 0.7s linear infinite;
     }
 
     /* Sizes - dots */
@@ -41,7 +41,7 @@ export class CaSpinner extends LitElement {
 
     /* Sizes - circle */
     :host([size='sm']) .circle { width: 14px; height: 14px; }
-    :host([size='md']) .circle, .circle { width: 20px; height: 20px; }
+    :host([size='md']) .circle, .circle { width: 22px; height: 22px; }
     :host([size='lg']) .circle { width: 28px; height: 28px; border-width: 3px; }
 
     @keyframes pulse {

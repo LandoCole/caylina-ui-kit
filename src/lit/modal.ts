@@ -6,17 +6,17 @@ import { classMap } from 'lit/directives/class-map.js';
 export class CaModal extends LitElement {
   static styles = css`
     :host { display: contents; }
-    .overlay { position: fixed; inset: 0; z-index: 9000; display: flex; align-items: center; justify-content: center; background-color: rgba(0,0,0,0.5); animation: overlay-fade-in 0.2s ease; }
+    .overlay { position: fixed; inset: 0; z-index: 9000; display: flex; align-items: center; justify-content: center; background-color: rgba(10,11,14,0.5); animation: overlay-fade-in 0.2s ease; }
     .panel { position: relative; background-color: var(--ca-surface-elevated); border-radius: var(--ca-radius-lg); box-shadow: var(--ca-shadow-lg); max-height: 90vh; overflow-y: auto; animation: panel-slide-up 0.25s ease; box-sizing: border-box; font-family: var(--ca-font-family); color: var(--ca-text-primary); }
     .sm { width: 90%; max-width: 400px; }
     .md { width: 90%; max-width: 560px; }
     .lg { width: 90%; max-width: 720px; }
     .full { width: 100%; height: 100%; max-width: none; max-height: none; border-radius: 0; }
-    .header { display: flex; align-items: center; justify-content: space-between; padding: var(--ca-space-md) var(--ca-space-lg); font-weight: var(--ca-font-weight-semibold); font-size: var(--ca-font-size-lg); }
-    .header .close-btn { background: none; border: none; cursor: pointer; padding: 4px; color: var(--ca-text-secondary); border-radius: var(--ca-radius-sm); line-height: 0; }
+    .header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--ca-border); font-weight: var(--ca-font-weight-semibold); font-size: var(--ca-font-size-md); }
+    .header .close-btn { background: none; border: none; cursor: pointer; padding: 4px; color: var(--ca-text-muted); border-radius: var(--ca-radius-sm); line-height: 0; }
     .header .close-btn:hover { color: var(--ca-text-primary); background: var(--ca-surface-hover); }
-    .body { padding: var(--ca-space-lg); }
-    .footer { display: flex; align-items: center; justify-content: flex-end; gap: var(--ca-space-sm); padding: var(--ca-space-md) var(--ca-space-lg); }
+    .body { padding: 16px; font-size: var(--ca-font-size-sm); line-height: 1.55; color: var(--ca-text-secondary); }
+    .footer { display: flex; align-items: center; justify-content: flex-end; gap: var(--ca-space-sm); padding: 12px 16px; border-top: 1px solid var(--ca-border); }
     .footer ::slotted(*) { margin: 0; }
     @keyframes overlay-fade-in { from { opacity: 0; } to { opacity: 1; } }
     @keyframes panel-slide-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }

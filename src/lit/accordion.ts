@@ -12,11 +12,17 @@ export interface AccordionItem {
 export class CaAccordion extends LitElement {
   static styles = css`
     .accordion {
-      --_border: var(--ca-accordion-border, 1px solid var(--ca-divider));
+      --_border: var(--ca-accordion-border, 1px solid var(--ca-border));
       width: 100%;
+      border: 1px solid var(--ca-border);
+      border-radius: var(--ca-radius-md);
+      overflow: hidden;
     }
     .item {
-      border-bottom: var(--_border);
+      border-top: var(--_border);
+    }
+    .item:first-child {
+      border-top: none;
     }
     .trigger {
       display: flex;
@@ -24,28 +30,31 @@ export class CaAccordion extends LitElement {
       justify-content: space-between;
       gap: 16px;
       width: 100%;
-      padding: 24px 0;
+      padding: 14px 16px;
       background: none;
       border: none;
       cursor: pointer;
       font-family: var(--ca-font-family);
-      font-weight: 400;
-      font-size: 22px;
-      line-height: 1;
+      font-weight: var(--ca-font-weight-medium);
+      font-size: var(--ca-font-size-md);
+      line-height: 1.3;
       color: var(--ca-text-primary);
       text-align: left;
+      transition: background-color var(--ca-transition-fast);
+    }
+    .trigger:hover {
+      background-color: var(--ca-surface-hover);
     }
     .trigger:focus-visible {
-      outline: 2px solid var(--ca-text-primary);
-      outline-offset: 2px;
-      border-radius: var(--ca-radius-sm);
+      outline: 2px solid var(--ca-color-primary);
+      outline-offset: -2px;
     }
     .chevron {
       flex-shrink: 0;
       width: 16px;
       height: 16px;
-      transition: transform 0.25s ease;
-      color: var(--ca-text-primary);
+      transition: transform 0.2s ease;
+      color: var(--ca-text-muted);
     }
     .chevron.open {
       transform: rotate(180deg);
@@ -64,7 +73,10 @@ export class CaAccordion extends LitElement {
       opacity: 1;
     }
     .panel-content {
-      padding: 0 0 32px 0;
+      padding: 0 16px 16px;
+      font-size: var(--ca-font-size-sm);
+      line-height: 1.55;
+      color: var(--ca-text-secondary);
     }
   `;
 

@@ -11,7 +11,7 @@ export class CaBadge extends LitElement {
       gap: 4px;
       border-radius: var(--ca-radius-full);
       font-family: var(--ca-font-family);
-      font-weight: var(--ca-font-weight-medium, 500);
+      font-weight: var(--ca-font-weight-semibold);
       line-height: 1;
       white-space: nowrap;
       box-sizing: border-box;
@@ -29,10 +29,10 @@ export class CaBadge extends LitElement {
       padding: 0 8px;
     }
     :host, :host([size='md']) {
-      font-size: var(--ca-font-size-xs);
-      min-width: 24px;
-      height: 24px;
-      padding: 0 10px;
+      font-size: 12px;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 9px;
     }
 
     /* Dot mode */

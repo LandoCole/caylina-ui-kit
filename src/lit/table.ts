@@ -84,9 +84,9 @@ export class CaTable extends LitElement {
     /* ── Card wrapper ── */
     .wrapper {
       background-color: var(--ca-surface);
-      border: 1px solid var(--ca-border);
-      border-radius: var(--ca-radius-lg);
-      overflow: hidden;
+      border-top: 1px solid var(--ca-border);
+      border-bottom: 1px solid var(--ca-border);
+      width: 100%;
     }
 
     /* ── Card header ── */
