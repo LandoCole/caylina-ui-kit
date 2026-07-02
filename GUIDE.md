@@ -2874,7 +2874,7 @@ All table features work together. Here's a fully-loaded example:
 ### Custom font
 
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   --ca-font-family: 'Inter', sans-serif;
