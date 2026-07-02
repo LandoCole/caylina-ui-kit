@@ -43,10 +43,7 @@ export class CaButton extends LitElement {
     .button.primary {
       background-color: var(--ca-color-primary);
       color: var(--ca-color-on-primary);
-      box-shadow:
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.14),
-        inset 0 -1px 0 0 rgba(0, 0, 0, 0.18),
-        var(--ca-shadow-sm);
+      box-shadow: var(--ca-shadow-sm);
     }
     .button.primary:hover:not(:disabled):not(.loading) {
       background-color: var(--ca-color-primary-hover);

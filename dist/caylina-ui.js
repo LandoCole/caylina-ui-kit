@@ -703,10 +703,7 @@ Me.styles = b`
     .button.primary {
       background-color: var(--ca-color-primary);
       color: var(--ca-color-on-primary);
-      box-shadow:
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.14),
-        inset 0 -1px 0 0 rgba(0, 0, 0, 0.18),
-        var(--ca-shadow-sm);
+      box-shadow: var(--ca-shadow-sm);
     }
     .button.primary:hover:not(:disabled):not(.loading) {
       background-color: var(--ca-color-primary-hover);
@@ -8447,7 +8444,7 @@ M.styles = b`
       font-weight: 400;
       line-height: 20px;
       white-space: nowrap;
-      box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.25);
+      box-shadow: var(--ca-shadow-menu);
     }
 
     /* Popover */
@@ -8463,8 +8460,7 @@ M.styles = b`
       background-color: var(--ca-surface-elevated);
       border: 1px solid var(--ca-border);
       border-radius: var(--ca-radius-lg);
-      box-shadow: 0px 100px 80px 0px rgba(0, 0, 0, 0.07),
-        0px 41.778px 33.422px 0px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--ca-shadow-menu);
     }
     .popover-link {
       display: flex;
@@ -8519,8 +8515,7 @@ M.styles = b`
       background-color: var(--ca-surface-elevated);
       border: 1px solid var(--ca-border);
       border-radius: var(--ca-radius-lg);
-      box-shadow: 0px 100px 80px 0px rgba(0, 0, 0, 0.07),
-        0px 41.778px 33.422px 0px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--ca-shadow-menu);
     }
     /* Profile popover — collapsed mode (to the right) */
     :host([collapsed]) .profile-popover {

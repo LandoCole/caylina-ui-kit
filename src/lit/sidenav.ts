@@ -444,7 +444,7 @@ export class CaSidenav extends LitElement {
       font-weight: 400;
       line-height: 20px;
       white-space: nowrap;
-      box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.25);
+      box-shadow: var(--ca-shadow-menu);
     }
 
     /* Popover */
@@ -460,8 +460,7 @@ export class CaSidenav extends LitElement {
       background-color: var(--ca-surface-elevated);
       border: 1px solid var(--ca-border);
       border-radius: var(--ca-radius-lg);
-      box-shadow: 0px 100px 80px 0px rgba(0, 0, 0, 0.07),
-        0px 41.778px 33.422px 0px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--ca-shadow-menu);
     }
     .popover-link {
       display: flex;
@@ -516,8 +515,7 @@ export class CaSidenav extends LitElement {
       background-color: var(--ca-surface-elevated);
       border: 1px solid var(--ca-border);
       border-radius: var(--ca-radius-lg);
-      box-shadow: 0px 100px 80px 0px rgba(0, 0, 0, 0.07),
-        0px 41.778px 33.422px 0px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--ca-shadow-menu);
     }
     /* Profile popover — collapsed mode (to the right) */
     :host([collapsed]) .profile-popover {
