@@ -590,7 +590,7 @@
 
   <!-- ─── Table (Expandable) ─── -->
   <h2>Table — Expandable Rows</h2>
-  <ca-table id="demo-table-expand" heading="Project Tasks" supporting-text="Tasks with nested subtasks" expandable></ca-table>
+  <ca-table id="demo-table-expand" heading="Project Tasks" supporting-text="Tasks with multi-level nested subtasks" expandable></ca-table>
   <script type="module">
     const expandTable = document.getElementById('demo-table-expand');
     expandTable.columns = [
@@ -604,7 +604,13 @@
         id: 't1', task: 'Design landing page', assignee: 'Alice', status: 'In Progress', priority: 'High',
         children: [
           { id: 't1-1', task: 'Create wireframes', assignee: 'Alice', status: 'Done', priority: 'High' },
-          { id: 't1-2', task: 'Design hero section', assignee: 'Alice', status: 'In Progress', priority: 'High' },
+          {
+            id: 't1-2', task: 'Design hero section', assignee: 'Alice', status: 'In Progress', priority: 'High',
+            children: [
+              { id: 't1-2-1', task: 'Choose hero imagery', assignee: 'Alice', status: 'Done', priority: 'Medium' },
+              { id: 't1-2-2', task: 'Write headline copy', assignee: 'Grace', status: 'In Progress', priority: 'High' },
+            ],
+          },
           { id: 't1-3', task: 'Design footer', assignee: 'Bob', status: 'To Do', priority: 'Medium' },
         ],
       },

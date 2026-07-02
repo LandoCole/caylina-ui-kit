@@ -112,14 +112,15 @@ export class CaTaskTable extends LitElement {
     }));
   }
 
-  /* ── Collect all rows (including children) across all groups ── */
+  /* ── Collect all rows (including nested children, any depth) across all groups ── */
   private get _allRows(): TaskTableRow[] {
     const rows: TaskTableRow[] = [];
+    const walk = (r: TaskTableRow) => {
+      rows.push(r);
+      if (r.children) for (const c of r.children) walk(c);
+    };
     for (const g of this.groups) {
-      for (const r of g.rows) {
-        rows.push(r);
-        if (r.children) rows.push(...r.children);
-      }
+      for (const r of g.rows) walk(r);
     }
     return rows;
   }

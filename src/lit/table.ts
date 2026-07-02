@@ -491,8 +491,11 @@ export class CaTable extends LitElement {
     .grid-row.child-row:hover .cell {
       background-color: var(--ca-surface-hover);
     }
-    .child-indent {
-      padding-left: 28px;
+    /* .cell.child-indent matches the specificity of .grid-row .cell so the
+       depth indent isn't overridden by the base cell padding shorthand. */
+    .cell.child-indent {
+      /* depth 1 = 28px; each further level adds 16px */
+      padding-left: calc(28px + (var(--_depth, 1) - 1) * 16px);
     }
 
     /* Row height variants */
@@ -1513,12 +1516,7 @@ export class CaTable extends LitElement {
                   <!-- Rows -->
                   ${group.rows.length === 0
                     ? html`<div class="empty" style="grid-column:1/-1">No tasks in this group</div>`
-                    : group.rows.map((row, i) => html`
-                        ${this._renderRow(row, i, hasActions)}
-                        ${this.expandable && (row.children?.length ?? 0) > 0 && this.expandedIds.includes(row.id)
-                          ? row.children!.map((child, ci) => this._renderChildRow(child, ci, hasActions))
-                          : nothing}
-                      `)}
+                    : group.rows.map((row, i) => this._renderRowTree(row, i, hasActions, 0))}
                 </div>
                 ${this._renderInlineAdd(group.id)}
               `
@@ -1656,17 +1654,25 @@ export class CaTable extends LitElement {
         <!-- Data rows -->
         ${this.rows.length === 0
           ? html`<div class="empty" style="grid-column:1/-1">No data</div>`
-          : this.rows.map((row, i) => html`
-              ${this._renderRow(row, i, hasActions)}
-              ${this.expandable && (row.children?.length ?? 0) > 0 && this.expandedIds.includes(row.id)
-                ? row.children!.map((child, ci) => this._renderChildRow(child, ci, hasActions))
-                : nothing}
-            `)}
+          : this.rows.map((row, i) => this._renderRowTree(row, i, hasActions, 0))}
       </div>
     `;
   }
 
-  private _renderRow(row: TableRow, index: number, hasActions: boolean) {
+  /** Render a row plus, when expanded, its descendants — recursive to any depth. */
+  private _renderRowTree(row: TableRow, index: number, hasActions: boolean, depth = 0): TemplateResult {
+    const hasChildren = this.expandable && (row.children?.length ?? 0) > 0;
+    const isExpanded = this.expandedIds.includes(row.id);
+    return html`
+      ${this._renderRow(row, index, hasActions, depth)}
+      ${hasChildren && isExpanded
+        ? row.children!.map((child, ci) => this._renderRowTree(child, ci, hasActions, depth + 1))
+        : nothing}
+    `;
+  }
+
+  private _renderRow(row: TableRow, index: number, hasActions: boolean, depth = 0) {
+    const isChild = depth > 0;
     const isSelected = this.selectedIds.includes(row.id);
     const isDragging = this._dragRowId === row.id;
     const isDragOverAbove = this._dragOverRowId === row.id && this._dragOverPosition === 'above';
@@ -1679,6 +1685,7 @@ export class CaTable extends LitElement {
       <div
         class=${classMap({
           'grid-row': true,
+          'child-row': isChild,
           selected: isSelected,
           dragging: isDragging,
           'drag-over-above': isDragOverAbove,
@@ -1706,7 +1713,9 @@ export class CaTable extends LitElement {
             `
           : nothing}
         ${this.draggable
-          ? html`
+          ? isChild
+            ? html`<div class="cell cell-checkbox"></div>`
+            : html`
               <div class="cell cell-checkbox">
                 <span
                   class="drag-handle"
@@ -1722,19 +1731,26 @@ export class CaTable extends LitElement {
             `
           : nothing}
         ${this.selectable
-          ? html`
+          ? isChild
+            ? html`<div class="cell cell-checkbox"></div>`
+            : html`
               <div class="cell cell-checkbox">
                 <ca-checkbox size="xs" ?checked=${isSelected} @ca-change=${() => this._handleSelectRow(row)}></ca-checkbox>
               </div>
             `
           : nothing}
         ${this.columns.map(
-          (col) => html`
-            <div class="cell">${this._renderCell(col, row)}</div>
+          (col, ci) => html`
+            <div
+              class="cell ${isChild && ci === 0 ? 'child-indent' : ''}"
+              style=${isChild && ci === 0 ? `--_depth:${depth}` : nothing}
+            >${this._renderCell(col, row)}</div>
           `
         )}
         ${hasActions
-          ? html`
+          ? isChild
+            ? html`<div class="cell cell-actions"></div>`
+            : html`
               <div class="cell cell-actions">
                 <button class="actions-btn" @click=${(e: Event) => this._toggleMenu(e, row.id)}>
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -1755,22 +1771,6 @@ export class CaTable extends LitElement {
               </div>
             `
           : nothing}
-      </div>
-    `;
-  }
-
-  private _renderChildRow(child: TableRow, _index: number, hasActions: boolean) {
-    return html`
-      <div class="grid-row child-row" data-row-id=${child.id}>
-        ${this.expandable ? html`<div class="cell cell-expand"></div>` : nothing}
-        ${this.draggable ? html`<div class="cell"></div>` : nothing}
-        ${this.selectable ? html`<div class="cell"></div>` : nothing}
-        ${this.columns.map(
-          (col, ci) => html`
-            <div class="cell ${ci === 0 ? 'child-indent' : ''}">${this._renderCell(col, child)}</div>
-          `
-        )}
-        ${hasActions ? html`<div class="cell"></div>` : nothing}
       </div>
     `;
   }
