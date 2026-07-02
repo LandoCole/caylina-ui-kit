@@ -90,6 +90,20 @@ focus rings use `--ca-shadow-focus`; control heights/radii match; menu/popover
 surfaces use `--ca-shadow-menu`; small floating pills use `--ca-shadow-chip`.
 Fix only genuine gaps; do not restructure markup.
 
+## 3.4 Nested / expandable table rows (enhancement)
+
+**Current state:** `ca-table` already ships the nested-row *scaffold* — `TableRow.children?: TableRow[]`, the `expandable` attribute, `expandedIds` property, the `ca-expand` event, and `.child-row` / `.child-indent` styling. But it is **single-level only**: `_renderChildRow` is a dead-end — child rows never render their own expand toggle, grandchildren are never emitted, and the indent is hardcoded for one level. `ca-task-table` delegates all nesting to `ca-table`, and `index.html` already demos one-level children.
+
+**Enhancement (fully backwards compatible — no public API change):** make child rendering **recursive to arbitrary depth**.
+
+- **Public surface unchanged:** `TableRow.children`, `expandable`, `expandedIds`, and the `ca-expand` event keep identical shapes and semantics. Existing single-level data renders the same.
+- **Recursion:** replace the flat `row → _renderChildRow` pass with a `_renderRowTree(row, depth)` that renders the row, then — when the row is in `expandedIds` — recurses into `row.children`, incrementing `depth`. Any row at any depth that itself has `children` gets an expand toggle; leaf rows do not (same rule as today, now applied at every level).
+- **Indentation by depth:** first-column indent = `depth × step` (via an inline `padding-left` / CSS custom property) instead of the hardcoded single-level `.child-indent`. Level-1 depth reproduces the current 28px so existing output is visually unchanged.
+- **`ca-task-table`:** benefits automatically (it delegates). Its internal `_allRows`/select-all helper is made recursive so select-all still covers all descendants — internal only, no API change.
+- **Demo:** extend the existing `#demo-table-expand` in `index.html` with a grandchild level to exercise multi-level nesting.
+
+**Decision — extend, don't fork:** the existing component already owns the nesting contract; a new `<ca-tree-table>` would duplicate the entire table surface and split the API. Extending `ca-table` keeps one component and honors the backwards-compat constraint.
+
 ## 4. Out of scope
 
 - No public API changes of any kind (backwards-compatibility constraint).
