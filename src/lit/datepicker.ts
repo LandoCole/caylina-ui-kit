@@ -44,9 +44,9 @@ export class CaDatepicker extends LitElement {
     :host {
       --_bg: var(--ca-datepicker-bg, var(--ca-surface));
       --_border: var(--ca-datepicker-border, var(--ca-border-input));
-      --_radius: var(--ca-datepicker-radius, var(--ca-radius-md));
+      --_radius: var(--ca-datepicker-radius, var(--ca-radius-sm));
       --_color: var(--ca-datepicker-color, var(--ca-text-primary));
-      --_focus-border: var(--ca-datepicker-focus-border, var(--ca-text-primary));
+      --_focus-border: var(--ca-datepicker-focus-border, var(--ca-color-primary));
       --_day-size: var(--ca-datepicker-day-size, 36px);
       --_day-hover-bg: var(--ca-datepicker-day-hover-bg, var(--ca-surface-hover));
       --_selected-bg: var(--ca-datepicker-selected-bg, var(--ca-color-primary));
@@ -139,7 +139,7 @@ export class CaDatepicker extends LitElement {
       min-height: var(--ca-control-height-xs);
       padding: 2px 8px;
       font-size: var(--ca-font-size-xs);
-      border-radius: var(--ca-radius-md);
+      border-radius: var(--ca-radius-sm);
       gap: 6px;
     }
     :host([size='xs']) .label { font-size: 9px; }
@@ -147,7 +147,7 @@ export class CaDatepicker extends LitElement {
       min-height: var(--ca-control-height-sm);
       padding: 4px 10px;
       font-size: var(--ca-font-size-xs);
-      border-radius: var(--ca-radius-md);
+      border-radius: var(--ca-radius-sm);
       gap: 8px;
     }
     :host([size='sm']) .label { font-size: 10px; }
@@ -155,7 +155,7 @@ export class CaDatepicker extends LitElement {
       min-height: var(--ca-control-height-lg);
       padding: 8px 14px;
       font-size: var(--ca-font-size-md);
-      border-radius: var(--ca-radius-md);
+      border-radius: var(--ca-radius-sm);
       gap: 12px;
     }
     :host([size='lg']) .label { font-size: 13px; }
@@ -163,7 +163,7 @@ export class CaDatepicker extends LitElement {
       min-height: var(--ca-control-height-xl);
       padding: 10px 16px;
       font-size: var(--ca-font-size-lg);
-      border-radius: var(--ca-radius-lg);
+      border-radius: var(--ca-radius-sm);
       gap: 14px;
     }
     :host([size='xl']) .label { font-size: 14px; }

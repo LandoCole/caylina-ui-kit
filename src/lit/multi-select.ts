@@ -38,7 +38,7 @@ export class CaMultiSelect extends LitElement {
     }
     .field:hover { border-color: var(--ca-text-primary); }
     .field:focus-visible,
-    .field:focus { outline: none; border: 2px solid var(--ca-text-primary); }
+    .field:focus { outline: none; border-color: var(--ca-color-primary); box-shadow: var(--ca-shadow-focus); }
     .field.loading { justify-content: center; pointer-events: none; }
 
     /* ── XS ── */

@@ -26,7 +26,8 @@ export class CaTextarea extends LitElement {
       transition: border-color 0.15s ease;
     }
     .field:focus-within {
-      border: 2px solid var(--ca-text-primary);
+      border-color: var(--ca-color-primary);
+      box-shadow: var(--ca-shadow-focus);
     }
     :host([error]) .field {
       border-color: var(--ca-text-danger);

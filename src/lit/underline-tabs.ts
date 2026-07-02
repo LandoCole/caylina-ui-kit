@@ -27,10 +27,10 @@ export class CaUnderlineTabs extends LitElement {
       border: none;
       cursor: pointer;
       font-family: var(--ca-font-family);
-      font-size: 14px;
+      font-size: var(--ca-font-size-sm);
       line-height: 1;
       color: var(--ca-text-muted);
-      font-weight: 400;
+      font-weight: var(--ca-font-weight-medium);
       position: relative;
       box-sizing: border-box;
       border-radius: var(--ca-radius-md);

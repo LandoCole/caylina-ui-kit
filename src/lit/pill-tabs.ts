@@ -63,12 +63,13 @@ export class CaPillTabs extends LitElement {
 
     /* Filled variant — preserves the legacy segmented-control look */
     :host([filled]) {
-      padding: 4px;
+      padding: 3px;
       background-color: var(--ca-surface-active);
-      border-radius: var(--ca-radius-full);
+      border-radius: var(--ca-radius-md);
     }
     :host([filled]) .tab {
       border-color: transparent;
+      border-radius: var(--ca-radius-sm);
     }
     :host([filled]) .tab:hover {
       background-color: var(--ca-surface);

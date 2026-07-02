@@ -40,7 +40,8 @@ export class CaSelect extends LitElement {
     .field:focus-visible,
     .field:focus {
       outline: none;
-      border: 2px solid var(--ca-text-primary);
+      border-color: var(--ca-color-primary);
+      box-shadow: var(--ca-shadow-focus);
     }
     :host([borderless]) .field {
       border-color: transparent;
@@ -51,7 +52,8 @@ export class CaSelect extends LitElement {
     }
     :host([borderless]) .field:focus-visible,
     :host([borderless]) .field:focus {
-      border: 2px solid var(--ca-text-primary);
+      border-color: var(--ca-color-primary);
+      box-shadow: var(--ca-shadow-focus);
     }
     .field.loading {
       justify-content: center;

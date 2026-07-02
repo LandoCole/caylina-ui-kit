@@ -930,14 +930,16 @@ V.styles = b`
       font-size: var(--ca-font-size-md);
     }
     .field:focus-within {
-      border: 2px solid var(--ca-text-primary);
+      border-color: var(--ca-color-primary);
+      box-shadow: var(--ca-shadow-focus);
     }
     :host([borderless]) .field {
       border-color: transparent;
       background-color: transparent;
     }
     :host([borderless]) .field:focus-within {
-      border: 2px solid var(--ca-text-primary);
+      border-color: var(--ca-color-primary);
+      box-shadow: var(--ca-shadow-focus);
     }
     .field.has-error {
       border-color: var(--ca-text-danger);
@@ -2626,10 +2628,10 @@ mt.styles = b`
       border: none;
       cursor: pointer;
       font-family: var(--ca-font-family);
-      font-size: 14px;
+      font-size: var(--ca-font-size-sm);
       line-height: 1;
       color: var(--ca-text-muted);
-      font-weight: 400;
+      font-weight: var(--ca-font-weight-medium);
       position: relative;
       box-sizing: border-box;
       border-radius: var(--ca-radius-md);
@@ -2777,12 +2779,13 @@ Je.styles = b`
 
     /* Filled variant — preserves the legacy segmented-control look */
     :host([filled]) {
-      padding: 4px;
+      padding: 3px;
       background-color: var(--ca-surface-active);
-      border-radius: var(--ca-radius-full);
+      border-radius: var(--ca-radius-md);
     }
     :host([filled]) .tab {
       border-color: transparent;
+      border-radius: var(--ca-radius-sm);
     }
     :host([filled]) .tab:hover {
       background-color: var(--ca-surface);
@@ -5979,9 +5982,9 @@ z.styles = b`
     :host {
       --_bg: var(--ca-datepicker-bg, var(--ca-surface));
       --_border: var(--ca-datepicker-border, var(--ca-border-input));
-      --_radius: var(--ca-datepicker-radius, var(--ca-radius-md));
+      --_radius: var(--ca-datepicker-radius, var(--ca-radius-sm));
       --_color: var(--ca-datepicker-color, var(--ca-text-primary));
-      --_focus-border: var(--ca-datepicker-focus-border, var(--ca-text-primary));
+      --_focus-border: var(--ca-datepicker-focus-border, var(--ca-color-primary));
       --_day-size: var(--ca-datepicker-day-size, 36px);
       --_day-hover-bg: var(--ca-datepicker-day-hover-bg, var(--ca-surface-hover));
       --_selected-bg: var(--ca-datepicker-selected-bg, var(--ca-color-primary));
@@ -6074,7 +6077,7 @@ z.styles = b`
       min-height: var(--ca-control-height-xs);
       padding: 2px 8px;
       font-size: var(--ca-font-size-xs);
-      border-radius: var(--ca-radius-md);
+      border-radius: var(--ca-radius-sm);
       gap: 6px;
     }
     :host([size='xs']) .label { font-size: 9px; }
@@ -6082,7 +6085,7 @@ z.styles = b`
       min-height: var(--ca-control-height-sm);
       padding: 4px 10px;
       font-size: var(--ca-font-size-xs);
-      border-radius: var(--ca-radius-md);
+      border-radius: var(--ca-radius-sm);
       gap: 8px;
     }
     :host([size='sm']) .label { font-size: 10px; }
@@ -6090,7 +6093,7 @@ z.styles = b`
       min-height: var(--ca-control-height-lg);
       padding: 8px 14px;
       font-size: var(--ca-font-size-md);
-      border-radius: var(--ca-radius-md);
+      border-radius: var(--ca-radius-sm);
       gap: 12px;
     }
     :host([size='lg']) .label { font-size: 13px; }
@@ -6098,7 +6101,7 @@ z.styles = b`
       min-height: var(--ca-control-height-xl);
       padding: 10px 16px;
       font-size: var(--ca-font-size-lg);
-      border-radius: var(--ca-radius-lg);
+      border-radius: var(--ca-radius-sm);
       gap: 14px;
     }
     :host([size='xl']) .label { font-size: 14px; }
@@ -6985,7 +6988,8 @@ D.styles = b`
     .field:focus-visible,
     .field:focus {
       outline: none;
-      border: 2px solid var(--ca-text-primary);
+      border-color: var(--ca-color-primary);
+      box-shadow: var(--ca-shadow-focus);
     }
     :host([borderless]) .field {
       border-color: transparent;
@@ -6996,7 +7000,8 @@ D.styles = b`
     }
     :host([borderless]) .field:focus-visible,
     :host([borderless]) .field:focus {
-      border: 2px solid var(--ca-text-primary);
+      border-color: var(--ca-color-primary);
+      box-shadow: var(--ca-shadow-focus);
     }
     .field.loading {
       justify-content: center;
@@ -7452,7 +7457,7 @@ S.styles = b`
     }
     .field:hover { border-color: var(--ca-text-primary); }
     .field:focus-visible,
-    .field:focus { outline: none; border: 2px solid var(--ca-text-primary); }
+    .field:focus { outline: none; border-color: var(--ca-color-primary); box-shadow: var(--ca-shadow-focus); }
     .field.loading { justify-content: center; pointer-events: none; }
 
     /* ── XS ── */
@@ -8821,7 +8826,8 @@ T.styles = b`
       transition: border-color 0.15s ease;
     }
     .field:focus-within {
-      border: 2px solid var(--ca-text-primary);
+      border-color: var(--ca-color-primary);
+      box-shadow: var(--ca-shadow-focus);
     }
     :host([error]) .field {
       border-color: var(--ca-text-danger);

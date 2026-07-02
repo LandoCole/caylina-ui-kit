@@ -40,14 +40,16 @@ export class CaInput extends LitElement {
       font-size: var(--ca-font-size-md);
     }
     .field:focus-within {
-      border: 2px solid var(--ca-text-primary);
+      border-color: var(--ca-color-primary);
+      box-shadow: var(--ca-shadow-focus);
     }
     :host([borderless]) .field {
       border-color: transparent;
       background-color: transparent;
     }
     :host([borderless]) .field:focus-within {
-      border: 2px solid var(--ca-text-primary);
+      border-color: var(--ca-color-primary);
+      box-shadow: var(--ca-shadow-focus);
     }
     .field.has-error {
       border-color: var(--ca-text-danger);
