@@ -20,7 +20,7 @@ export class CaCard extends LitElement {
     :host([padding='lg']) { padding: 32px; }
 
     :host([elevated]) {
-      box-shadow: var(--ca-shadow-md);
+      box-shadow: var(--ca-shadow-sm);
     }
     :host([flat]) {
       box-shadow: none;
@@ -31,7 +31,7 @@ export class CaCard extends LitElement {
     }
     :host([interactive]:hover) {
       border-color: var(--ca-border-strong);
-      box-shadow: var(--ca-shadow-md);
+      box-shadow: var(--ca-shadow-sm);
     }
   `;
 

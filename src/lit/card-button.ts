@@ -37,7 +37,7 @@ export class CaCardButton extends LitElement {
     }
     .wrapper:hover .inner {
       border-color: var(--ca-border-strong);
-      box-shadow: var(--ca-shadow-md);
+      box-shadow: var(--ca-shadow-sm);
     }
     .wrapper:active .inner {
       transform: scale(0.97);

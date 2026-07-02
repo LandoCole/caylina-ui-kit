@@ -31,7 +31,7 @@ export class CaInput extends LitElement {
       align-items: center;
       gap: 8px;
       border: 1px solid var(--ca-border-input);
-      border-radius: var(--ca-radius-md);
+      border-radius: var(--ca-radius-sm);
       background-color: var(--ca-surface);
       transition: border-color var(--ca-transition-fast);
       box-sizing: border-box;
@@ -111,7 +111,7 @@ export class CaInput extends LitElement {
       min-height: var(--ca-control-height-xs);
       padding: 2px 8px;
       font-size: var(--ca-font-size-xs);
-      border-radius: var(--ca-radius-md);
+      border-radius: var(--ca-radius-sm);
       gap: 6px;
     }
     :host([size='xs']) .label { font-size: 9px; }
@@ -120,7 +120,7 @@ export class CaInput extends LitElement {
       min-height: var(--ca-control-height-sm);
       padding: 4px 10px;
       font-size: var(--ca-font-size-xs);
-      border-radius: var(--ca-radius-md);
+      border-radius: var(--ca-radius-sm);
     }
     :host([size='sm']) .label { font-size: 10px; }
     /* Size: lg */
@@ -128,7 +128,7 @@ export class CaInput extends LitElement {
       min-height: var(--ca-control-height-lg);
       padding: 8px 14px;
       font-size: var(--ca-font-size-md);
-      border-radius: var(--ca-radius-md);
+      border-radius: var(--ca-radius-sm);
     }
     :host([size='lg']) .label { font-size: 13px; }
     /* Size: xl */
@@ -136,7 +136,7 @@ export class CaInput extends LitElement {
       min-height: var(--ca-control-height-xl);
       padding: 10px 16px;
       font-size: var(--ca-font-size-lg);
-      border-radius: var(--ca-radius-lg);
+      border-radius: var(--ca-radius-sm);
       gap: 10px;
     }
     :host([size='xl']) .label { font-size: 14px; }

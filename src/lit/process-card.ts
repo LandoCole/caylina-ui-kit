@@ -25,7 +25,7 @@ export class CaProcessCard extends LitElement {
                   box-shadow var(--ca-transition-fast);
     }
     .card.expanded {
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      box-shadow: var(--ca-shadow-sm);
     }
     .card.status-pending {
       opacity: 0.55;
@@ -213,7 +213,7 @@ export class CaProcessCard extends LitElement {
     /* ── Dark mode ── */
     :host([data-theme='dark']) .card.expanded,
     :host-context([data-theme='dark']) .card.expanded {
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: var(--ca-shadow-sm);
     }
   `;
 

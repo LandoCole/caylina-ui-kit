@@ -36,7 +36,7 @@ export class CaKanbanCard extends LitElement {
       font-family: var(--ca-font-family);
     }
     .card:hover {
-      box-shadow: var(--ca-shadow-md);
+      box-shadow: var(--ca-shadow-sm);
       border-color: var(--ca-border-strong);
     }
     .card.overdue {

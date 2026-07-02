@@ -21,7 +21,7 @@ export class CaTextarea extends LitElement {
     }
     .field {
       border: 1px solid var(--ca-border-input);
-      border-radius: var(--ca-radius-md);
+      border-radius: var(--ca-radius-sm);
       background-color: var(--ca-surface);
       transition: border-color 0.15s ease;
     }
@@ -84,7 +84,7 @@ export class CaTextarea extends LitElement {
       padding: 6px 8px;
       font-size: var(--ca-font-size-xs);
     }
-    :host([size='xs']) .field { border-radius: 6px; }
+    :host([size='xs']) .field { border-radius: var(--ca-radius-sm); }
     :host([size='xs']) .label { font-size: 9px; padding: 6px 8px 0 8px; }
 
     /* Size: sm */
@@ -92,7 +92,7 @@ export class CaTextarea extends LitElement {
       padding: 8px 10px;
       font-size: var(--ca-font-size-xs);
     }
-    :host([size='sm']) .field { border-radius: 6px; }
+    :host([size='sm']) .field { border-radius: var(--ca-radius-sm); }
     :host([size='sm']) .label { font-size: 10px; padding: 8px 10px 0 10px; }
 
     /* Size: lg */
@@ -100,7 +100,7 @@ export class CaTextarea extends LitElement {
       padding: 14px 14px;
       font-size: var(--ca-font-size-lg);
     }
-    :host([size='lg']) .field { border-radius: 10px; }
+    :host([size='lg']) .field { border-radius: var(--ca-radius-sm); }
     :host([size='lg']) .label { font-size: 13px; padding: 14px 14px 0 14px; }
 
     /* Size: xl */
@@ -108,7 +108,7 @@ export class CaTextarea extends LitElement {
       padding: 18px 16px;
       font-size: 20px;
     }
-    :host([size='xl']) .field { border-radius: 12px; }
+    :host([size='xl']) .field { border-radius: var(--ca-radius-sm); }
     :host([size='xl']) .label { font-size: 14px; padding: 18px 16px 0 16px; }
 
     /* Reduce textarea top padding when label is present */
