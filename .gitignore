@@ -1,3 +1,7 @@
 node_modules/
 .vite/
 .DS_Store
+
+# Unrelated vendored app / tooling caches — not part of the UI kit
+worklenz-main/
+.superpowers/
