@@ -172,8 +172,9 @@ export declare class CaTable extends LitElement {
     private _renderHeader;
     private _renderToolbar;
     private _renderGrid;
+    /** Render a row plus, when expanded, its descendants — recursive to any depth. */
+    private _renderRowTree;
     private _renderRow;
-    private _renderChildRow;
     private _renderPagination;
 }
 declare global {
