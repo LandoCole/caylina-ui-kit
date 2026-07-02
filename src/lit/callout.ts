@@ -52,32 +52,32 @@ export class CaCallout extends LitElement {
 
     /* Tone variants — tinted soft backgrounds with matching icon color */
     :host([tone='warning']) .callout {
-      background-color: var(--ca-color-priority-medium-bg, #F8EFD7);
+      background-color: var(--ca-warning-bg);
       border-color: color-mix(in srgb, var(--ca-color-warning) 30%, transparent);
     }
     :host([tone='warning']) .icon-slot {
-      color: var(--ca-color-priority-medium-fg, var(--ca-color-warning));
+      color: var(--ca-warning-fg);
     }
     :host([tone='success']) .callout {
-      background-color: var(--ca-color-status-done-bg, #E0F2E7);
+      background-color: var(--ca-success-bg);
       border-color: color-mix(in srgb, var(--ca-color-success) 25%, transparent);
     }
     :host([tone='success']) .icon-slot {
-      color: var(--ca-color-status-done-fg, var(--ca-color-success));
+      color: var(--ca-success-fg);
     }
     :host([tone='danger']) .callout {
-      background-color: var(--ca-color-priority-urgent-bg, #FBE5E5);
+      background-color: var(--ca-danger-bg);
       border-color: color-mix(in srgb, var(--ca-color-danger) 25%, transparent);
     }
     :host([tone='danger']) .icon-slot {
-      color: var(--ca-color-priority-urgent-fg, var(--ca-color-danger));
+      color: var(--ca-danger-fg);
     }
     :host([tone='info']) .callout {
-      background-color: var(--ca-color-status-in-progress-bg, #E5EEF7);
-      border-color: color-mix(in srgb, var(--ca-color-status-in-progress, #4F7AB8) 25%, transparent);
+      background-color: var(--ca-info-bg);
+      border-color: color-mix(in srgb, var(--ca-color-primary) 25%, transparent);
     }
     :host([tone='info']) .icon-slot {
-      color: var(--ca-color-status-in-progress-fg, #2C5F8E);
+      color: var(--ca-info-fg);
     }
   `;
 

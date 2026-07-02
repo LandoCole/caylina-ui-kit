@@ -24,9 +24,9 @@ export class CaToastContainer extends LitElement {
     .toast { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--ca-radius-md); font-family: var(--ca-font-family); font-size: 13px; box-shadow: var(--ca-shadow-md); pointer-events: auto; animation: toast-slide-in 0.25s ease; white-space: nowrap; }
     .toast.exiting { animation: toast-slide-out 0.2s ease forwards; }
     .info { background-color: var(--ca-text-primary); color: var(--ca-surface); }
-    .success { background-color: var(--ca-color-success); color: white; }
-    .error { background-color: var(--ca-color-danger); color: white; }
-    .warning { background-color: var(--ca-color-warning); color: white; }
+    .success { background-color: var(--ca-color-success); color: var(--ca-color-white); }
+    .error { background-color: var(--ca-color-danger); color: var(--ca-color-white); }
+    .warning { background-color: var(--ca-color-warning); color: var(--ca-color-white); }
     .message { flex: 1; line-height: 1.4; }
     .close { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; border: none; background: none; color: inherit; cursor: pointer; opacity: 0.7; transition: opacity 0.15s ease; }
     .close:hover { opacity: 1; }

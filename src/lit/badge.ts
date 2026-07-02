@@ -15,10 +15,10 @@ export class CaBadge extends LitElement {
       line-height: 1;
       white-space: nowrap;
       box-sizing: border-box;
-      /* Default = soft blue (info/neutral) */
-      color: var(--ca-color-status-in-progress-fg, #2C5F8E);
-      background-color: var(--ca-color-status-in-progress-bg, #E5EEF7);
-      border: 1px solid color-mix(in srgb, var(--ca-color-status-in-progress, #4F7AB8) 30%, transparent);
+      /* Default = info (periwinkle accent family) */
+      color: var(--ca-info-fg);
+      background-color: var(--ca-info-bg);
+      border: 1px solid color-mix(in srgb, var(--ca-color-primary) 30%, transparent);
     }
 
     /* Sizes */
@@ -53,18 +53,18 @@ export class CaBadge extends LitElement {
 
     /* Variants — soft tinted pills with matching colored borders */
     :host([variant='success']) {
-      color: var(--ca-color-status-done-fg, var(--ca-color-success));
-      background-color: var(--ca-color-status-done-bg, color-mix(in srgb, var(--ca-color-success) 14%, transparent));
+      color: var(--ca-success-fg);
+      background-color: var(--ca-success-bg);
       border-color: color-mix(in srgb, var(--ca-color-success) 30%, transparent);
     }
     :host([variant='warning']) {
-      color: var(--ca-color-priority-medium-fg, var(--ca-color-warning));
-      background-color: var(--ca-color-priority-medium-bg, color-mix(in srgb, var(--ca-color-warning) 18%, transparent));
+      color: var(--ca-warning-fg);
+      background-color: var(--ca-warning-bg);
       border-color: color-mix(in srgb, var(--ca-color-warning) 35%, transparent);
     }
     :host([variant='danger']) {
-      color: var(--ca-color-priority-urgent-fg, var(--ca-color-danger));
-      background-color: var(--ca-color-priority-urgent-bg, color-mix(in srgb, var(--ca-color-danger) 14%, transparent));
+      color: var(--ca-danger-fg);
+      background-color: var(--ca-danger-bg);
       border-color: color-mix(in srgb, var(--ca-color-danger) 30%, transparent);
     }
 
