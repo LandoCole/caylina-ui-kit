@@ -158,6 +158,9 @@ export class CaCommentThread extends LitElement {
       border-color: var(--ca-color-primary);
     }
     .edit-save-btn:hover {
+      background-color: var(--ca-color-primary-hover);
+    }
+    .edit-save-btn:active {
       background-color: var(--ca-color-primary-pressed);
     }
     .edit-cancel-btn {
@@ -226,6 +229,9 @@ export class CaCommentThread extends LitElement {
       transition: background-color var(--ca-transition-fast);
     }
     .submit-btn:hover {
+      background-color: var(--ca-color-primary-hover);
+    }
+    .submit-btn:active {
       background-color: var(--ca-color-primary-pressed);
     }
     .submit-btn:disabled {

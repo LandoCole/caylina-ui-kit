@@ -49,6 +49,9 @@ export class CaButton extends LitElement {
         var(--ca-shadow-sm);
     }
     .button.primary:hover:not(:disabled):not(.loading) {
+      background-color: var(--ca-color-primary-hover);
+    }
+    .button.primary:active:not(:disabled):not(.loading) {
       background-color: var(--ca-color-primary-pressed);
     }
     .button.primary:focus-visible {

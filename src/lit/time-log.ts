@@ -199,6 +199,9 @@ export class CaTimeLog extends LitElement {
       transition: background-color var(--ca-transition-fast);
     }
     .add-btn:hover {
+      background-color: var(--ca-color-primary-hover);
+    }
+    .add-btn:active {
       background-color: var(--ca-color-primary-pressed);
     }
     .add-btn:disabled {
