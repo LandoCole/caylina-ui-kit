@@ -90,15 +90,16 @@ export class CaButton extends LitElement {
     /* Tertiary */
     .button.tertiary {
       background-color: transparent;
-      color: var(--ca-text-primary);
-      border: 1px solid var(--ca-text-primary);
+      color: var(--ca-text-secondary);
+      border: 1px solid transparent;
     }
     .button.tertiary:hover:not(:disabled):not(.loading) {
-      background-color: var(--ca-color-secondary-hover);
+      background-color: var(--ca-surface-hover);
+      color: var(--ca-text-primary);
     }
     .button.tertiary:focus-visible {
-      border-width: 2.5px;
-      border-color: var(--ca-text-primary);
+      border-color: transparent;
+      box-shadow: var(--ca-shadow-focus);
     }
     .button.tertiary:disabled,
     .button.tertiary.loading {
