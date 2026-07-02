@@ -19,10 +19,11 @@ export class CaMenu extends LitElement {
     :host {
       display: flex;
       flex-direction: column;
-      background-color: var(--ca-surface);
-      border-radius: 16px;
+      background-color: var(--ca-surface-elevated);
+      border: 1px solid var(--ca-border);
+      border-radius: var(--ca-radius-md);
       box-shadow: var(--ca-shadow-menu);
-      padding: 12px 0;
+      padding: 4px 0;
       min-width: 200px;
       overflow: hidden;
     }
