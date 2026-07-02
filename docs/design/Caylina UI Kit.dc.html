@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ca-font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --ca-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  /* periwinkle, deeper & richer */
+  --ca-primary:#4B5FC6;
+  --ca-primary-hover:#4152B0;
+  --ca-primary-pressed:#39499C;
+  --ca-primary-tint:#EEF0FB;
+  --ca-primary-tint-strong:#DFE3F8;
+  --ca-on-primary:#FFFFFF;
+  /* cool neutrals */
+  --ca-bg-page:#FAFAFB;
+  --ca-surface:#FFFFFF;
+  --ca-surface-2:#F5F6F8;
+  --ca-surface-hover:#F3F4F6;
+  --ca-border:#E8E9EC;
+  --ca-border-strong:#D5D7DC;
+  --ca-text-primary:#16181D;
+  --ca-text-secondary:#565A63;
+  --ca-text-muted:#8B8F98;
+  /* semantic */
+  --ca-success:#16A34A; --ca-success-bg:#E7F6ED; --ca-success-fg:#15803D;
+  --ca-warning:#B45309; --ca-warning-bg:#FBEFD9; --ca-warning-fg:#9A5B08;
+  --ca-danger:#CE3F1F; --ca-danger-bg:#FBE9E4; --ca-danger-fg:#B23217;
+  --ca-info-bg:var(--ca-primary-tint); --ca-info-fg:var(--ca-primary-pressed);
+  /* radii — sharp */
+  --ca-r-xs:2px; --ca-r-sm:4px; --ca-r-md:6px; --ca-r-lg:8px; --ca-r-full:9999px;
+  /* elevation — tight */
+  --ca-shadow-sm:0 1px 2px rgba(16,18,29,.06);
+  --ca-shadow-md:0 2px 4px rgba(16,18,29,.05),0 4px 12px rgba(16,18,29,.06);
+  --ca-shadow-lg:0 10px 28px rgba(16,18,29,.12),0 2px 6px rgba(16,18,29,.06);
+  --ca-focus:0 0 0 3px rgba(75,95,198,.28);
+}
+[data-ca-theme="dark"]{
+  --ca-primary:#8093EA;
+  --ca-primary-hover:#909FEE;
+  --ca-primary-pressed:#7183E0;
+  --ca-primary-tint:rgba(128,147,234,.15);
+  --ca-primary-tint-strong:rgba(128,147,234,.24);
+  --ca-on-primary:#0E1220;
+  --ca-bg-page:#0B0C0F;
+  --ca-surface:#131519;
+  --ca-surface-2:#1A1D22;
+  --ca-surface-hover:#20242B;
+  --ca-border:rgba(255,255,255,.09);
+  --ca-border-strong:rgba(255,255,255,.17);
+  --ca-text-primary:#ECEDEF;
+  --ca-text-secondary:#9CA0A9;
+  --ca-text-muted:#6E727C;
+  --ca-success:#34D399; --ca-success-bg:rgba(52,211,153,.14); --ca-success-fg:#6EE7B7;
+  --ca-warning:#F59E0B; --ca-warning-bg:rgba(245,158,11,.15); --ca-warning-fg:#FCD34D;
+  --ca-danger:#F87171; --ca-danger-bg:rgba(248,113,113,.15); --ca-danger-fg:#FCA5A5;
+  --ca-info-fg:#A5B4FC;
+  --ca-shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --ca-shadow-md:0 2px 6px rgba(0,0,0,.4),0 8px 20px rgba(0,0,0,.35);
+  --ca-shadow-lg:0 16px 40px rgba(0,0,0,.55),0 2px 8px rgba(0,0,0,.4);
+  --ca-focus:0 0 0 3px rgba(128,147,234,.35);
+}
+*{box-sizing:border-box}
+body{margin:0}
+@keyframes ca-spin{to{transform:rotate(360deg)}}
+@keyframes ca-pulse{0%,100%{opacity:1}50%{opacity:.45}}
+</style>
+</helmet>
+
+<div data-ca-theme="{{ caTheme }}" style="min-height:100vh;background:var(--ca-bg-page);color:var(--ca-text-primary);font-family:var(--ca-font);-webkit-font-smoothing:antialiased;font-feature-settings:'cv05','ss01';transition:background .2s ease;">
+
+  <!-- TOP BAR -->
+  <header style="position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 32px;height:60px;background:color-mix(in srgb, var(--ca-surface) 82%, transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--ca-border);">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:var(--ca-r-md);background:var(--ca-primary);color:var(--ca-on-primary);box-shadow:var(--ca-shadow-sm);">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+      </div>
+      <div style="display:flex;flex-direction:column;line-height:1.1;">
+        <span style="font:600 14px/1.2 var(--ca-font);letter-spacing:-0.01em;">Caylina</span>
+        <span style="font:500 10px/1.2 var(--ca-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ca-text-muted);">UI Kit · v2</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);padding-right:4px;">{{ themeLabel }}</span>
+      <button onClick="{{ toggleTheme }}" style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 12px;border:1px solid var(--ca-border-strong);background:var(--ca-surface);color:var(--ca-text-primary);border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:pointer;transition:background .15s ease,border-color .15s ease;" style-hover="background:var(--ca-surface-hover);border-color:var(--ca-text-muted)">
+        <span innerHTML="{{ themeIcon }}" style="display:inline-flex;"></span>
+        Theme
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div style="max-width:1120px;margin:0 auto;padding:56px 32px 8px;">
+    <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ca-primary);">Component Library Refresh</span>
+    <h1 style="font:600 34px/1.08 var(--ca-font);letter-spacing:-0.025em;margin:14px 0 12px;max-width:22ch;">An enterprise system for dashboards &amp; workflow tools</h1>
+    <p style="font:450 16px/1.6 var(--ca-font);color:var(--ca-text-secondary);margin:0;max-width:62ch;">A crisp, dense, information-first refresh — restrained periwinkle accent, cool neutral surfaces, sharp geometry, and a tight elevation scale. Foundations first, then components. Toggle the theme in the top bar.</p>
+  </div>
+
+  <main style="max-width:1120px;margin:0 auto;padding:40px 32px 96px;display:flex;flex-direction:column;gap:56px;">
+
+    <!-- ============ FOUNDATIONS ============ -->
+    <div style="display:flex;flex-direction:column;gap:24px;">
+      <div style="display:flex;align-items:center;gap:12px;padding-bottom:2px;">
+        <span style="font:600 11px/1 var(--ca-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ca-text-muted);">01 — Foundations</span>
+        <div style="flex:1;height:1px;background:var(--ca-border);"></div>
+      </div>
+
+      <!-- COLOR -->
+      <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:20px;">
+          <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Color</h2>
+          <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">tokens · light + dark</span>
+        </div>
+
+        <p style="font:500 11px/1 var(--ca-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ca-text-muted);margin:0 0 12px;">Primary — periwinkle</p>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:26px;">
+          <sc-for list="{{ primaryScale }}" as="s" hint-placeholder-count="6">
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="height:56px;border-radius:var(--ca-r-md);background:{{ s.hex }};border:1px solid rgba(0,0,0,.06);"></div>
+              <span style="font:600 11px/1.2 var(--ca-font);color:var(--ca-text-primary);">{{ s.name }}</span>
+              <span style="font:500 10px/1.2 var(--ca-mono);color:var(--ca-text-muted);">{{ s.hex }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <p style="font:500 11px/1 var(--ca-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ca-text-muted);margin:0 0 12px;">Neutrals</p>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:26px;">
+          <sc-for list="{{ neutralScale }}" as="s" hint-placeholder-count="6">
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="height:56px;border-radius:var(--ca-r-md);background:{{ s.hex }};border:1px solid var(--ca-border);"></div>
+              <span style="font:600 11px/1.2 var(--ca-font);color:var(--ca-text-primary);">{{ s.name }}</span>
+              <span style="font:500 10px/1.2 var(--ca-mono);color:var(--ca-text-muted);">{{ s.hex }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <p style="font:500 11px/1 var(--ca-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ca-text-muted);margin:0 0 12px;">Semantic</p>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
+          <sc-for list="{{ semanticColors }}" as="s" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--ca-border);border-radius:var(--ca-r-md);background:{{ s.bg }};">
+              <span style="width:28px;height:28px;border-radius:var(--ca-r-sm);background:{{ s.dot }};flex:none;"></span>
+              <div style="display:flex;flex-direction:column;gap:2px;min-width:0;">
+                <span style="font:600 13px/1.2 var(--ca-font);color:{{ s.fg }};">{{ s.name }}</span>
+                <span style="font:500 10px/1.2 var(--ca-mono);color:{{ s.fg }};opacity:.75;">{{ s.token }}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- TYPE + SPACING/RADIUS/ELEVATION -->
+      <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:24px;">
+        <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:22px;">
+            <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Typography</h2>
+            <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">Inter · JetBrains Mono</span>
+          </div>
+          <div style="display:flex;flex-direction:column;">
+            <sc-for list="{{ typeScale }}" as="t" hint-placeholder-count="6">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:13px 0;border-top:1px solid var(--ca-border);">
+                <span style="font-family:var(--ca-font);font-weight:{{ t.weight }};font-size:{{ t.px }};line-height:1.15;letter-spacing:{{ t.tracking }};color:var(--ca-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ t.sample }}</span>
+                <span style="font:500 11px/1 var(--ca-mono);color:var(--ca-text-muted);white-space:nowrap;flex:none;">{{ t.meta }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+
+        <div style="display:flex;flex-direction:column;gap:24px;">
+          <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:24px;box-shadow:var(--ca-shadow-sm);">
+            <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0 0 16px;">Spacing &amp; radius</h2>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:18px;">
+              <sc-for list="{{ spacingScale }}" as="sp" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <span style="font:500 10px/1 var(--ca-mono);color:var(--ca-text-muted);width:26px;">{{ sp.px }}</span>
+                  <span style="height:10px;border-radius:2px;background:var(--ca-primary);width:{{ sp.px }};"></span>
+                  <span style="font:500 11px/1 var(--ca-mono);color:var(--ca-text-secondary);">{{ sp.name }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <sc-for list="{{ radiusScale }}" as="r" hint-placeholder-count="4">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;">
+                  <div style="width:100%;height:38px;background:var(--ca-primary-tint);border:1px solid var(--ca-primary);border-bottom:none;border-radius:{{ r.px }} {{ r.px }} 0 0;"></div>
+                  <span style="font:500 10px/1 var(--ca-mono);color:var(--ca-text-muted);">{{ r.px }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </section>
+
+          <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:24px;box-shadow:var(--ca-shadow-sm);">
+            <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0 0 18px;">Elevation</h2>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+                <div style="width:100%;height:52px;background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-md);box-shadow:var(--ca-shadow-sm);"></div>
+                <span style="font:500 10px/1 var(--ca-mono);color:var(--ca-text-muted);">sm</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+                <div style="width:100%;height:52px;background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-md);box-shadow:var(--ca-shadow-md);"></div>
+                <span style="font:500 10px/1 var(--ca-mono);color:var(--ca-text-muted);">md</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+                <div style="width:100%;height:52px;background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-md);box-shadow:var(--ca-shadow-lg);"></div>
+                <span style="font:500 10px/1 var(--ca-mono);color:var(--ca-text-muted);">lg</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ COMPONENTS ============ -->
+    <div style="display:flex;flex-direction:column;gap:24px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="font:600 11px/1 var(--ca-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ca-text-muted);">02 — Components</span>
+        <div style="flex:1;height:1px;background:var(--ca-border);"></div>
+      </div>
+
+      <!-- BUTTONS -->
+      <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:22px;">
+          <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Buttons</h2>
+          <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-button</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:18px;">
+          <button style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px;border:1px solid transparent;background:var(--ca-primary);color:var(--ca-on-primary);border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:pointer;box-shadow:var(--ca-shadow-sm);transition:background .15s ease;" style-hover="background:var(--ca-primary-hover)">Primary</button>
+          <button style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px;border:1px solid var(--ca-border-strong);background:var(--ca-surface);color:var(--ca-text-primary);border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:pointer;transition:background .15s ease,border-color .15s ease;" style-hover="background:var(--ca-surface-hover);border-color:var(--ca-text-muted)">Secondary</button>
+          <button style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 12px;border:1px solid transparent;background:transparent;color:var(--ca-text-secondary);border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:pointer;transition:background .15s ease,color .15s ease;" style-hover="background:var(--ca-surface-hover);color:var(--ca-text-primary)">Tertiary</button>
+          <button style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px;border:1px solid transparent;background:var(--ca-danger);color:#fff;border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:pointer;box-shadow:var(--ca-shadow-sm);transition:filter .15s ease;" style-hover="filter:brightness(1.06)">Delete</button>
+          <button style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px 0 12px;border:1px solid transparent;background:var(--ca-primary);color:var(--ca-on-primary);border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:pointer;box-shadow:var(--ca-shadow-sm);transition:background .15s ease;" style-hover="background:var(--ca-primary-hover)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            New task
+          </button>
+          <!-- split button -->
+          <div style="display:inline-flex;align-items:stretch;box-shadow:var(--ca-shadow-sm);border-radius:var(--ca-r-sm);">
+            <button style="display:inline-flex;align-items:center;height:32px;padding:0 14px;border:1px solid var(--ca-border-strong);background:var(--ca-surface);color:var(--ca-text-primary);border-radius:var(--ca-r-sm) 0 0 var(--ca-r-sm);border-right:none;font:500 13px/1 var(--ca-font);cursor:pointer;" style-hover="background:var(--ca-surface-hover)">Save</button>
+            <button style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:32px;border:1px solid var(--ca-border-strong);background:var(--ca-surface);color:var(--ca-text-secondary);border-radius:0 var(--ca-r-sm) var(--ca-r-sm) 0;cursor:pointer;" style-hover="background:var(--ca-surface-hover)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;">
+          <button style="display:inline-flex;align-items:center;height:28px;padding:0 11px;border:1px solid transparent;background:var(--ca-primary);color:var(--ca-on-primary);border-radius:var(--ca-r-sm);font:500 12px/1 var(--ca-font);cursor:pointer;">Small</button>
+          <button style="display:inline-flex;align-items:center;height:32px;padding:0 14px;border:1px solid transparent;background:var(--ca-primary);color:var(--ca-on-primary);border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:pointer;">Medium</button>
+          <button style="display:inline-flex;align-items:center;height:38px;padding:0 18px;border:1px solid transparent;background:var(--ca-primary);color:var(--ca-on-primary);border-radius:var(--ca-r-sm);font:500 14px/1 var(--ca-font);cursor:pointer;">Large</button>
+          <button style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px;border:1px solid transparent;background:var(--ca-primary);color:var(--ca-on-primary);border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:default;opacity:.85;">
+            <span style="width:13px;height:13px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;display:inline-block;animation:ca-spin .7s linear infinite;"></span>
+            Saving…
+          </button>
+          <button disabled style="display:inline-flex;align-items:center;height:32px;padding:0 14px;border:1px solid var(--ca-border);background:var(--ca-surface-2);color:var(--ca-text-muted);border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:not-allowed;">Disabled</button>
+        </div>
+      </section>
+
+      <!-- INPUTS -->
+      <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:22px;">
+          <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Inputs &amp; forms</h2>
+          <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-input · ca-select · ca-textarea</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:22px;">
+          <label style="display:flex;flex-direction:column;gap:6px;">
+            <span style="font:500 12px/1.2 var(--ca-font);color:var(--ca-text-secondary);">Email</span>
+            <div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;background:var(--ca-surface);border:1px solid var(--ca-border-strong);border-radius:var(--ca-r-sm);">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ca-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+              <input value="olivia@caylina.io" style="border:none;outline:none;background:transparent;color:var(--ca-text-primary);font:450 14px/1 var(--ca-font);width:100%;"/>
+            </div>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px;">
+            <span style="font:500 12px/1.2 var(--ca-font);color:var(--ca-text-secondary);">Search</span>
+            <div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;background:var(--ca-surface);border:1px solid var(--ca-primary);border-radius:var(--ca-r-sm);box-shadow:var(--ca-focus);">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ca-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+              <input value="quarterly" style="border:none;outline:none;background:transparent;color:var(--ca-text-primary);font:450 14px/1 var(--ca-font);width:100%;"/>
+            </div>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px;">
+            <span style="font:500 12px/1.2 var(--ca-font);color:var(--ca-text-secondary);">Workspace name</span>
+            <div style="display:flex;align-items:center;height:36px;padding:0 12px;background:var(--ca-surface);border:1px solid var(--ca-danger);border-radius:var(--ca-r-sm);">
+              <input value="ab" style="border:none;outline:none;background:transparent;color:var(--ca-text-primary);font:450 14px/1 var(--ca-font);width:100%;"/>
+            </div>
+            <span style="font:450 11px/1.3 var(--ca-font);color:var(--ca-danger-fg);">Must be at least 3 characters.</span>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px;">
+            <span style="font:500 12px/1.2 var(--ca-font);color:var(--ca-text-secondary);">Region</span>
+            <button style="display:flex;align-items:center;justify-content:space-between;height:36px;padding:0 12px;background:var(--ca-surface);border:1px solid var(--ca-border-strong);border-radius:var(--ca-r-sm);cursor:pointer;font:450 14px/1 var(--ca-font);color:var(--ca-text-primary);" style-hover="border-color:var(--ca-text-muted)">
+              US · East (Virginia)
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ca-text-muted)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px;grid-column:span 2;">
+            <span style="font:500 12px/1.2 var(--ca-font);color:var(--ca-text-secondary);">Description</span>
+            <textarea rows="3" style="resize:vertical;padding:10px 12px;background:var(--ca-surface);border:1px solid var(--ca-border-strong);border-radius:var(--ca-r-sm);color:var(--ca-text-primary);font:450 14px/1.5 var(--ca-font);outline:none;">Consolidated view of workflow throughput across all connected pipelines.</textarea>
+            <span style="font:500 11px/1 var(--ca-mono);color:var(--ca-text-muted);align-self:flex-end;">84 / 240</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- SELECTION CONTROLS -->
+      <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:22px;">
+          <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Selection</h2>
+          <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-checkbox · ca-radio · ca-toggle</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;">
+          <!-- checkboxes -->
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <sc-for list="{{ checkItems }}" as="c" hint-placeholder-count="3">
+              <button onClick="{{ c.onToggle }}" style="display:flex;align-items:flex-start;gap:10px;background:none;border:none;padding:0;cursor:pointer;text-align:left;">
+                <span style="flex:none;width:18px;height:18px;margin-top:1px;border-radius:var(--ca-r-xs);display:flex;align-items:center;justify-content:center;transition:all .12s ease;border:1.5px solid {{ c.bd }};background:{{ c.bg }};">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ca-on-primary)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" style="opacity:{{ c.tick }};"><path d="M5 12l5 5L20 7"/></svg>
+                </span>
+                <span style="display:flex;flex-direction:column;gap:2px;">
+                  <span style="font:450 14px/1.3 var(--ca-font);color:var(--ca-text-primary);">{{ c.label }}</span>
+                  <span style="font:450 12px/1.3 var(--ca-font);color:var(--ca-text-muted);">{{ c.sub }}</span>
+                </span>
+              </button>
+            </sc-for>
+          </div>
+          <!-- radios -->
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <sc-for list="{{ radioItems }}" as="r" hint-placeholder-count="3">
+              <button onClick="{{ r.onSelect }}" style="display:flex;align-items:flex-start;gap:10px;background:none;border:none;padding:0;cursor:pointer;text-align:left;">
+                <span style="flex:none;width:18px;height:18px;margin-top:1px;border-radius:var(--ca-r-full);display:flex;align-items:center;justify-content:center;transition:all .12s ease;border:1.5px solid {{ r.bd }};background:var(--ca-surface);">
+                  <span style="width:8px;height:8px;border-radius:var(--ca-r-full);background:var(--ca-primary);transform:scale({{ r.dot }});transition:transform .12s ease;"></span>
+                </span>
+                <span style="display:flex;flex-direction:column;gap:2px;">
+                  <span style="font:450 14px/1.3 var(--ca-font);color:var(--ca-text-primary);">{{ r.label }}</span>
+                  <span style="font:450 12px/1.3 var(--ca-font);color:var(--ca-text-muted);">{{ r.sub }}</span>
+                </span>
+              </button>
+            </sc-for>
+          </div>
+          <!-- toggles -->
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <sc-for list="{{ toggleItems }}" as="t" hint-placeholder-count="3">
+              <button onClick="{{ t.onToggle }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:none;border:none;padding:0;cursor:pointer;text-align:left;width:100%;">
+                <span style="display:flex;flex-direction:column;gap:2px;">
+                  <span style="font:450 14px/1.3 var(--ca-font);color:var(--ca-text-primary);">{{ t.label }}</span>
+                  <span style="font:450 12px/1.3 var(--ca-font);color:var(--ca-text-muted);">{{ t.sub }}</span>
+                </span>
+                <span style="flex:none;width:36px;height:20px;border-radius:var(--ca-r-full);padding:2px;transition:background .16s ease;background:{{ t.track }};">
+                  <span style="display:block;width:16px;height:16px;border-radius:var(--ca-r-full);background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.3);transform:translateX({{ t.x }});transition:transform .16s ease;"></span>
+                </span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <!-- BADGES, CHIPS, AVATARS -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:20px;">
+            <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Badges &amp; status</h2>
+            <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-badge</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+            <span style="display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:var(--ca-r-full);background:var(--ca-success-bg);color:var(--ca-success-fg);font:600 12px/1 var(--ca-font);"><span style="width:6px;height:6px;border-radius:50%;background:var(--ca-success);"></span>Active</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:var(--ca-r-full);background:var(--ca-warning-bg);color:var(--ca-warning-fg);font:600 12px/1 var(--ca-font);"><span style="width:6px;height:6px;border-radius:50%;background:var(--ca-warning);"></span>Pending</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:var(--ca-r-full);background:var(--ca-danger-bg);color:var(--ca-danger-fg);font:600 12px/1 var(--ca-font);"><span style="width:6px;height:6px;border-radius:50%;background:var(--ca-danger);"></span>Failed</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:var(--ca-r-full);background:var(--ca-info-bg);color:var(--ca-info-fg);font:600 12px/1 var(--ca-font);"><span style="width:6px;height:6px;border-radius:50%;background:var(--ca-primary);"></span>Running</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;">
+            <span style="display:inline-flex;align-items:center;height:20px;padding:0 8px;border-radius:var(--ca-r-full);background:var(--ca-surface-2);border:1px solid var(--ca-border);color:var(--ca-text-secondary);font:600 11px/1 var(--ca-mono);">v2.4.1</span>
+            <span style="display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;border-radius:var(--ca-r-full);background:var(--ca-primary);color:var(--ca-on-primary);font:600 11px/1 var(--ca-font);">3</span>
+            <span style="display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;border-radius:var(--ca-r-full);background:var(--ca-danger);color:#fff;font:600 11px/1 var(--ca-font);">12</span>
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--ca-success);box-shadow:0 0 0 3px var(--ca-success-bg);"></span>
+          </div>
+          <div style="height:1px;background:var(--ca-border);margin:20px 0;"></div>
+          <p style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);margin:0 0 12px;">Chips · ca-chip</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <span style="display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:var(--ca-r-full);background:var(--ca-surface);border:1px solid var(--ca-border-strong);color:var(--ca-text-secondary);font:500 13px/1 var(--ca-font);cursor:pointer;" style-hover="background:var(--ca-surface-hover)">Design</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 8px 0 12px;border-radius:var(--ca-r-full);background:var(--ca-primary);color:var(--ca-on-primary);font:500 13px/1 var(--ca-font);cursor:pointer;">Engineering<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+            <span style="display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:var(--ca-r-full);background:var(--ca-surface);border:1px solid var(--ca-border-strong);color:var(--ca-text-secondary);font:500 13px/1 var(--ca-font);cursor:pointer;" style-hover="background:var(--ca-surface-hover)">Research</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:var(--ca-r-full);background:var(--ca-surface);border:1px dashed var(--ca-border-strong);color:var(--ca-text-muted);font:500 13px/1 var(--ca-font);cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add</span>
+          </div>
+        </section>
+
+        <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:20px;">
+            <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Avatars</h2>
+            <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-avatar</span>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:14px;margin-bottom:22px;">
+            <div style="width:28px;height:28px;border-radius:var(--ca-r-full);background:var(--ca-primary);color:var(--ca-on-primary);display:flex;align-items:center;justify-content:center;font:600 11px/1 var(--ca-font);">OM</div>
+            <div style="width:34px;height:34px;border-radius:var(--ca-r-full);background:#3F8F6B;color:#fff;display:flex;align-items:center;justify-content:center;font:600 13px/1 var(--ca-font);">JL</div>
+            <div style="position:relative;width:42px;height:42px;">
+              <div style="width:42px;height:42px;border-radius:var(--ca-r-full);background:#B4693E;color:#fff;display:flex;align-items:center;justify-content:center;font:600 15px/1 var(--ca-font);">IN</div>
+              <span style="position:absolute;right:0;bottom:1px;width:11px;height:11px;border-radius:50%;background:var(--ca-success);border:2px solid var(--ca-surface);"></span>
+            </div>
+            <div style="width:50px;height:50px;border-radius:var(--ca-r-full);background:#6B5FB0;color:#fff;display:flex;align-items:center;justify-content:center;font:600 17px/1 var(--ca-font);">WK</div>
+          </div>
+          <p style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);margin:0 0 12px;">Group · ca-avatar-group</p>
+          <div style="display:flex;align-items:center;">
+            <div style="width:32px;height:32px;border-radius:var(--ca-r-full);background:var(--ca-primary);color:var(--ca-on-primary);display:flex;align-items:center;justify-content:center;font:600 12px/1 var(--ca-font);border:2px solid var(--ca-surface);">OM</div>
+            <div style="width:32px;height:32px;border-radius:var(--ca-r-full);background:#3F8F6B;color:#fff;display:flex;align-items:center;justify-content:center;font:600 12px/1 var(--ca-font);border:2px solid var(--ca-surface);margin-left:-9px;">JL</div>
+            <div style="width:32px;height:32px;border-radius:var(--ca-r-full);background:#B4693E;color:#fff;display:flex;align-items:center;justify-content:center;font:600 12px/1 var(--ca-font);border:2px solid var(--ca-surface);margin-left:-9px;">IN</div>
+            <div style="width:32px;height:32px;border-radius:var(--ca-r-full);background:var(--ca-surface-2);color:var(--ca-text-secondary);display:flex;align-items:center;justify-content:center;font:600 11px/1 var(--ca-font);border:2px solid var(--ca-surface);margin-left:-9px;">+5</div>
+          </div>
+          <div style="height:1px;background:var(--ca-border);margin:20px 0;"></div>
+          <p style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);margin:0 0 12px;">Progress · ca-progress-bar</p>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;justify-content:space-between;font:500 12px/1 var(--ca-font);color:var(--ca-text-secondary);"><span>Storage</span><span style="font-family:var(--ca-mono);color:var(--ca-text-muted);">68%</span></div>
+              <div style="height:6px;border-radius:var(--ca-r-full);background:var(--ca-surface-2);overflow:hidden;"><div style="height:100%;width:68%;background:var(--ca-primary);border-radius:var(--ca-r-full);"></div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;justify-content:space-between;font:500 12px/1 var(--ca-font);color:var(--ca-text-secondary);"><span>Sprint progress</span><span style="font-family:var(--ca-mono);color:var(--ca-text-muted);">40 · 25 · 15</span></div>
+              <div style="display:flex;height:6px;border-radius:var(--ca-r-full);background:var(--ca-surface-2);overflow:hidden;">
+                <div style="height:100%;width:40%;background:var(--ca-success);"></div>
+                <div style="height:100%;width:25%;background:var(--ca-warning);"></div>
+                <div style="height:100%;width:15%;background:var(--ca-danger);"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- TABS + MENU + ACCORDION -->
+      <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:24px;">
+        <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:20px;">
+            <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Tabs &amp; accordion</h2>
+            <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-tabs · ca-accordion</span>
+          </div>
+          <!-- underline tabs -->
+          <div style="display:flex;gap:2px;border-bottom:1px solid var(--ca-border);margin-bottom:14px;">
+            <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+              <button onClick="{{ t.onClick }}" style="position:relative;padding:0 12px 11px;background:none;border:none;cursor:pointer;font-family:var(--ca-font);font-size:13px;font-weight:{{ t.weight }};color:{{ t.color }};transition:color .15s ease;">
+                {{ t.label }}
+                <span style="position:absolute;left:0;right:0;bottom:-1px;height:2px;border-radius:2px;background:var(--ca-primary);transform:scaleX({{ t.ind }});transition:transform .18s ease;"></span>
+              </button>
+            </sc-for>
+          </div>
+          <!-- pill tabs -->
+          <div style="display:inline-flex;align-self:flex-start;gap:2px;padding:3px;background:var(--ca-surface-2);border-radius:var(--ca-r-md);margin-bottom:22px;">
+            <sc-for list="{{ pills }}" as="p" hint-placeholder-count="3">
+              <button onClick="{{ p.onClick }}" style="padding:6px 14px;border:none;border-radius:var(--ca-r-sm);cursor:pointer;font:500 13px/1 var(--ca-font);color:{{ p.color }};background:{{ p.bg }};box-shadow:{{ p.shadow }};transition:all .15s ease;">{{ p.label }}</button>
+            </sc-for>
+          </div>
+          <!-- accordion -->
+          <div style="display:flex;flex-direction:column;border:1px solid var(--ca-border);border-radius:var(--ca-r-md);overflow:hidden;">
+            <sc-for list="{{ accordion }}" as="a" hint-placeholder-count="3">
+              <div style="border-top:1px solid var(--ca-border);">
+                <button onClick="{{ a.onToggle }}" style="display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 16px;background:{{ a.headBg }};border:none;cursor:pointer;font:500 14px/1.3 var(--ca-font);color:var(--ca-text-primary);text-align:left;">
+                  {{ a.title }}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ca-text-muted)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate({{ a.rot }});transition:transform .18s ease;flex:none;"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div style="max-height:{{ a.maxH }};overflow:hidden;transition:max-height .22s ease;">
+                  <p style="margin:0;padding:0 16px 16px;font:450 13px/1.55 var(--ca-font);color:var(--ca-text-secondary);">{{ a.body }}</p>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+
+        <!-- MENU + spinner/divider -->
+        <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:20px;">
+            <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Menu</h2>
+            <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-menu</span>
+          </div>
+          <div style="width:220px;padding:5px;background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-md);box-shadow:var(--ca-shadow-lg);">
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:var(--ca-r-sm);cursor:pointer;font:450 13px/1 var(--ca-font);color:var(--ca-text-primary);" style-hover="background:var(--ca-surface-hover)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ca-text-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>Profile</div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:var(--ca-r-sm);cursor:pointer;font:450 13px/1 var(--ca-font);color:var(--ca-text-primary);background:var(--ca-primary-tint);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ca-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:var(--ca-r-sm);cursor:pointer;font:450 13px/1 var(--ca-font);color:var(--ca-text-primary);" style-hover="background:var(--ca-surface-hover)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ca-text-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3 2.5c-.9.3-1.5 1-1.5 2M12 17h.01"/></svg>Help center</div>
+            <div style="height:1px;background:var(--ca-border);margin:5px 4px;"></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:var(--ca-r-sm);cursor:pointer;font:450 13px/1 var(--ca-font);color:var(--ca-danger-fg);" style-hover="background:var(--ca-danger-bg)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>Log out</div>
+          </div>
+          <div style="height:1px;background:var(--ca-border);margin:20px 0;"></div>
+          <p style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);margin:0 0 14px;">Spinner &amp; skeleton</p>
+          <div style="display:flex;align-items:center;gap:20px;">
+            <span style="width:22px;height:22px;border:2.5px solid var(--ca-surface-2);border-top-color:var(--ca-primary);border-radius:50%;display:inline-block;animation:ca-spin .7s linear infinite;"></span>
+            <div style="display:flex;gap:5px;">
+              <span style="width:7px;height:7px;border-radius:50%;background:var(--ca-primary);animation:ca-pulse 1s ease-in-out infinite;"></span>
+              <span style="width:7px;height:7px;border-radius:50%;background:var(--ca-primary);animation:ca-pulse 1s ease-in-out .15s infinite;"></span>
+              <span style="width:7px;height:7px;border-radius:50%;background:var(--ca-primary);animation:ca-pulse 1s ease-in-out .3s infinite;"></span>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:7px;">
+              <span style="height:9px;width:100%;border-radius:var(--ca-r-xs);background:var(--ca-surface-2);animation:ca-pulse 1.4s ease-in-out infinite;"></span>
+              <span style="height:9px;width:60%;border-radius:var(--ca-r-xs);background:var(--ca-surface-2);animation:ca-pulse 1.4s ease-in-out .2s infinite;"></span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- CALLOUTS -->
+      <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:20px;">
+          <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Callouts &amp; toasts</h2>
+          <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-callout · ca-toast</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+          <div style="display:flex;gap:11px;padding:14px 16px;border-radius:var(--ca-r-md);background:var(--ca-info-bg);border:1px solid color-mix(in srgb, var(--ca-primary) 26%, transparent);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ca-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px;"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <div><p style="margin:0 0 2px;font:600 13px/1.4 var(--ca-font);color:var(--ca-text-primary);">Sync scheduled</p><p style="margin:0;font:450 13px/1.5 var(--ca-font);color:var(--ca-text-secondary);">The next pipeline run starts in 12 minutes.</p></div>
+          </div>
+          <div style="display:flex;gap:11px;padding:14px 16px;border-radius:var(--ca-r-md);background:var(--ca-warning-bg);border:1px solid color-mix(in srgb, var(--ca-warning) 30%, transparent);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ca-warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px;"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+            <div><p style="margin:0 0 2px;font:600 13px/1.4 var(--ca-font);color:var(--ca-text-primary);">Quota nearing limit</p><p style="margin:0;font:450 13px/1.5 var(--ca-font);color:var(--ca-text-secondary);">You've used 92% of your monthly API calls.</p></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;width:fit-content;padding:12px 14px 12px 12px;border-radius:var(--ca-r-md);background:var(--ca-text-primary);color:var(--ca-bg-page);box-shadow:var(--ca-shadow-lg);">
+          <span style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--ca-success);flex:none;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+          <span style="font:500 13px/1.3 var(--ca-font);">Workflow published successfully</span>
+          <span style="font:500 13px/1 var(--ca-font);color:var(--ca-primary);cursor:pointer;padding-left:6px;">Undo</span>
+        </div>
+      </section>
+
+      <!-- TABLE -->
+      <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);box-shadow:var(--ca-shadow-sm);overflow:hidden;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Data table</h2>
+            <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-table</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="display:flex;align-items:center;gap:7px;height:32px;padding:0 11px;border:1px solid var(--ca-border-strong);border-radius:var(--ca-r-sm);color:var(--ca-text-muted);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+              <span style="font:450 13px/1 var(--ca-font);">Search…</span>
+            </div>
+            <button style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 12px;border:1px solid var(--ca-border-strong);background:var(--ca-surface);color:var(--ca-text-primary);border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:pointer;" style-hover="background:var(--ca-surface-hover)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filter</button>
+            <button style="display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px;border:1px solid transparent;background:var(--ca-primary);color:var(--ca-on-primary);border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:pointer;box-shadow:var(--ca-shadow-sm);" style-hover="background:var(--ca-primary-hover)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add member</button>
+          </div>
+        </div>
+
+        <sc-if value="{{ hasSelection }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:14px;padding:9px 20px;background:var(--ca-primary-tint);border-top:1px solid var(--ca-border);border-bottom:1px solid var(--ca-border);">
+            <span style="font:600 12px/1 var(--ca-font);color:var(--ca-primary-pressed);">{{ selectedCount }} selected</span>
+            <button style="display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border:1px solid var(--ca-border-strong);background:var(--ca-surface);color:var(--ca-text-primary);border-radius:var(--ca-r-sm);font:500 12px/1 var(--ca-font);cursor:pointer;">Export</button>
+            <button style="display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border:1px solid transparent;background:var(--ca-surface);color:var(--ca-danger-fg);border-radius:var(--ca-r-sm);font:500 12px/1 var(--ca-font);cursor:pointer;" style-hover="background:var(--ca-danger-bg)">Deactivate</button>
+          </div>
+        </sc-if>
+
+        <div style="display:grid;grid-template-columns:44px 2fr 1.4fr 1fr 120px 44px;align-items:center;padding:0 20px;height:38px;background:var(--ca-surface-2);border-top:1px solid var(--ca-border);border-bottom:1px solid var(--ca-border);">
+          <button onClick="{{ toggleAll }}" style="display:flex;align-items:center;justify-content:center;background:none;border:none;padding:0;cursor:pointer;">
+            <span style="width:16px;height:16px;border-radius:var(--ca-r-xs);border:1.5px solid {{ allBd }};background:{{ allBg }};display:flex;align-items:center;justify-content:center;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--ca-on-primary)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="opacity:{{ allTick }};"><path d="M5 13l4 4L19 7"/></svg>
+            </span>
+          </button>
+          <span style="font:600 10px/1 var(--ca-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ca-text-muted);">Name</span>
+          <span style="font:600 10px/1 var(--ca-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ca-text-muted);">Email</span>
+          <span style="font:600 10px/1 var(--ca-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ca-text-muted);">Role</span>
+          <span style="font:600 10px/1 var(--ca-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ca-text-muted);">Status</span>
+          <span></span>
+        </div>
+
+        <sc-for list="{{ tableRows }}" as="row" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:44px 2fr 1.4fr 1fr 120px 44px;align-items:center;padding:0 20px;height:56px;border-bottom:1px solid var(--ca-border);background:{{ row.rowBg }};transition:background .12s ease;" style-hover="background:var(--ca-surface-hover)">
+            <button onClick="{{ row.onToggle }}" style="display:flex;align-items:center;justify-content:center;background:none;border:none;padding:0;cursor:pointer;">
+              <span style="width:16px;height:16px;border-radius:var(--ca-r-xs);border:1.5px solid {{ row.bd }};background:{{ row.bg }};display:flex;align-items:center;justify-content:center;">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--ca-on-primary)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="opacity:{{ row.tick }};"><path d="M5 13l4 4L19 7"/></svg>
+              </span>
+            </button>
+            <div style="display:flex;align-items:center;gap:11px;min-width:0;">
+              <div style="width:30px;height:30px;flex:none;border-radius:var(--ca-r-full);background:{{ row.avatarBg }};color:#fff;display:flex;align-items:center;justify-content:center;font:600 12px/1 var(--ca-font);">{{ row.initials }}</div>
+              <span style="font:500 14px/1.2 var(--ca-font);color:var(--ca-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ row.name }}</span>
+            </div>
+            <span style="font:450 13px/1.2 var(--ca-mono);color:var(--ca-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ row.email }}</span>
+            <span style="font:450 13px/1.2 var(--ca-font);color:var(--ca-text-secondary);">{{ row.role }}</span>
+            <span style="justify-self:start;display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:var(--ca-r-full);background:{{ row.statusBg }};color:{{ row.statusFg }};font:600 12px/1 var(--ca-font);"><span style="width:6px;height:6px;border-radius:50%;background:{{ row.statusDot }};"></span>{{ row.status }}</span>
+            <button style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border:none;background:none;border-radius:var(--ca-r-sm);color:var(--ca-text-muted);cursor:pointer;justify-self:center;" style-hover="background:var(--ca-surface-hover);color:var(--ca-text-primary)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
+            </button>
+          </div>
+        </sc-for>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;">
+          <span style="font:450 13px/1 var(--ca-font);color:var(--ca-text-muted);">1–5 of 24 members</span>
+          <div style="display:flex;align-items:center;gap:4px;">
+            <button style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border:1px solid var(--ca-border-strong);background:var(--ca-surface);border-radius:var(--ca-r-sm);color:var(--ca-text-muted);cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <button style="display:flex;align-items:center;justify-content:center;min-width:30px;height:30px;border:1px solid transparent;background:var(--ca-primary);color:var(--ca-on-primary);border-radius:var(--ca-r-sm);font:600 13px/1 var(--ca-font);cursor:pointer;">1</button>
+            <button style="display:flex;align-items:center;justify-content:center;min-width:30px;height:30px;border:1px solid var(--ca-border-strong);background:var(--ca-surface);color:var(--ca-text-primary);border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:pointer;" style-hover="background:var(--ca-surface-hover)">2</button>
+            <button style="display:flex;align-items:center;justify-content:center;min-width:30px;height:30px;border:1px solid var(--ca-border-strong);background:var(--ca-surface);color:var(--ca-text-primary);border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:pointer;" style-hover="background:var(--ca-surface-hover)">3</button>
+            <button style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border:1px solid var(--ca-border-strong);background:var(--ca-surface);border-radius:var(--ca-r-sm);color:var(--ca-text-primary);cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ============ NAVIGATION & OVERLAYS ============ -->
+    <div style="display:flex;flex-direction:column;gap:24px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="font:600 11px/1 var(--ca-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ca-text-muted);">03 — Navigation &amp; Overlays</span>
+        <div style="flex:1;height:1px;background:var(--ca-border);"></div>
+      </div>
+
+      <!-- SIDENAV + BREADCRUMB + PAGE NAV (shell) -->
+      <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:20px;">
+          <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Navigation shell</h2>
+          <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-sidenav · ca-breadcrumb · ca-page-nav</span>
+        </div>
+        <div style="display:flex;height:440px;border:1px solid var(--ca-border);border-radius:var(--ca-r-md);overflow:hidden;box-shadow:var(--ca-shadow-sm);">
+          <!-- sidenav -->
+          <div style="width:216px;flex:none;background:var(--ca-surface);border-right:1px solid var(--ca-border);display:flex;flex-direction:column;padding:16px 12px;gap:18px;">
+            <div style="display:flex;align-items:center;gap:9px;padding:0 6px;">
+              <div style="width:24px;height:24px;border-radius:var(--ca-r-sm);background:var(--ca-primary);display:flex;align-items:center;justify-content:center;flex:none;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+              </div>
+              <span style="font:600 13px/1 var(--ca-font);color:var(--ca-text-primary);">Acme Workspace</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;">
+              <sc-for list="{{ sidenavItems }}" as="n" hint-placeholder-count="5">
+                <button onClick="{{ n.onClick }}" style="display:flex;align-items:center;gap:10px;padding:8px 9px;border:none;border-radius:var(--ca-r-sm);cursor:pointer;text-align:left;background:{{ n.bg }};" style-hover="background:var(--ca-surface-hover)">
+                  <span innerHTML="{{ n.icon }}" style="display:flex;color:{{ n.iconColor }};flex:none;"></span>
+                  <span style="font:500 13px/1 var(--ca-font);color:{{ n.color }};">{{ n.label }}</span>
+                </button>
+              </sc-for>
+            </div>
+            <div style="flex:1;"></div>
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 6px;border-top:1px solid var(--ca-border);">
+              <div style="width:26px;height:26px;border-radius:var(--ca-r-full);background:#6B5FB0;color:#fff;display:flex;align-items:center;justify-content:center;font:600 11px/1 var(--ca-font);flex:none;">WK</div>
+              <div style="display:flex;flex-direction:column;line-height:1.2;min-width:0;">
+                <span style="font:500 12px/1.2 var(--ca-font);color:var(--ca-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">William Kim</span>
+                <span style="font:450 11px/1.2 var(--ca-font);color:var(--ca-text-muted);">Admin</span>
+              </div>
+            </div>
+          </div>
+          <!-- main area -->
+          <div style="flex:1;background:var(--ca-bg-page);display:flex;flex-direction:column;min-width:0;">
+            <div style="display:flex;align-items:center;gap:8px;padding:16px 22px 0;">
+              <span style="font:450 13px/1 var(--ca-font);color:var(--ca-text-muted);cursor:pointer;">Home</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--ca-text-muted)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+              <span style="font:450 13px/1 var(--ca-font);color:var(--ca-text-muted);cursor:pointer;">Workflows</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--ca-text-muted)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+              <span style="font:600 13px/1 var(--ca-font);color:var(--ca-text-primary);">Invoice Sync</span>
+            </div>
+            <div style="display:flex;gap:4px;padding:14px 22px 0;border-bottom:1px solid var(--ca-border);">
+              <sc-for list="{{ pageNavItems }}" as="p" hint-placeholder-count="4">
+                <button onClick="{{ p.onClick }}" style="position:relative;padding:0 4px 10px;margin-right:14px;background:none;border:none;cursor:pointer;font:500 13px/1 var(--ca-font);color:{{ p.color }};">
+                  {{ p.label }}
+                  <span style="position:absolute;left:0;right:0;bottom:-1px;height:2px;border-radius:2px;background:var(--ca-primary);transform:scaleX({{ p.ind }});transition:transform .18s ease;"></span>
+                </button>
+              </sc-for>
+            </div>
+            <div style="flex:1;margin:18px 22px;border-radius:var(--ca-r-md);background:repeating-linear-gradient(135deg, var(--ca-surface-2), var(--ca-surface-2) 8px, var(--ca-surface) 8px, var(--ca-surface) 16px);border:1px dashed var(--ca-border-strong);display:flex;align-items:center;justify-content:center;">
+              <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ca-text-muted);background:var(--ca-surface);padding:5px 10px;border-radius:var(--ca-r-sm);border:1px solid var(--ca-border);">workflow canvas</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOOLTIP + CONTEXT MENU -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:34px;">
+            <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Tooltip</h2>
+            <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-tooltip</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-around;padding:10px 0 46px;">
+            <div style="position:relative;display:inline-flex;">
+              <div style="position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%);background:var(--ca-text-primary);color:var(--ca-bg-page);padding:5px 9px;border-radius:var(--ca-r-sm);font:500 12px/1 var(--ca-font);white-space:nowrap;box-shadow:var(--ca-shadow-md);">Run workflow now</div>
+              <button style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--ca-border-strong);background:var(--ca-surface);border-radius:var(--ca-r-sm);cursor:pointer;color:var(--ca-text-secondary);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg></button>
+            </div>
+            <div style="position:relative;display:inline-flex;">
+              <span style="border-bottom:1px dashed var(--ca-text-muted);font:450 13px/1 var(--ca-font);color:var(--ca-text-secondary);cursor:default;">99.98% uptime</span>
+              <div style="position:absolute;top:calc(100% + 9px);left:50%;transform:translateX(-50%);background:var(--ca-text-primary);color:var(--ca-bg-page);padding:5px 9px;border-radius:var(--ca-r-sm);font:500 12px/1 var(--ca-font);white-space:nowrap;box-shadow:var(--ca-shadow-md);">Last 30 days</div>
+            </div>
+            <div style="position:relative;display:inline-flex;">
+              <div style="width:30px;height:30px;border-radius:var(--ca-r-full);background:var(--ca-primary);color:var(--ca-on-primary);display:flex;align-items:center;justify-content:center;font:600 12px/1 var(--ca-font);">JL</div>
+              <div style="position:absolute;left:calc(100% + 9px);top:50%;transform:translateY(-50%);background:var(--ca-text-primary);color:var(--ca-bg-page);padding:5px 9px;border-radius:var(--ca-r-sm);font:500 12px/1 var(--ca-font);white-space:nowrap;box-shadow:var(--ca-shadow-md);">Jackson Lee · Developer</div>
+            </div>
+          </div>
+        </section>
+
+        <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:20px;">
+            <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Context menu</h2>
+            <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-context-menu</span>
+          </div>
+          <div style="position:relative;display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid var(--ca-border);border-radius:var(--ca-r-md);background:var(--ca-surface-hover);">
+            <span style="font:500 13px/1 var(--ca-font);color:var(--ca-text-primary);">Invoice Sync.yaml</span>
+            <span style="display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:var(--ca-r-sm);background:var(--ca-surface-2);color:var(--ca-text-primary);"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></span>
+            <div style="position:absolute;top:calc(100% + 6px);right:0;width:198px;padding:5px;background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-md);box-shadow:var(--ca-shadow-lg);z-index:5;">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 9px;border-radius:var(--ca-r-sm);cursor:pointer;" style-hover="background:var(--ca-surface-hover)"><span style="font:450 13px/1 var(--ca-font);color:var(--ca-text-primary);">Open</span><span style="font:600 11px/1 var(--ca-mono);color:var(--ca-text-muted);">↵</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 9px;border-radius:var(--ca-r-sm);cursor:pointer;" style-hover="background:var(--ca-surface-hover)"><span style="font:450 13px/1 var(--ca-font);color:var(--ca-text-primary);">Duplicate</span><span style="font:600 11px/1 var(--ca-mono);color:var(--ca-text-muted);">⌘D</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 9px;border-radius:var(--ca-r-sm);cursor:pointer;" style-hover="background:var(--ca-surface-hover)"><span style="font:450 13px/1 var(--ca-font);color:var(--ca-text-primary);">Rename</span><span style="font:600 11px/1 var(--ca-mono);color:var(--ca-text-muted);">⏎</span></div>
+              <div style="height:1px;background:var(--ca-border);margin:5px 4px;"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 9px;border-radius:var(--ca-r-sm);cursor:pointer;color:var(--ca-danger-fg);" style-hover="background:var(--ca-danger-bg)"><span style="font:450 13px/1 var(--ca-font);">Delete</span><span style="font:600 11px/1 var(--ca-mono);opacity:.75;">⌫</span></div>
+            </div>
+          </div>
+          <p style="margin:14px 0 0;font:450 12px/1.5 var(--ca-font);color:var(--ca-text-muted);">Right-click any row or use the row action menu to trigger.</p>
+        </section>
+      </div>
+
+      <!-- COMMAND BAR -->
+      <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:22px;">
+          <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Command bar</h2>
+          <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-command-bar</span>
+        </div>
+        <div style="max-width:560px;margin:0 auto;border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);overflow:hidden;box-shadow:var(--ca-shadow-lg);">
+          <div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--ca-border);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ca-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+            <span style="flex:1;font:450 14px/1 var(--ca-font);color:var(--ca-text-muted);">Type a command or search…</span>
+            <span style="display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;border-radius:4px;background:var(--ca-surface-2);border:1px solid var(--ca-border);font:600 11px/1 var(--ca-mono);color:var(--ca-text-muted);">ESC</span>
+          </div>
+          <div style="padding:8px;">
+            <p style="margin:4px 8px 6px;font:600 10px/1 var(--ca-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ca-text-muted);">Suggested</p>
+            <sc-for list="{{ commandItems }}" as="c" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:11px;padding:9px 9px;border-radius:var(--ca-r-sm);cursor:pointer;background:{{ c.bg }};" style-hover="background:var(--ca-surface-hover)">
+                <span innerHTML="{{ c.icon }}" style="display:flex;color:var(--ca-text-secondary);flex:none;"></span>
+                <span style="flex:1;font:450 13px/1 var(--ca-font);color:var(--ca-text-primary);">{{ c.label }}</span>
+                <span style="font:600 11px/1 var(--ca-mono);color:var(--ca-text-muted);">{{ c.shortcut }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <!-- DATEPICKER + MULTI-SELECT -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:20px;">
+            <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Date picker</h2>
+            <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-datepicker</span>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
+            <span style="font:500 12px/1.2 var(--ca-font);color:var(--ca-text-secondary);">Due date</span>
+            <div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;background:var(--ca-surface);border:1px solid var(--ca-primary);border-radius:var(--ca-r-sm);box-shadow:var(--ca-focus);width:fit-content;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ca-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+              <span style="font:450 14px/1 var(--ca-font);color:var(--ca-text-primary);">March {{ dpSelectedDay }}, 2026</span>
+            </div>
+          </label>
+          <div style="width:264px;border:1px solid var(--ca-border);border-radius:var(--ca-r-md);padding:14px;box-shadow:var(--ca-shadow-sm);">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <button style="display:flex;align-items:center;justify-content:center;width:24px;height:24px;border:none;background:none;border-radius:var(--ca-r-sm);color:var(--ca-text-muted);cursor:pointer;" style-hover="background:var(--ca-surface-hover)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+              <span style="font:600 13px/1 var(--ca-font);color:var(--ca-text-primary);">March 2026</span>
+              <button style="display:flex;align-items:center;justify-content:center;width:24px;height:24px;border:none;background:none;border-radius:var(--ca-r-sm);color:var(--ca-text-muted);cursor:pointer;" style-hover="background:var(--ca-surface-hover)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;">
+              <sc-for list="{{ weekdayLabels }}" as="w" hint-placeholder-count="7">
+                <span style="text-align:center;font:600 10px/1 var(--ca-mono);color:var(--ca-text-muted);padding:4px 0;">{{ w }}</span>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;">
+              <sc-for list="{{ dpDays }}" as="d" hint-placeholder-count="35">
+                <button onClick="{{ d.onClick }}" disabled="{{ d.blank }}" style="aspect-ratio:1;border:none;border-radius:var(--ca-r-full);cursor:pointer;font:500 12px/1 var(--ca-font);background:{{ d.bg }};color:{{ d.color }};box-shadow:{{ d.ring }};">{{ d.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+
+        <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:20px;">
+            <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Multi-select</h2>
+            <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-multi-select</span>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
+            <span style="font:500 12px/1.2 var(--ca-font);color:var(--ca-text-secondary);">Labels</span>
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-height:36px;padding:5px 8px;background:var(--ca-surface);border:1px solid var(--ca-border-strong);border-radius:var(--ca-r-sm);">
+              <sc-for list="{{ msChips }}" as="tag" hint-placeholder-count="2">
+                <span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 6px 0 9px;border-radius:var(--ca-r-full);background:{{ tag.bg }};color:{{ tag.fg }};font:500 12px/1 var(--ca-font);">
+                  {{ tag.label }}
+                  <span onClick="{{ tag.onRemove }}" style="display:flex;cursor:pointer;opacity:.75;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+                </span>
+              </sc-for>
+              <span style="font:450 13px/1 var(--ca-font);color:var(--ca-text-muted);padding:0 4px;">Add label…</span>
+            </div>
+          </label>
+          <div style="border:1px solid var(--ca-border);border-radius:var(--ca-r-md);padding:5px;box-shadow:var(--ca-shadow-sm);">
+            <sc-for list="{{ msOptions }}" as="o" hint-placeholder-count="4">
+              <button onClick="{{ o.onToggle }}" style="display:flex;align-items:center;gap:10px;width:100%;padding:8px 9px;border:none;background:none;border-radius:var(--ca-r-sm);cursor:pointer;text-align:left;" style-hover="background:var(--ca-surface-hover)">
+                <span style="width:9px;height:9px;border-radius:50%;background:{{ o.dot }};flex:none;"></span>
+                <span style="flex:1;font:450 13px/1 var(--ca-font);color:var(--ca-text-primary);">{{ o.label }}</span>
+                <span style="display:flex;opacity:{{ o.tick }};color:var(--ca-primary);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+              </button>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+
+      <!-- MODAL + DRAWER -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:20px;">
+            <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Modal</h2>
+            <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-modal</span>
+          </div>
+          <div style="position:relative;height:300px;border:1px solid var(--ca-border);border-radius:var(--ca-r-md);overflow:hidden;background:var(--ca-surface-2);">
+            <div style="padding:20px;display:flex;flex-direction:column;gap:10px;">
+              <span style="height:9px;width:70%;border-radius:3px;background:var(--ca-border-strong);"></span>
+              <span style="height:9px;width:45%;border-radius:3px;background:var(--ca-border-strong);"></span>
+              <button onClick="{{ openModal }}" style="align-self:flex-start;margin-top:10px;display:inline-flex;align-items:center;height:32px;padding:0 14px;border:1px solid transparent;background:var(--ca-primary);color:var(--ca-on-primary);border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:pointer;">Open modal</button>
+            </div>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,11,14,.5);opacity:{{ modalBackdropOpacity }};pointer-events:{{ modalPointer }};transition:opacity .18s ease;">
+              <div style="width:280px;background:var(--ca-surface);border-radius:var(--ca-r-lg);box-shadow:var(--ca-shadow-lg);transform:scale({{ modalScale }});transition:transform .18s ease;overflow:hidden;">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--ca-border);">
+                  <span style="font:600 14px/1.2 var(--ca-font);color:var(--ca-text-primary);">Delete workflow?</span>
+                  <button onClick="{{ closeModal }}" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;border:none;background:none;color:var(--ca-text-muted);cursor:pointer;border-radius:var(--ca-r-sm);" style-hover="background:var(--ca-surface-hover)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+                </div>
+                <p style="margin:0;padding:16px;font:450 13px/1.55 var(--ca-font);color:var(--ca-text-secondary);">This will permanently remove &quot;Invoice Sync&quot; and stop all scheduled runs.</p>
+                <div style="display:flex;justify-content:flex-end;gap:8px;padding:12px 16px;border-top:1px solid var(--ca-border);">
+                  <button onClick="{{ closeModal }}" style="display:inline-flex;align-items:center;height:30px;padding:0 12px;border:1px solid var(--ca-border-strong);background:var(--ca-surface);color:var(--ca-text-primary);border-radius:var(--ca-r-sm);font:500 12px/1 var(--ca-font);cursor:pointer;">Cancel</button>
+                  <button onClick="{{ closeModal }}" style="display:inline-flex;align-items:center;height:30px;padding:0 12px;border:1px solid transparent;background:var(--ca-danger);color:#fff;border-radius:var(--ca-r-sm);font:500 12px/1 var(--ca-font);cursor:pointer;">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section style="background:var(--ca-surface);border:1px solid var(--ca-border);border-radius:var(--ca-r-lg);padding:28px;box-shadow:var(--ca-shadow-sm);">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:20px;">
+            <h2 style="font:600 15px/1.2 var(--ca-font);letter-spacing:-0.01em;margin:0;">Drawer</h2>
+            <span style="font:500 11px/1 var(--ca-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ca-text-muted);">ca-drawer</span>
+          </div>
+          <div style="position:relative;height:300px;border:1px solid var(--ca-border);border-radius:var(--ca-r-md);overflow:hidden;background:var(--ca-surface-2);">
+            <div style="padding:20px;display:flex;flex-direction:column;gap:10px;">
+              <span style="height:9px;width:60%;border-radius:3px;background:var(--ca-border-strong);"></span>
+              <span style="height:9px;width:38%;border-radius:3px;background:var(--ca-border-strong);"></span>
+              <button onClick="{{ openDrawer }}" style="align-self:flex-start;margin-top:10px;display:inline-flex;align-items:center;height:32px;padding:0 14px;border:1px solid var(--ca-border-strong);background:var(--ca-surface);color:var(--ca-text-primary);border-radius:var(--ca-r-sm);font:500 13px/1 var(--ca-font);cursor:pointer;">Open drawer</button>
+            </div>
+            <div style="position:absolute;inset:0;background:rgba(10,11,14,.4);opacity:{{ drawerBackdropOpacity }};pointer-events:{{ drawerPointer }};transition:opacity .2s ease;"></div>
+            <div style="position:absolute;top:0;right:0;bottom:0;width:210px;background:var(--ca-surface);box-shadow:var(--ca-shadow-lg);border-left:1px solid var(--ca-border);transform:translateX({{ drawerX }});transition:transform .22s ease;display:flex;flex-direction:column;">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 14px;border-bottom:1px solid var(--ca-border);">
+                <span style="font:600 13px/1.2 var(--ca-font);color:var(--ca-text-primary);">Run details</span>
+                <button onClick="{{ closeDrawer }}" style="display:flex;align-items:center;justify-content:center;width:20px;height:20px;border:none;background:none;color:var(--ca-text-muted);cursor:pointer;border-radius:var(--ca-r-sm);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+              </div>
+              <div style="padding:14px;display:flex;flex-direction:column;gap:9px;flex:1;">
+                <span style="height:8px;width:80%;border-radius:3px;background:var(--ca-border);"></span>
+                <span style="height:8px;width:60%;border-radius:3px;background:var(--ca-border);"></span>
+                <span style="height:8px;width:70%;border-radius:3px;background:var(--ca-border);"></span>
+              </div>
+              <div style="padding:12px 14px;border-top:1px solid var(--ca-border);">
+                <button onClick="{{ closeDrawer }}" style="width:100%;display:inline-flex;align-items:center;justify-content:center;height:30px;border:1px solid transparent;background:var(--ca-primary);color:var(--ca-on-primary);border-radius:var(--ca-r-sm);font:500 12px/1 var(--ca-font);cursor:pointer;">Close</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <footer style="padding-top:8px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--ca-border);">
+      <span style="font:450 12px/1.4 var(--ca-font);color:var(--ca-text-muted);padding-top:20px;">Caylina UI Kit — refreshed foundations &amp; components. Built for translation back to Lit.</span>
+      <span style="font:500 11px/1 var(--ca-mono);color:var(--ca-text-muted);padding-top:20px;">{{ themeLabel }}</span>
+    </footer>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = {
+    dark: false,
+    checks: { a: true, b: false, c: false },
+    radio: 'balanced',
+    toggles: { notif: true, deploy: false, beta: true },
+    tab: 'overview',
+    pill: 'week',
+    open: 'perf',
+    selected: { 1: true, 3: true },
+    sidenavActive: 'workflows',
+    pageNav: 'overview',
+    dpDay: 14,
+    msSelected: { bug: true, design: true },
+    modalOpen: false,
+    drawerOpen: false,
+  };
+
+  get PRIMARY() { return this.state.dark ? '#8093EA' : '#4B5FC6'; }
+
+  toggleTheme = () => this.setState(s => ({ dark: !s.dark }));
+  toggleCheck = (k) => this.setState(s => ({ checks: { ...s.checks, [k]: !s.checks[k] } }));
+  setRadio = (v) => this.setState({ radio: v });
+  toggleToggle = (k) => this.setState(s => ({ toggles: { ...s.toggles, [k]: !s.toggles[k] } }));
+  setTab = (v) => this.setState({ tab: v });
+  setPill = (v) => this.setState({ pill: v });
+  setOpen = (v) => this.setState(s => ({ open: s.open === v ? '' : v }));
+  toggleRow = (id) => this.setState(s => ({ selected: { ...s.selected, [id]: !s.selected[id] } }));
+  setSidenav = (id) => this.setState({ sidenavActive: id });
+  setPageNav = (id) => this.setState({ pageNav: id });
+  setDpDay = (day) => this.setState({ dpDay: day });
+  toggleMsTag = (id) => this.setState(s => ({ msSelected: { ...s.msSelected, [id]: !s.msSelected[id] } }));
+  openModal = () => this.setState({ modalOpen: true });
+  closeModal = () => this.setState({ modalOpen: false });
+  openDrawer = () => this.setState({ drawerOpen: true });
+  closeDrawer = () => this.setState({ drawerOpen: false });
+
+  renderVals() {
+    const d = this.state.dark;
+    const P = this.PRIMARY;
+    const bd = 'var(--ca-border-strong)';
+
+    const checkDefs = [
+      { k: 'a', label: 'Enable notifications', sub: 'Get alerts for runs and failures' },
+      { k: 'b', label: 'Weekly digest', sub: 'A summary every Monday' },
+      { k: 'c', label: 'Share usage data', sub: 'Help improve the product' },
+    ];
+    const checkItems = checkDefs.map(c => {
+      const on = this.state.checks[c.k];
+      return { label: c.label, sub: c.sub, tick: on ? 1 : 0,
+        bg: on ? P : 'var(--ca-surface)', bd: on ? P : bd,
+        onToggle: () => this.toggleCheck(c.k) };
+    });
+
+    const radioDefs = [
+      { v: 'compact', label: 'Compact', sub: 'Maximize rows on screen' },
+      { v: 'balanced', label: 'Balanced', sub: 'Comfortable but efficient' },
+      { v: 'relaxed', label: 'Relaxed', sub: 'More breathing room' },
+    ];
+    const radioItems = radioDefs.map(r => {
+      const on = this.state.radio === r.v;
+      return { label: r.label, sub: r.sub, dot: on ? 1 : 0, bd: on ? P : bd,
+        onSelect: () => this.setRadio(r.v) };
+    });
+
+    const toggleDefs = [
+      { k: 'notif', label: 'Realtime alerts', sub: 'Push on every event' },
+      { k: 'deploy', label: 'Auto-deploy', sub: 'Ship on green build' },
+      { k: 'beta', label: 'Beta features', sub: 'Opt into previews' },
+    ];
+    const toggleItems = toggleDefs.map(t => {
+      const on = this.state.toggles[t.k];
+      return { label: t.label, sub: t.sub, x: on ? '16px' : '0px',
+        track: on ? P : 'var(--ca-border-strong)', onToggle: () => this.toggleToggle(t.k) };
+    });
+
+    const tabDefs = [
+      { v: 'overview', label: 'Overview' },
+      { v: 'activity', label: 'Activity' },
+      { v: 'settings', label: 'Settings' },
+    ];
+    const tabs = tabDefs.map(t => {
+      const on = this.state.tab === t.v;
+      return { label: t.label, ind: on ? 1 : 0, weight: on ? 600 : 500,
+        color: on ? 'var(--ca-text-primary)' : 'var(--ca-text-muted)',
+        onClick: () => this.setTab(t.v) };
+    });
+
+    const pillDefs = [
+      { v: 'day', label: 'Day' },
+      { v: 'week', label: 'Week' },
+      { v: 'month', label: 'Month' },
+    ];
+    const pills = pillDefs.map(p => {
+      const on = this.state.pill === p.v;
+      return { label: p.label,
+        bg: on ? 'var(--ca-surface)' : 'transparent',
+        color: on ? 'var(--ca-text-primary)' : 'var(--ca-text-secondary)',
+        shadow: on ? 'var(--ca-shadow-sm)' : 'none',
+        onClick: () => this.setPill(p.v) };
+    });
+
+    const accDefs = [
+      { v: 'perf', title: 'Performance thresholds', body: 'Define latency and error-rate budgets per environment. Alerts fire when a rolling window breaches the configured ceiling.' },
+      { v: 'access', title: 'Access & permissions', body: 'Role-based access with workspace, project, and resource scopes. Supports SSO and SCIM provisioning.' },
+      { v: 'billing', title: 'Billing & usage', body: 'Metered by active workflows and compute minutes. Usage resets on the first of each billing cycle.' },
+    ];
+    const accordion = accDefs.map(a => {
+      const on = this.state.open === a.v;
+      return { title: a.title, body: a.body, rot: on ? '180deg' : '0deg',
+        maxH: on ? '160px' : '0px',
+        headBg: on ? 'var(--ca-surface-2)' : 'var(--ca-surface)',
+        onToggle: () => this.setOpen(a.v) };
+    });
+
+    // TABLE
+    const rowDefs = [
+      { id: 1, name: 'Olivia Martin', email: 'olivia@caylina.io', role: 'Designer', status: 'Active', initials: 'OM', avatarBg: P },
+      { id: 2, name: 'Jackson Lee', email: 'jackson@caylina.io', role: 'Developer', status: 'Active', initials: 'JL', avatarBg: '#3F8F6B' },
+      { id: 3, name: 'Isabella Nguyen', email: 'isabella@caylina.io', role: 'Manager', status: 'Inactive', initials: 'IN', avatarBg: '#B4693E' },
+      { id: 4, name: 'William Kim', email: 'william@caylina.io', role: 'Developer', status: 'Pending', initials: 'WK', avatarBg: '#6B5FB0' },
+      { id: 5, name: 'Sofia Davis', email: 'sofia@caylina.io', role: 'Designer', status: 'Active', initials: 'SD', avatarBg: '#B0567F' },
+    ];
+    const statusMap = {
+      Active: { bg: 'var(--ca-success-bg)', fg: 'var(--ca-success-fg)', dot: 'var(--ca-success)' },
+      Inactive: { bg: 'var(--ca-danger-bg)', fg: 'var(--ca-danger-fg)', dot: 'var(--ca-danger)' },
+      Pending: { bg: 'var(--ca-warning-bg)', fg: 'var(--ca-warning-fg)', dot: 'var(--ca-warning)' },
+    };
+    const tableRows = rowDefs.map(r => {
+      const on = !!this.state.selected[r.id];
+      const st = statusMap[r.status];
+      return { ...r, tick: on ? 1 : 0,
+        bg: on ? P : 'var(--ca-surface)', bd: on ? P : bd,
+        rowBg: on ? 'var(--ca-primary-tint)' : 'var(--ca-surface)',
+        statusBg: st.bg, statusFg: st.fg, statusDot: st.dot,
+        onToggle: () => this.toggleRow(r.id) };
+    });
+    const selCount = rowDefs.filter(r => this.state.selected[r.id]).length;
+    const allOn = selCount === rowDefs.length;
+    const someOn = selCount > 0;
+
+    return {
+      caTheme: d ? 'dark' : 'light',
+      themeLabel: d ? 'Dark' : 'Light',
+      themeIcon: d
+        ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
+        : '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+      toggleTheme: this.toggleTheme,
+
+      primaryScale: d
+        ? [ {name:'100',hex:'#22264A'},{name:'300',hex:'#3D4485'},{name:'500',hex:'#5D6CC4'},{name:'600',hex:'#8093EA'},{name:'700',hex:'#A0AEF0'},{name:'900',hex:'#D6DDFA'} ]
+        : [ {name:'50',hex:'#EEF0FB'},{name:'100',hex:'#DFE3F8'},{name:'300',hex:'#AEB8EE'},{name:'500',hex:'#6B7DD6'},{name:'600',hex:'#4B5FC6'},{name:'700',hex:'#39499C'} ],
+      neutralScale: d
+        ? [ {name:'page',hex:'#0B0C0F'},{name:'surface',hex:'#131519'},{name:'raised',hex:'#1A1D22'},{name:'hover',hex:'#20242B'},{name:'border',hex:'#2A2E36'},{name:'text',hex:'#E9EAED'} ]
+        : [ {name:'page',hex:'#FAFAFB'},{name:'surface',hex:'#FFFFFF'},{name:'raised',hex:'#F5F6F8'},{name:'border',hex:'#E8E9EC'},{name:'muted',hex:'#8B8F98'},{name:'text',hex:'#16181D'} ],
+      semanticColors: [
+        { name: 'Success', token: '--ca-success', dot: 'var(--ca-success)', bg: 'var(--ca-success-bg)', fg: 'var(--ca-success-fg)' },
+        { name: 'Warning', token: '--ca-warning', dot: 'var(--ca-warning)', bg: 'var(--ca-warning-bg)', fg: 'var(--ca-warning-fg)' },
+        { name: 'Danger', token: '--ca-danger', dot: 'var(--ca-danger)', bg: 'var(--ca-danger-bg)', fg: 'var(--ca-danger-fg)' },
+        { name: 'Info', token: '--ca-primary', dot: 'var(--ca-primary)', bg: 'var(--ca-info-bg)', fg: 'var(--ca-info-fg)' },
+      ],
+
+      typeScale: [
+        { sample: 'Display', px: '34px', weight: 600, tracking: '-0.025em', meta: '34 / 600' },
+        { sample: 'Heading', px: '20px', weight: 600, tracking: '-0.015em', meta: '20 / 600' },
+        { sample: 'Subheading', px: '16px', weight: 600, tracking: '-0.01em', meta: '16 / 600' },
+        { sample: 'Body text', px: '14px', weight: 450, tracking: '0', meta: '14 / 450' },
+        { sample: 'Small / caption', px: '13px', weight: 450, tracking: '0', meta: '13 / 450' },
+        { sample: 'LABEL · MONO', px: '11px', weight: 600, tracking: '0.08em', meta: '11 / mono' },
+      ],
+      spacingScale: [
+        { name: 'xs', px: '4px' }, { name: 'sm', px: '8px' }, { name: 'md', px: '16px' },
+        { name: 'lg', px: '24px' }, { name: 'xl', px: '32px' },
+      ],
+      radiusScale: [
+        { px: '2px' }, { px: '4px' }, { px: '6px' }, { px: '8px' },
+      ],
+
+      checkItems, radioItems, toggleItems, tabs, pills, accordion,
+
+      tableRows,
+      hasSelection: someOn,
+      selectedCount: selCount,
+      toggleAll: () => {
+        const next = {};
+        if (!allOn) rowDefs.forEach(r => next[r.id] = true);
+        this.setState({ selected: next });
+      },
+      allBg: allOn ? P : 'var(--ca-surface)',
+      allBd: someOn ? P : bd,
+      allTick: allOn ? 1 : 0,
+
+      // --- sidenav ---
+      sidenavItems: [
+        { id: 'dashboard', label: 'Dashboard', icon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>' },
+        { id: 'projects', label: 'Projects', icon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>' },
+        { id: 'workflows', label: 'Workflows', icon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>' },
+        { id: 'reports', label: 'Reports', icon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>' },
+        { id: 'settings', label: 'Settings', icon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>' },
+      ].map(n => {
+        const on = this.state.sidenavActive === n.id;
+        return { ...n, bg: on ? 'var(--ca-primary-tint)' : 'transparent',
+          color: on ? 'var(--ca-primary)' : 'var(--ca-text-primary)',
+          iconColor: on ? 'var(--ca-primary)' : 'var(--ca-text-secondary)',
+          onClick: () => this.setSidenav(n.id) };
+      }),
+
+      pageNavItems: ['overview', 'runs', 'triggers', 'members'].map(v => {
+        const on = this.state.pageNav === v;
+        return { label: v[0].toUpperCase() + v.slice(1), ind: on ? 1 : 0,
+          color: on ? 'var(--ca-text-primary)' : 'var(--ca-text-muted)',
+          onClick: () => this.setPageNav(v) };
+      }),
+
+      // --- command bar ---
+      commandItems: [
+        { label: 'Create new workflow', shortcut: '⌘N', icon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>', bg: 'var(--ca-primary-tint)' },
+        { label: 'Go to Reports', shortcut: 'G R', icon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>', bg: 'transparent' },
+        { label: 'Invite teammate', shortcut: '⌘I', icon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.6 3-5.6 6.5-5.6s6.5 2 6.5 5.6M17 8v5M14.5 10.5h5"/></svg>', bg: 'transparent' },
+        { label: 'Toggle dark mode', shortcut: '⌘J', icon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>', bg: 'transparent' },
+      ],
+
+      // --- datepicker ---
+      dpSelectedDay: this.state.dpDay,
+      weekdayLabels: ['SU','MO','TU','WE','TH','FR','SA'],
+      dpDays: (() => {
+        const leading = 3, total = 35;
+        const out = [];
+        for (let i = 0; i < total; i++) {
+          const day = i - leading + 1;
+          const blank = day < 1 || day > 31;
+          const selected = !blank && day === this.state.dpDay;
+          const today = !blank && day === 21;
+          out.push({
+            label: blank ? '' : String(day), blank,
+            bg: selected ? P : 'transparent',
+            color: blank ? 'transparent' : (selected ? 'var(--ca-on-primary)' : 'var(--ca-text-primary)'),
+            ring: today && !selected ? 'inset 0 0 0 1.5px var(--ca-primary)' : 'none',
+            onClick: blank ? undefined : () => this.setDpDay(day),
+          });
+        }
+        return out;
+      })(),
+
+      // --- multi-select ---
+      msChips: [
+        { id: 'bug', label: 'Bug', bg: 'var(--ca-danger-bg)', fg: 'var(--ca-danger-fg)' },
+        { id: 'design', label: 'Design', bg: 'rgba(176,86,127,.15)', fg: '#B0567F' },
+      ].filter(t => this.state.msSelected[t.id])
+       .map(t => ({ ...t, onRemove: () => this.toggleMsTag(t.id) })),
+      msOptions: [
+        { id: 'bug', label: 'Bug', dot: 'var(--ca-danger)' },
+        { id: 'feature', label: 'Feature', dot: P },
+        { id: 'design', label: 'Design', dot: '#B0567F' },
+        { id: 'docs', label: 'Documentation', dot: '#6B5FB0' },
+      ].map(o => {
+        const on = !!this.state.msSelected[o.id];
+        return { ...o, tick: on ? 1 : 0, onToggle: () => this.toggleMsTag(o.id) };
+      }),
+
+      // --- modal / drawer ---
+      openModal: this.openModal, closeModal: this.closeModal,
+      modalBackdropOpacity: this.state.modalOpen ? 1 : 0,
+      modalPointer: this.state.modalOpen ? 'auto' : 'none',
+      modalScale: this.state.modalOpen ? 1 : 0.95,
+      openDrawer: this.openDrawer, closeDrawer: this.closeDrawer,
+      drawerBackdropOpacity: this.state.drawerOpen ? 1 : 0,
+      drawerPointer: this.state.drawerOpen ? 'auto' : 'none',
+      drawerX: this.state.drawerOpen ? '0%' : '100%',
+    };
+  }
+}
+</script>
+</body>
+</html>

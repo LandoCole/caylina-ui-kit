@@ -1,74 +1,107 @@
+/* ============================================================================
+   CAYLINA DESIGN TOKENS — v2 "Refresh"
+   ----------------------------------------------------------------------------
+   Drop-in replacement for src/tokens.css. Same custom-property names as v1
+   (so every @caylina/ui-kit component keeps working unchanged) — values,
+   and a handful of net-new tokens, updated to the v2 visual direction:
+   restrained periwinkle accent, cool neutral surfaces, sharp geometry,
+   tight/layered elevation. See DESIGN-GUIDELINES.md for full rationale,
+   usage rules, and the v1 → v2 diff.
+
+   Load order: this file, then component JS. Dark mode: add
+   [data-theme="dark"] to <html> (see GUIDE.md "Theming & Dark Mode").
+   ============================================================================ */
+
 @layer caylina.tokens, caylina.components;
 
 @layer caylina.tokens {
   :root {
     /* ── Brand Colors (constant across themes) ── */
-    --ca-color-primary: #728EC7;
-    --ca-color-primary-pressed: #657EAB;
+    --ca-color-primary: #4B5FC6;
+    --ca-color-primary-hover: #4152B0;
+    --ca-color-primary-pressed: #39499C;
+    --ca-color-primary-tint: #EEF0FB;
+    --ca-color-primary-tint-strong: #DFE3F8;
+    --ca-color-on-primary: #FFFFFF;
     --ca-color-secondary: #222222;
     --ca-color-secondary-hover: rgba(34, 34, 34, 0.05);
     --ca-color-white: #FFFFFF;
-    --ca-color-link: #004CC4;
-    --ca-color-danger: #C13515;
-    --ca-color-danger-pressed: #A42E12;
-    --ca-color-success: #15803D;
-    --ca-color-warning: #CA8A04;
+    --ca-color-link: #4152B0;
+    --ca-color-danger: #CE3F1F;
+    --ca-color-danger-pressed: #A8341C;
+    --ca-color-success: #16A34A;
+    --ca-color-warning: #B45309;
 
     /* ── Semantic Surfaces ── */
-    --ca-bg-page: #F4F4F5;
+    --ca-bg-page: #FAFAFB;
     --ca-surface: #FFFFFF;
-    --ca-surface-hover: #F7F7F7;
-    --ca-surface-active: #F6F6F6;
+    --ca-surface-hover: #F3F4F6;
+    --ca-surface-active: #F5F6F8;
     --ca-surface-elevated: #FFFFFF;
 
     /* ── Semantic Text ── */
-    --ca-text-primary: #1A1A1A;
-    --ca-text-secondary: #6E6E6E;
-    --ca-text-muted: #9A9A9A;
-    --ca-text-danger: #D55F5A;
+    --ca-text-primary: #16181D;
+    --ca-text-secondary: #565A63;
+    --ca-text-muted: #8B8F98;
+    --ca-text-danger: #B23217;
 
     /* ── Semantic Borders ── */
-    --ca-border: #ECECEC;
-    --ca-border-strong: #B0B0B0;
-    --ca-border-input: #D8D8D8;
-    --ca-divider: #EFEFEF;
+    --ca-border: #E8E9EC;
+    --ca-border-strong: #D5D7DC;
+    --ca-border-input: #D5D7DC;
+    --ca-divider: #E8E9EC;
 
     /* ── State Colors ── */
-    --ca-color-disabled: #DDDDDD;
-    --ca-color-disabled-text: #FFFFFF;
-    --ca-color-focus-ring: #D3D3D3;
+    --ca-color-disabled: #F5F6F8;
+    --ca-color-disabled-text: #8B8F98;
+    --ca-color-focus-ring: rgba(75, 95, 198, 0.28);
+
+    /* ── Semantic fill/foreground pairs (badges, callouts, toasts) ── */
+    --ca-success-bg: #E7F6ED;
+    --ca-success-fg: #15803D;
+    --ca-warning-bg: #FBEFD9;
+    --ca-warning-fg: #9A5B08;
+    --ca-danger-bg: #FBE9E4;
+    --ca-danger-fg: #B23217;
+    --ca-info-bg: var(--ca-color-primary-tint);
+    --ca-info-fg: var(--ca-color-primary-pressed);
 
     /* ── Typography ── */
-    --ca-font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    --ca-font-family-display: "Poppins", "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    --ca-font-family-mono: "Inconsolata", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --ca-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --ca-font-family-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --ca-font-family-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-    --ca-font-weight-thin: 100;
-    --ca-font-weight-extralight: 200;
-    --ca-font-weight-light: 300;
     --ca-font-weight-normal: 400;
+    --ca-font-weight-book: 450;
     --ca-font-weight-medium: 500;
     --ca-font-weight-semibold: 600;
     --ca-font-weight-bold: 700;
-    --ca-font-weight-extrabold: 800;
-    --ca-font-weight-black: 900;
 
-    /* Type scale: 12 / 14 / 16 / 20 / 24 / 32 */
-    --ca-font-size-xs: 12px;
-    --ca-font-size-sm: 14px;
-    --ca-font-size-md: 16px;
-    --ca-font-size-lg: 20px;
-    --ca-font-size-xl: 24px;
-    --ca-font-size-2xl: 32px;
+    /* Foundational size scale */
+    --ca-font-size-xs: 11px;
+    --ca-font-size-sm: 13px;
+    --ca-font-size-md: 14px;
+    --ca-font-size-lg: 16px;
+    --ca-font-size-xl: 20px;
+    --ca-font-size-2xl: 34px;
 
-    /* ── Radii ── */
+    /* Role-based type tokens — prefer these over raw sizes in product UI */
+    --ca-type-display: 600 34px/1.08 var(--ca-font-family-display);
+    --ca-type-heading: 600 20px/1.2 var(--ca-font-family-display);
+    --ca-type-subheading: 600 16px/1.3 var(--ca-font-family);
+    --ca-type-body: 450 14px/1.5 var(--ca-font-family);
+    --ca-type-caption: 450 13px/1.4 var(--ca-font-family);
+    --ca-type-label: 600 11px/1 var(--ca-font-family-mono);
+
+    /* ── Radii — sharp / dense ── */
+    --ca-radius-xs: 2px;
     --ca-radius-sm: 4px;
-    --ca-radius-md: 8px;
-    --ca-radius-lg: 10px;
-    --ca-radius-xl: 14px;
+    --ca-radius-md: 6px;
+    --ca-radius-lg: 8px;
+    --ca-radius-xl: 12px;
     --ca-radius-full: 9999px;
-    --ca-radius-button: 8px;
-    --ca-radius-focus-wrapper: 10px;
+    --ca-radius-button: 4px;
+    --ca-radius-focus-wrapper: 8px;
     --ca-radius-link-focus: 4px;
     --ca-radius-link-focus-sm: 2px;
 
@@ -85,7 +118,6 @@
     --ca-space-md: 16px;
     --ca-space-lg: 24px;
     --ca-space-xl: 32px;
-    /* Numeric scale — use for fine-grained spacing the t-shirt scale can't express */
     --ca-space-0-5: 2px;
     --ca-space-1: 4px;
     --ca-space-1-5: 6px;
@@ -102,14 +134,12 @@
     --ca-transition-normal: 0.2s ease;
 
     /* ── Toggle ── */
-    --ca-toggle-active: #222222;
+    --ca-toggle-active: var(--ca-color-primary);
 
-    /* ── PM Status Colors ── */
+    /* ── PM Status Colors (unchanged from v1 — domain palette, not restyled) ── */
     --ca-color-status-todo: #6b7280;
     --ca-color-status-in-progress: #4F7AB8;
     --ca-color-status-done: #3FA864;
-
-    /* Soft tinted backgrounds + readable foregrounds for pill-style badges */
     --ca-color-status-todo-bg: #F1F2F4;
     --ca-color-status-todo-fg: #4B5563;
     --ca-color-status-in-progress-bg: #E5EEF7;
@@ -117,13 +147,11 @@
     --ca-color-status-done-bg: #E0F2E7;
     --ca-color-status-done-fg: #2A7A4A;
 
-    /* ── PM Priority Colors ── */
+    /* ── PM Priority Colors (unchanged from v1) ── */
     --ca-color-priority-urgent: #D04A4A;
     --ca-color-priority-high: #D87324;
     --ca-color-priority-medium: #C4942A;
     --ca-color-priority-low: #6b7280;
-
-    /* Soft tinted backgrounds + foregrounds for pill-style priority badges */
     --ca-color-priority-urgent-bg: #FBE5E5;
     --ca-color-priority-urgent-fg: #A53030;
     --ca-color-priority-high-bg: #FBEAD8;
@@ -142,54 +170,68 @@
     --ca-gantt-row-height: 40px;
     --ca-gantt-today-color: var(--ca-color-danger);
 
-    /* ── Shadows (layered, tight — enterprise feel) ── */
-    --ca-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.06);
-    --ca-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.06);
-    --ca-shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.06), 0 8px 16px rgba(0, 0, 0, 0.08);
-    --ca-shadow-menu: 0 2px 4px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.08);
-    --ca-shadow-chip: 0 1px 2px rgba(0, 0, 0, 0.08);
+    /* ── Shadows (tighter, cooler-toned — enterprise/dense feel) ── */
+    --ca-shadow-sm: 0 1px 2px rgba(16, 18, 29, 0.06);
+    --ca-shadow-md: 0 2px 4px rgba(16, 18, 29, 0.05), 0 4px 12px rgba(16, 18, 29, 0.06);
+    --ca-shadow-lg: 0 10px 28px rgba(16, 18, 29, 0.12), 0 2px 6px rgba(16, 18, 29, 0.06);
+    --ca-shadow-menu: 0 10px 28px rgba(16, 18, 29, 0.12), 0 2px 6px rgba(16, 18, 29, 0.06);
+    --ca-shadow-chip: 0 1px 2px rgba(16, 18, 29, 0.08);
+    --ca-shadow-focus: 0 0 0 3px var(--ca-color-focus-ring);
   }
 
   /* ── Dark Mode ── */
   [data-theme="dark"] {
+    --ca-color-primary: #8093EA;
+    --ca-color-primary-hover: #909FEE;
+    --ca-color-primary-pressed: #7183E0;
+    --ca-color-primary-tint: rgba(128, 147, 234, 0.15);
+    --ca-color-primary-tint-strong: rgba(128, 147, 234, 0.24);
+    --ca-color-on-primary: #0E1220;
     --ca-color-secondary: rgba(255, 255, 255, 0.85);
     --ca-color-secondary-text: #161A23;
     --ca-checkbox-checkmark: #161A23;
     --ca-color-secondary-divider: rgba(0, 0, 0, 0.15);
     --ca-color-secondary-hover: rgba(255, 255, 255, 0.05);
-    --ca-color-link: #7EB3FF;
-    --ca-color-danger: #CC8889;
-    --ca-color-danger-pressed: #B87A7B;
-    --ca-color-success: #22C55E;
-    --ca-color-warning: #EAB308;
+    --ca-color-link: #A5B4FC;
+    --ca-color-danger: #F87171;
+    --ca-color-danger-pressed: #E2625F;
+    --ca-color-success: #34D399;
+    --ca-color-warning: #F59E0B;
 
-    --ca-bg-page: #0F1218;
-    --ca-surface: #161A23;
-    --ca-surface-hover: #2D2F39;
-    --ca-surface-active: #2D2F39;
-    --ca-surface-elevated: #1E222D;
+    --ca-bg-page: #0B0C0F;
+    --ca-surface: #131519;
+    --ca-surface-hover: #20242B;
+    --ca-surface-active: #1A1D22;
+    --ca-surface-elevated: #1A1D22;
 
-    --ca-text-primary: rgba(255, 255, 255, 0.8);
-    --ca-text-secondary: rgba(255, 255, 255, 0.5);
-    --ca-text-muted: rgba(255, 255, 255, 0.5);
-    --ca-text-danger: #CC8889;
+    --ca-text-primary: #ECEDEF;
+    --ca-text-secondary: #9CA0A9;
+    --ca-text-muted: #6E727C;
+    --ca-text-danger: #F87171;
 
-    --ca-border: rgba(255, 255, 255, 0.1);
-    --ca-border-strong: rgba(255, 255, 255, 0.2);
-    --ca-border-input: rgba(255, 255, 255, 0.2);
-    --ca-divider: #2D2F39;
+    --ca-border: rgba(255, 255, 255, 0.09);
+    --ca-border-strong: rgba(255, 255, 255, 0.17);
+    --ca-border-input: rgba(255, 255, 255, 0.17);
+    --ca-divider: rgba(255, 255, 255, 0.09);
 
-    --ca-color-disabled: #3A3D47;
-    --ca-color-disabled-text: rgba(255, 255, 255, 0.3);
-    --ca-color-focus-ring: rgba(255, 255, 255, 0.3);
+    --ca-color-disabled: #1A1D22;
+    --ca-color-disabled-text: #6E727C;
+    --ca-color-focus-ring: rgba(128, 147, 234, 0.35);
 
-    --ca-toggle-active: #008A05;
+    --ca-success-bg: rgba(52, 211, 153, 0.14);
+    --ca-success-fg: #6EE7B7;
+    --ca-warning-bg: rgba(245, 158, 11, 0.15);
+    --ca-warning-fg: #FCD34D;
+    --ca-danger-bg: rgba(248, 113, 113, 0.15);
+    --ca-danger-fg: #FCA5A5;
+    --ca-info-fg: #A5B4FC;
 
-    /* ── Status pill bg/fg pairs (dark mode) ── */
+    --ca-toggle-active: var(--ca-color-primary);
+
+    /* ── Status pill bg/fg pairs (dark mode, unchanged from v1) ── */
     --ca-color-status-todo: #9CA3AF;
     --ca-color-status-in-progress: #60A5FA;
     --ca-color-status-done: #4ADE80;
-
     --ca-color-status-todo-bg: rgba(156, 163, 175, 0.15);
     --ca-color-status-todo-fg: #C4CAD3;
     --ca-color-status-in-progress-bg: rgba(96, 165, 250, 0.16);
@@ -197,12 +239,11 @@
     --ca-color-status-done-bg: rgba(74, 222, 128, 0.15);
     --ca-color-status-done-fg: #86EFAC;
 
-    /* ── Priority pill bg/fg pairs (dark mode) ── */
+    /* ── Priority pill bg/fg pairs (dark mode, unchanged from v1) ── */
     --ca-color-priority-urgent: #F87171;
     --ca-color-priority-high: #FB923C;
     --ca-color-priority-medium: #FACC15;
     --ca-color-priority-low: #9CA3AF;
-
     --ca-color-priority-urgent-bg: rgba(248, 113, 113, 0.15);
     --ca-color-priority-urgent-fg: #FCA5A5;
     --ca-color-priority-high-bg: rgba(251, 146, 60, 0.16);
@@ -212,10 +253,11 @@
     --ca-color-priority-low-bg: rgba(156, 163, 175, 0.15);
     --ca-color-priority-low-fg: #C4CAD3;
 
-    --ca-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.3);
-    --ca-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.25);
-    --ca-shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.3);
-    --ca-shadow-menu: 0 2px 4px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.3);
+    --ca-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --ca-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.4), 0 8px 20px rgba(0, 0, 0, 0.35);
+    --ca-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.4);
+    --ca-shadow-menu: 0 16px 40px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.4);
     --ca-shadow-chip: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --ca-shadow-focus: 0 0 0 3px var(--ca-color-focus-ring);
   }
 }
