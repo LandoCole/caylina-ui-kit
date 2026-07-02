@@ -214,13 +214,19 @@
 
   <!-- ─── Tabs ─── -->
   <h2>Tabs</h2>
-  <ca-underline-tabs active-id="t1" id="demo-underline-tabs" style="margin-bottom: 16px;"></ca-underline-tabs>
+  <ca-underline-tabs active-id="activity" id="demo-underline-tabs" style="margin-bottom: 16px;"></ca-underline-tabs>
+  <ca-pill-tabs filled active-id="day" id="demo-segmented" style="margin-bottom: 16px;"></ca-pill-tabs>
   <ca-pill-tabs active-id="p1" id="demo-pill-tabs"></ca-pill-tabs>
   <script type="module">
     document.getElementById('demo-underline-tabs').tabs = [
-      { id: 't1', label: 'Tab 1', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>' },
-      { id: 't2', label: 'Tab 2', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' },
-      { id: 't3', label: 'Tab 3' },
+      { id: 'overview', label: 'Overview' },
+      { id: 'activity', label: 'Activity' },
+      { id: 'settings', label: 'Settings' },
+    ];
+    document.getElementById('demo-segmented').tabs = [
+      { id: 'day', label: 'Day' },
+      { id: 'week', label: 'Week' },
+      { id: 'month', label: 'Month' },
     ];
     document.getElementById('demo-pill-tabs').tabs = [
       { id: 'p1', label: 'Pill 1' },

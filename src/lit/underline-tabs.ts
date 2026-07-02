@@ -14,14 +14,13 @@ export class CaUnderlineTabs extends LitElement {
   static styles = css`
     :host {
       display: flex;
-      align-items: center;
-      gap: 0;
+      align-items: stretch;
+      gap: 2px;
+      border-bottom: 1px solid var(--ca-border);
     }
     .tab {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 0;
       padding: 0;
       background: none;
       border: none;
@@ -33,12 +32,12 @@ export class CaUnderlineTabs extends LitElement {
       font-weight: var(--ca-font-weight-medium);
       position: relative;
       box-sizing: border-box;
-      border-radius: var(--ca-radius-md);
+      transition: color var(--ca-transition-fast);
     }
     .tab:focus-visible {
-      outline: 2px solid var(--ca-color-focus-ring);
-      outline-offset: 4px;
-      border-radius: var(--ca-radius-md);
+      outline: none;
+      border-radius: var(--ca-radius-sm);
+      box-shadow: var(--ca-shadow-focus);
     }
     .tab:hover {
       color: var(--ca-text-primary);
@@ -49,17 +48,17 @@ export class CaUnderlineTabs extends LitElement {
     }
     .tab-content {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
       gap: 8px;
-      padding: 8px 16px;
+      padding: 0 12px 11px;
     }
     .tab-icon {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       color: inherit;
     }
     .tab-icon svg {
@@ -70,11 +69,13 @@ export class CaUnderlineTabs extends LitElement {
       white-space: nowrap;
     }
     .indicator {
-      display: block;
-      width: 100%;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
       height: 2px;
       background-color: transparent;
-      border-radius: 1px;
+      border-radius: 1px 1px 0 0;
     }
     .tab.active .indicator {
       background-color: var(--ca-color-primary);
