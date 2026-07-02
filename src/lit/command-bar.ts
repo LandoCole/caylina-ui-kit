@@ -88,11 +88,12 @@ export class CaCommandBar extends LitElement {
 
     .group-header {
       padding: 8px 16px 4px;
+      font-family: var(--ca-font-family-mono);
       font-size: var(--ca-font-size-xs);
       font-weight: var(--ca-font-weight-semibold);
       color: var(--ca-text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
       user-select: none;
     }
 

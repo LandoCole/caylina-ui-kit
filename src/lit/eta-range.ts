@@ -182,6 +182,7 @@ export class CaEtaRange extends LitElement {
       gap: 1px;
     }
     .list-micro-label {
+      font-family: var(--ca-font-family-mono);
       font-size: 9px;
       color: var(--ca-text-muted);
       text-transform: uppercase;

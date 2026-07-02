@@ -225,11 +225,12 @@ export class CaTable extends LitElement {
       display: flex;
       align-items: center;
       padding: 10px 12px;
+      font-family: var(--ca-font-family-mono);
       font-size: var(--ca-font-size-xs);
       font-weight: var(--ca-font-weight-semibold);
       color: var(--ca-text-secondary);
       text-transform: uppercase;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.06em;
       background-color: var(--ca-surface-active);
       border-bottom: 1px solid var(--ca-border);
       border-top: 1px solid var(--ca-border);
