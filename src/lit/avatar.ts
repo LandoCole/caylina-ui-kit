@@ -15,7 +15,7 @@ export class CaAvatar extends LitElement {
       justify-content: center;
       border-radius: var(--ca-avatar-radius, 9999px);
       background-color: var(--ca-avatar-bg, var(--ca-color-primary));
-      color: var(--ca-avatar-color, var(--ca-color-white));
+      color: var(--ca-avatar-color, var(--ca-color-on-primary));
       font-family: var(--ca-font-family);
       font-weight: var(--ca-font-weight-semibold);
       overflow: hidden;

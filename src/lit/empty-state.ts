@@ -43,7 +43,7 @@ export class CaEmptyState extends LitElement {
       border: none;
       border-radius: var(--ca-radius-md);
       background-color: var(--ca-color-primary);
-      color: var(--ca-color-white);
+      color: var(--ca-color-on-primary);
       font-family: var(--ca-font-family);
       font-size: var(--ca-font-size-sm);
       font-weight: var(--ca-font-weight-semibold);

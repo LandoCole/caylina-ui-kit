@@ -702,7 +702,7 @@ Me.styles = b`
     /* Primary */
     .button.primary {
       background-color: var(--ca-color-primary);
-      color: var(--ca-color-white);
+      color: var(--ca-color-on-primary);
       box-shadow:
         inset 0 1px 0 0 rgba(255, 255, 255, 0.14),
         inset 0 -1px 0 0 rgba(0, 0, 0, 0.18),
@@ -5346,7 +5346,7 @@ te.styles = b`
       justify-content: center;
       border-radius: var(--ca-avatar-radius, 9999px);
       background-color: var(--ca-avatar-bg, var(--ca-color-primary));
-      color: var(--ca-avatar-color, var(--ca-color-white));
+      color: var(--ca-avatar-color, var(--ca-color-on-primary));
       font-family: var(--ca-font-family);
       font-weight: var(--ca-font-weight-semibold);
       overflow: hidden;
@@ -8667,7 +8667,7 @@ A.styles = b`
     :host([size="xl"]) .main-button { padding: 20px 40px; font-size: 16px; }
     :host([size="xl"]) .dropdown-trigger { padding: 20px 20px; }
     /* Primary */
-    :host([variant="primary"]) .main-button, :host([variant="primary"]) .dropdown-trigger, .main-button, .dropdown-trigger { background-color: var(--ca-color-primary); color: var(--ca-color-white); border: none; }
+    :host([variant="primary"]) .main-button, :host([variant="primary"]) .dropdown-trigger, .main-button, .dropdown-trigger { background-color: var(--ca-color-primary); color: var(--ca-color-on-primary); border: none; }
     :host([variant="primary"]) .divider, .divider { background-color: rgba(255,255,255,0.25); }
     :host([variant="primary"]) .main-button:hover:not(:disabled), :host([variant="primary"]) .dropdown-trigger:hover:not(:disabled) { background-color: var(--ca-color-primary-pressed); }
     /* Secondary */
@@ -11846,7 +11846,7 @@ le.styles = b`
     }
     .edit-save-btn {
       background-color: var(--ca-color-primary);
-      color: var(--ca-color-white);
+      color: var(--ca-color-on-primary);
       border-color: var(--ca-color-primary);
     }
     .edit-save-btn:hover {
@@ -11910,7 +11910,7 @@ le.styles = b`
       border: none;
       border-radius: var(--ca-radius-md);
       background-color: var(--ca-color-primary);
-      color: var(--ca-color-white);
+      color: var(--ca-color-on-primary);
       font-family: var(--ca-font-family);
       font-size: var(--ca-font-size-sm);
       font-weight: var(--ca-font-weight-semibold);
@@ -12443,7 +12443,7 @@ ce.styles = b`
       border: none;
       border-radius: var(--ca-radius-md);
       background-color: var(--ca-color-primary);
-      color: var(--ca-color-white);
+      color: var(--ca-color-on-primary);
       font-family: var(--ca-font-family);
       font-size: var(--ca-font-size-sm);
       font-weight: var(--ca-font-weight-semibold);
@@ -13583,7 +13583,7 @@ et.styles = b`
       border: none;
       border-radius: var(--ca-radius-md);
       background-color: var(--ca-color-primary);
-      color: var(--ca-color-white);
+      color: var(--ca-color-on-primary);
       font-family: var(--ca-font-family);
       font-size: var(--ca-font-size-sm);
       font-weight: var(--ca-font-weight-semibold);

@@ -42,7 +42,7 @@ export class CaButton extends LitElement {
     /* Primary */
     .button.primary {
       background-color: var(--ca-color-primary);
-      color: var(--ca-color-white);
+      color: var(--ca-color-on-primary);
       box-shadow:
         inset 0 1px 0 0 rgba(255, 255, 255, 0.14),
         inset 0 -1px 0 0 rgba(0, 0, 0, 0.18),

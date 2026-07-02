@@ -31,7 +31,7 @@ export class CaSplitButton extends LitElement {
     :host([size="xl"]) .main-button { padding: 20px 40px; font-size: 16px; }
     :host([size="xl"]) .dropdown-trigger { padding: 20px 20px; }
     /* Primary */
-    :host([variant="primary"]) .main-button, :host([variant="primary"]) .dropdown-trigger, .main-button, .dropdown-trigger { background-color: var(--ca-color-primary); color: var(--ca-color-white); border: none; }
+    :host([variant="primary"]) .main-button, :host([variant="primary"]) .dropdown-trigger, .main-button, .dropdown-trigger { background-color: var(--ca-color-primary); color: var(--ca-color-on-primary); border: none; }
     :host([variant="primary"]) .divider, .divider { background-color: rgba(255,255,255,0.25); }
     :host([variant="primary"]) .main-button:hover:not(:disabled), :host([variant="primary"]) .dropdown-trigger:hover:not(:disabled) { background-color: var(--ca-color-primary-pressed); }
     /* Secondary */
