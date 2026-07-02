@@ -205,9 +205,9 @@ export class CaGanttChart extends LitElement {
       color: var(--ca-text-secondary);
     }
     .view-btn.active {
-      background: var(--ca-color-secondary);
-      color: var(--ca-color-white);
-      border-color: var(--ca-color-secondary);
+      background: var(--ca-color-primary);
+      color: var(--ca-color-on-primary);
+      border-color: var(--ca-color-primary);
     }
     .view-btn:hover:not(.active) {
       background: var(--ca-surface-hover);

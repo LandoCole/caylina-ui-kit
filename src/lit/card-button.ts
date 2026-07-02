@@ -46,8 +46,8 @@ export class CaCardButton extends LitElement {
       border-color: var(--ca-text-primary);
     }
     .inner.selected {
-      background-color: var(--ca-surface-hover);
-      border-color: var(--ca-text-primary);
+      background-color: var(--ca-color-primary-tint);
+      border-color: var(--ca-color-primary);
     }
     .icon-slot {
       display: flex;

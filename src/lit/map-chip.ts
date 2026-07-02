@@ -30,8 +30,8 @@ export class CaMapChip extends LitElement {
       transform: scale(1.05);
     }
     .map-chip.selected {
-      background-color: var(--ca-color-secondary);
-      color: var(--ca-color-secondary-text, var(--ca-color-white));
+      background-color: var(--ca-color-primary);
+      color: var(--ca-color-on-primary);
     }
     .map-chip.viewed {
       background-color: var(--ca-surface-active);

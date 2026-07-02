@@ -199,7 +199,8 @@ export class CaSelect extends LitElement {
       background-color: var(--ca-surface-hover);
     }
     .option.selected {
-      background-color: var(--ca-surface-hover);
+      background-color: var(--ca-color-primary-tint);
+      color: var(--ca-color-primary-pressed);
     }
     .option-text {
       flex: 1;

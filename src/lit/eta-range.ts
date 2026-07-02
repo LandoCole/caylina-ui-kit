@@ -75,8 +75,8 @@ export class CaEtaRange extends LitElement {
       transition: background var(--ca-transition-fast), color var(--ca-transition-fast);
     }
     .toggle-btn[aria-pressed="true"] {
-      background: var(--ca-color-secondary);
-      color: var(--ca-surface);
+      background: var(--ca-color-primary);
+      color: var(--ca-color-on-primary);
     }
 
     /* ── Timeline View ── */

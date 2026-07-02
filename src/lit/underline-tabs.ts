@@ -77,7 +77,7 @@ export class CaUnderlineTabs extends LitElement {
       border-radius: 1px;
     }
     .tab.active .indicator {
-      background-color: var(--ca-text-primary);
+      background-color: var(--ca-color-primary);
     }
   `;
 

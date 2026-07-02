@@ -57,13 +57,13 @@ export class CaRadio extends LitElement {
       box-sizing: border-box;
     }
     .circle.checked {
-      border: 2px solid var(--ca-radio-checked-color, var(--ca-color-secondary));
+      border: 2px solid var(--ca-radio-checked-color, var(--ca-color-primary));
     }
     .dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background-color: var(--ca-radio-checked-color, var(--ca-color-secondary));
+      background-color: var(--ca-radio-checked-color, var(--ca-color-primary));
       opacity: 0;
       transition: opacity var(--ca-transition-fast);
     }

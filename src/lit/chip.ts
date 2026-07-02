@@ -45,13 +45,12 @@ export class CaChip extends LitElement {
       border-color: var(--ca-text-primary);
     }
     .chip.selected {
-      background-color: var(--ca-color-secondary);
-      border-color: var(--ca-color-secondary);
-      color: var(--ca-color-secondary-text, var(--ca-color-white));
+      background-color: var(--ca-color-primary);
+      border-color: var(--ca-color-primary);
+      color: var(--ca-color-on-primary);
     }
     .chip.selected:hover {
-      background-color: var(--ca-color-secondary);
-      opacity: 0.92;
+      background-color: var(--ca-color-primary-hover);
     }
     :host([disabled]) .chip {
       opacity: 0.5;

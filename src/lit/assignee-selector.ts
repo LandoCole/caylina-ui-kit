@@ -147,13 +147,13 @@ export class CaAssigneeSelector extends LitElement {
       transition: background-color var(--ca-transition-fast), border-color var(--ca-transition-fast);
     }
     .checkbox-box.checked {
-      background-color: var(--ca-color-secondary);
-      border-color: var(--ca-color-secondary);
+      background-color: var(--ca-color-primary);
+      border-color: var(--ca-color-primary);
     }
     .checkbox-box svg {
       width: 10px;
       height: 10px;
-      color: var(--ca-color-white);
+      color: var(--ca-color-on-primary);
     }
 
     .member-info {

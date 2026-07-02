@@ -52,13 +52,13 @@ export class CaCheckbox extends LitElement {
       height: 24px;
     }
     .box.checked {
-      background-color: var(--ca-checkbox-checked-bg, var(--ca-color-secondary));
-      border-color: var(--ca-checkbox-checked-border, var(--ca-color-secondary));
+      background-color: var(--ca-checkbox-checked-bg, var(--ca-color-primary));
+      border-color: var(--ca-checkbox-checked-border, var(--ca-color-primary));
     }
     .checkmark {
       opacity: 0;
       transition: opacity var(--ca-transition-fast);
-      color: var(--ca-checkbox-checkmark, var(--ca-color-white));
+      color: var(--ca-checkbox-checkmark, var(--ca-color-on-primary));
       width: 16px;
       height: 16px;
     }

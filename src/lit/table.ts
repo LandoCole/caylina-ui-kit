@@ -159,9 +159,9 @@ export class CaTable extends LitElement {
       background-color: var(--ca-surface-hover);
     }
     .filter-tab.active {
-      background-color: var(--ca-color-secondary);
-      color: var(--ca-color-white);
-      border-color: var(--ca-color-secondary);
+      background-color: var(--ca-color-primary);
+      color: var(--ca-color-on-primary);
+      border-color: var(--ca-color-primary);
     }
     .filter-tab-count {
       font-size: var(--ca-font-size-xs);
