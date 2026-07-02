@@ -137,7 +137,7 @@ export class CaEtaRange extends LitElement {
     }
     .bar-date {
       font-size: 10px;
-      color: #fff;
+      color: var(--ca-color-on-primary);
       font-weight: 500;
       white-space: nowrap;
     }

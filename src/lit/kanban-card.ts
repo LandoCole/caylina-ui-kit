@@ -67,7 +67,7 @@ export class CaKanbanCard extends LitElement {
       border-radius: var(--ca-radius-full);
       font-size: 10px;
       font-weight: var(--ca-font-weight-semibold);
-      color: #fff;
+      color: var(--ca-color-white);
       line-height: 1.5;
     }
     .footer {

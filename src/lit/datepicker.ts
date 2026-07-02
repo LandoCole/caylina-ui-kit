@@ -50,7 +50,7 @@ export class CaDatepicker extends LitElement {
       --_day-size: var(--ca-datepicker-day-size, 36px);
       --_day-hover-bg: var(--ca-datepicker-day-hover-bg, var(--ca-surface-hover));
       --_selected-bg: var(--ca-datepicker-selected-bg, var(--ca-color-primary));
-      --_selected-color: var(--ca-datepicker-selected-color, #ffffff);
+      --_selected-color: var(--ca-datepicker-selected-color, var(--ca-color-on-primary));
       --_range-bg: var(--ca-datepicker-range-bg, color-mix(in srgb, var(--ca-color-primary) 12%, transparent));
       --_today-border: var(--ca-datepicker-today-border, var(--ca-border-strong));
       --_shadow: var(--ca-datepicker-shadow, var(--ca-shadow-menu));

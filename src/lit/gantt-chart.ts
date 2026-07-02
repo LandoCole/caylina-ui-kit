@@ -167,7 +167,7 @@ export class CaGanttChart extends LitElement {
       left: 6px;
       font-size: 10px;
       font-weight: var(--ca-font-weight-semibold);
-      color: #fff;
+      color: var(--ca-color-white);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;

@@ -55,7 +55,7 @@ export class CaLabelSelector extends LitElement {
       border-radius: var(--ca-radius-full);
       font-size: var(--ca-font-size-xs);
       font-weight: var(--ca-font-weight-semibold);
-      color: #fff;
+      color: var(--ca-color-white);
       white-space: nowrap;
       line-height: 1.4;
     }
@@ -252,7 +252,7 @@ export class CaLabelSelector extends LitElement {
     }
     .create-btn-primary {
       background-color: var(--ca-color-primary);
-      color: #fff;
+      color: var(--ca-color-on-primary);
     }
     .create-btn-primary:hover { opacity: 0.9; }
     .create-btn-cancel {

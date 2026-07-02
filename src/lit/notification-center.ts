@@ -67,7 +67,7 @@ export class CaNotificationCenter extends LitElement {
       padding: 0 4px;
       border-radius: var(--ca-radius-full);
       background-color: var(--ca-color-danger);
-      color: #fff;
+      color: var(--ca-color-white);
       font-size: 10px;
       font-weight: var(--ca-font-weight-semibold);
       line-height: 16px;

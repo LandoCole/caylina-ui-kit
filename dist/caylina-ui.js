@@ -262,7 +262,7 @@ Qe.elementStyles = [], Qe.shadowRootOptions = { mode: "open" }, Qe[ht("elementPr
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const lr = globalThis, $r = (e) => e, Ft = lr.trustedTypes, kr = Ft ? Ft.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, Lr = "$lit$", he = `lit$${Math.random().toFixed(9).slice(2)}$`, Rr = "?" + he, so = `<${Rr}>`, Ie = document, ut = () => Ie.createComment(""), ft = (e) => e === null || typeof e != "object" && typeof e != "function", cr = Array.isArray, no = (e) => cr(e) || typeof e?.[Symbol.iterator] == "function", Zt = `[ 	
+const lr = globalThis, $r = (e) => e, Ft = lr.trustedTypes, kr = Ft ? Ft.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, Lr = "$lit$", he = `lit$${Math.random().toFixed(9).slice(2)}$`, Rr = "?" + he, so = `<${Rr}>`, Ie = document, ut = () => Ie.createComment(""), vt = (e) => e === null || typeof e != "object" && typeof e != "function", cr = Array.isArray, no = (e) => cr(e) || typeof e?.[Symbol.iterator] == "function", Zt = `[ 	
 \f\r]`, dt = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, zr = /-->/g, Cr = />/g, Ee = RegExp(`>|${Zt}(?:([^\\s"'>=/]+)(${Zt}*=${Zt}*(?:[^ 	
 \f\r"'\`<>=]|("|')|))|$)`, "g"), Or = /'/g, Sr = /"/g, Fr = /^(?:script|style|textarea|title)$/i, lo = (e) => (t, ...r) => ({ _$litType$: e, strings: t, values: r }), n = lo(1), ue = Symbol.for("lit-noChange"), c = Symbol.for("lit-nothing"), Dr = /* @__PURE__ */ new WeakMap(), Pe = Ie.createTreeWalker(Ie, 129);
 function Nr(e, t) {
@@ -274,41 +274,41 @@ const co = (e, t) => {
   let o, i = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", s = dt;
   for (let d = 0; d < r; d++) {
     const p = e[d];
-    let x, m, f = -1, $ = 0;
-    for (; $ < p.length && (s.lastIndex = $, m = s.exec(p), m !== null); ) $ = s.lastIndex, s === dt ? m[1] === "!--" ? s = zr : m[1] !== void 0 ? s = Cr : m[2] !== void 0 ? (Fr.test(m[2]) && (o = RegExp("</" + m[2], "g")), s = Ee) : m[3] !== void 0 && (s = Ee) : s === Ee ? m[0] === ">" ? (s = o ?? dt, f = -1) : m[1] === void 0 ? f = -2 : (f = s.lastIndex - m[2].length, x = m[1], s = m[3] === void 0 ? Ee : m[3] === '"' ? Sr : Or) : s === Sr || s === Or ? s = Ee : s === zr || s === Cr ? s = dt : (s = Ee, o = void 0);
+    let x, m, v = -1, $ = 0;
+    for (; $ < p.length && (s.lastIndex = $, m = s.exec(p), m !== null); ) $ = s.lastIndex, s === dt ? m[1] === "!--" ? s = zr : m[1] !== void 0 ? s = Cr : m[2] !== void 0 ? (Fr.test(m[2]) && (o = RegExp("</" + m[2], "g")), s = Ee) : m[3] !== void 0 && (s = Ee) : s === Ee ? m[0] === ">" ? (s = o ?? dt, v = -1) : m[1] === void 0 ? v = -2 : (v = s.lastIndex - m[2].length, x = m[1], s = m[3] === void 0 ? Ee : m[3] === '"' ? Sr : Or) : s === Sr || s === Or ? s = Ee : s === zr || s === Cr ? s = dt : (s = Ee, o = void 0);
     const _ = s === Ee && e[d + 1].startsWith("/>") ? " " : "";
-    i += s === dt ? p + so : f >= 0 ? (a.push(x), p.slice(0, f) + Lr + p.slice(f) + he + _) : p + he + (f === -2 ? d : _);
+    i += s === dt ? p + so : v >= 0 ? (a.push(x), p.slice(0, v) + Lr + p.slice(v) + he + _) : p + he + (v === -2 ? d : _);
   }
   return [Nr(e, i + (e[r] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), a];
 };
-class vt {
+class ft {
   constructor({ strings: t, _$litType$: r }, a) {
     let o;
     this.parts = [];
     let i = 0, s = 0;
     const d = t.length - 1, p = this.parts, [x, m] = co(t, r);
-    if (this.el = vt.createElement(x, a), Pe.currentNode = this.el.content, r === 2 || r === 3) {
-      const f = this.el.content.firstChild;
-      f.replaceWith(...f.childNodes);
+    if (this.el = ft.createElement(x, a), Pe.currentNode = this.el.content, r === 2 || r === 3) {
+      const v = this.el.content.firstChild;
+      v.replaceWith(...v.childNodes);
     }
     for (; (o = Pe.nextNode()) !== null && p.length < d; ) {
       if (o.nodeType === 1) {
-        if (o.hasAttributes()) for (const f of o.getAttributeNames()) if (f.endsWith(Lr)) {
-          const $ = m[s++], _ = o.getAttribute(f).split(he), k = /([.?@])?(.*)/.exec($);
-          p.push({ type: 1, index: i, name: k[2], strings: _, ctor: k[1] === "." ? ho : k[1] === "?" ? uo : k[1] === "@" ? fo : qt }), o.removeAttribute(f);
-        } else f.startsWith(he) && (p.push({ type: 6, index: i }), o.removeAttribute(f));
+        if (o.hasAttributes()) for (const v of o.getAttributeNames()) if (v.endsWith(Lr)) {
+          const $ = m[s++], _ = o.getAttribute(v).split(he), k = /([.?@])?(.*)/.exec($);
+          p.push({ type: 1, index: i, name: k[2], strings: _, ctor: k[1] === "." ? ho : k[1] === "?" ? uo : k[1] === "@" ? vo : qt }), o.removeAttribute(v);
+        } else v.startsWith(he) && (p.push({ type: 6, index: i }), o.removeAttribute(v));
         if (Fr.test(o.tagName)) {
-          const f = o.textContent.split(he), $ = f.length - 1;
+          const v = o.textContent.split(he), $ = v.length - 1;
           if ($ > 0) {
             o.textContent = Ft ? Ft.emptyScript : "";
-            for (let _ = 0; _ < $; _++) o.append(f[_], ut()), Pe.nextNode(), p.push({ type: 2, index: ++i });
-            o.append(f[$], ut());
+            for (let _ = 0; _ < $; _++) o.append(v[_], ut()), Pe.nextNode(), p.push({ type: 2, index: ++i });
+            o.append(v[$], ut());
           }
         }
       } else if (o.nodeType === 8) if (o.data === Rr) p.push({ type: 2, index: i });
       else {
-        let f = -1;
-        for (; (f = o.data.indexOf(he, f + 1)) !== -1; ) p.push({ type: 7, index: i }), f += he.length - 1;
+        let v = -1;
+        for (; (v = o.data.indexOf(he, v + 1)) !== -1; ) p.push({ type: 7, index: i }), v += he.length - 1;
       }
       i++;
     }
@@ -321,7 +321,7 @@ class vt {
 function Ge(e, t, r = e, a) {
   if (t === ue) return t;
   let o = a !== void 0 ? r._$Co?.[a] : r._$Cl;
-  const i = ft(t) ? void 0 : t._$litDirective$;
+  const i = vt(t) ? void 0 : t._$litDirective$;
   return o?.constructor !== i && (o?._$AO?.(!1), i === void 0 ? o = void 0 : (o = new i(e), o._$AT(e, r, a)), a !== void 0 ? (r._$Co ??= [])[a] = o : r._$Cl = o), o !== void 0 && (t = Ge(e, o._$AS(e, t.values), o, a)), t;
 }
 class po {
@@ -341,7 +341,7 @@ class po {
     for (; p !== void 0; ) {
       if (s === p.index) {
         let x;
-        p.type === 2 ? x = new _t(i, i.nextSibling, this, t) : p.type === 1 ? x = new p.ctor(i, p.name, p.strings, this, t) : p.type === 6 && (x = new vo(i, this, t)), this._$AV.push(x), p = a[++d];
+        p.type === 2 ? x = new _t(i, i.nextSibling, this, t) : p.type === 1 ? x = new p.ctor(i, p.name, p.strings, this, t) : p.type === 6 && (x = new fo(i, this, t)), this._$AV.push(x), p = a[++d];
       }
       s !== p?.index && (i = Pe.nextNode(), s++);
     }
@@ -371,7 +371,7 @@ class _t {
     return this._$AB;
   }
   _$AI(t, r = this) {
-    t = Ge(this, t, r), ft(t) ? t === c || t == null || t === "" ? (this._$AH !== c && this._$AR(), this._$AH = c) : t !== this._$AH && t !== ue && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : no(t) ? this.k(t) : this._(t);
+    t = Ge(this, t, r), vt(t) ? t === c || t == null || t === "" ? (this._$AH !== c && this._$AR(), this._$AH = c) : t !== this._$AH && t !== ue && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : no(t) ? this.k(t) : this._(t);
   }
   O(t) {
     return this._$AA.parentNode.insertBefore(t, this._$AB);
@@ -380,10 +380,10 @@ class _t {
     this._$AH !== t && (this._$AR(), this._$AH = this.O(t));
   }
   _(t) {
-    this._$AH !== c && ft(this._$AH) ? this._$AA.nextSibling.data = t : this.T(Ie.createTextNode(t)), this._$AH = t;
+    this._$AH !== c && vt(this._$AH) ? this._$AA.nextSibling.data = t : this.T(Ie.createTextNode(t)), this._$AH = t;
   }
   $(t) {
-    const { values: r, _$litType$: a } = t, o = typeof a == "number" ? this._$AC(t) : (a.el === void 0 && (a.el = vt.createElement(Nr(a.h, a.h[0]), this.options)), a);
+    const { values: r, _$litType$: a } = t, o = typeof a == "number" ? this._$AC(t) : (a.el === void 0 && (a.el = ft.createElement(Nr(a.h, a.h[0]), this.options)), a);
     if (this._$AH?._$AD === o) this._$AH.p(r);
     else {
       const i = new po(o, this), s = i.u(this.options);
@@ -392,7 +392,7 @@ class _t {
   }
   _$AC(t) {
     let r = Dr.get(t.strings);
-    return r === void 0 && Dr.set(t.strings, r = new vt(t)), r;
+    return r === void 0 && Dr.set(t.strings, r = new ft(t)), r;
   }
   k(t) {
     cr(this._$AH) || (this._$AH = [], this._$AR());
@@ -424,11 +424,11 @@ class qt {
   _$AI(t, r = this, a, o) {
     const i = this.strings;
     let s = !1;
-    if (i === void 0) t = Ge(this, t, r, 0), s = !ft(t) || t !== this._$AH && t !== ue, s && (this._$AH = t);
+    if (i === void 0) t = Ge(this, t, r, 0), s = !vt(t) || t !== this._$AH && t !== ue, s && (this._$AH = t);
     else {
       const d = t;
       let p, x;
-      for (t = i[0], p = 0; p < i.length - 1; p++) x = Ge(this, d[a + p], r, p), x === ue && (x = this._$AH[p]), s ||= !ft(x) || x !== this._$AH[p], x === c ? t = c : t !== c && (t += (x ?? "") + i[p + 1]), this._$AH[p] = x;
+      for (t = i[0], p = 0; p < i.length - 1; p++) x = Ge(this, d[a + p], r, p), x === ue && (x = this._$AH[p]), s ||= !vt(x) || x !== this._$AH[p], x === c ? t = c : t !== c && (t += (x ?? "") + i[p + 1]), this._$AH[p] = x;
     }
     s && !o && this.j(t);
   }
@@ -452,7 +452,7 @@ class uo extends qt {
     this.element.toggleAttribute(this.name, !!t && t !== c);
   }
 }
-class fo extends qt {
+class vo extends qt {
   constructor(t, r, a, o, i) {
     super(t, r, a, o, i), this.type = 5;
   }
@@ -465,7 +465,7 @@ class fo extends qt {
     typeof this._$AH == "function" ? this._$AH.call(this.options?.host ?? this.element, t) : this._$AH.handleEvent(t);
   }
 }
-class vo {
+class fo {
   constructor(t, r, a) {
     this.element = t, this.type = 6, this._$AN = void 0, this._$AM = r, this.options = a;
   }
@@ -477,7 +477,7 @@ class vo {
   }
 }
 const go = lr.litHtmlPolyfillSupport;
-go?.(vt, _t), (lr.litHtmlVersions ??= []).push("3.3.2");
+go?.(ft, _t), (lr.litHtmlVersions ??= []).push("3.3.2");
 const bo = (e, t, r) => {
   const a = r?.renderBefore ?? t;
   let o = a._$litPart$;
@@ -493,7 +493,7 @@ const bo = (e, t, r) => {
  * SPDX-License-Identifier: BSD-3-Clause
  */
 const dr = globalThis;
-let v = class extends Qe {
+let f = class extends Qe {
   constructor() {
     super(...arguments), this.renderOptions = { host: this }, this._$Do = void 0;
   }
@@ -515,9 +515,9 @@ let v = class extends Qe {
     return ue;
   }
 };
-v._$litElement$ = !0, v.finalized = !0, dr.litElementHydrateSupport?.({ LitElement: v });
+f._$litElement$ = !0, f.finalized = !0, dr.litElementHydrateSupport?.({ LitElement: f });
 const xo = dr.litElementPolyfillSupport;
-xo?.({ LitElement: v });
+xo?.({ LitElement: f });
 (dr.litElementVersions ??= []).push("4.2.2");
 /**
  * @license
@@ -642,7 +642,7 @@ var _o = Object.defineProperty, $o = Object.getOwnPropertyDescriptor, $t = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && _o(t, r, o), o;
 };
-let Me = class extends v {
+let Me = class extends f {
   constructor() {
     super(...arguments), this.variant = "primary", this.size = "md", this.disabled = !1, this.loading = !1;
   }
@@ -844,7 +844,7 @@ var ko = Object.defineProperty, zo = Object.getOwnPropertyDescriptor, se = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && ko(t, r, o), o;
 };
-let V = class extends v {
+let V = class extends f {
   constructor() {
     super(...arguments), this.type = "text", this.value = "", this.label = "", this.error = "", this.placeholder = "", this.disabled = !1, this.loading = !1, this.size = "md", this.borderless = !1;
   }
@@ -1069,7 +1069,7 @@ var Co = Object.defineProperty, Oo = Object.getOwnPropertyDescriptor, ot = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Co(t, r, o), o;
 };
-let fe = class extends v {
+let ve = class extends f {
   constructor() {
     super(...arguments), this.checked = !1, this.disabled = !1, this.size = "md", this.label = "", this.subtext = "";
   }
@@ -1115,7 +1115,7 @@ let fe = class extends v {
     `;
   }
 };
-fe.styles = b`
+ve.styles = b`
     :host {
       display: inline-flex;
     }
@@ -1242,28 +1242,28 @@ fe.styles = b`
   `;
 ot([
   l({ type: Boolean, reflect: !0 })
-], fe.prototype, "checked", 2);
+], ve.prototype, "checked", 2);
 ot([
   l({ type: Boolean, reflect: !0 })
-], fe.prototype, "disabled", 2);
+], ve.prototype, "disabled", 2);
 ot([
   l({ type: String, reflect: !0 })
-], fe.prototype, "size", 2);
+], ve.prototype, "size", 2);
 ot([
   l({ type: String })
-], fe.prototype, "label", 2);
+], ve.prototype, "label", 2);
 ot([
   l({ type: String })
-], fe.prototype, "subtext", 2);
-fe = ot([
+], ve.prototype, "subtext", 2);
+ve = ot([
   g("ca-checkbox")
-], fe);
+], ve);
 var So = Object.defineProperty, Do = Object.getOwnPropertyDescriptor, ye = (e, t, r, a) => {
   for (var o = a > 1 ? void 0 : a ? Do(t, r) : t, i = e.length - 1, s; i >= 0; i--)
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && So(t, r, o), o;
 };
-let J = class extends v {
+let J = class extends f {
   constructor() {
     super(...arguments), this.checked = !1, this.disabled = !1, this.size = "md", this.name = "", this.value = "", this.label = "", this.subtext = "";
   }
@@ -1468,7 +1468,7 @@ var Eo = Object.defineProperty, Po = Object.getOwnPropertyDescriptor, at = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Eo(t, r, o), o;
 };
-let ve = class extends v {
+let fe = class extends f {
   constructor() {
     super(...arguments), this.checked = !1, this.disabled = !1, this.size = "md", this.label = "", this.subtext = "";
   }
@@ -1516,7 +1516,7 @@ let ve = class extends v {
     `;
   }
 };
-ve.styles = b`
+fe.styles = b`
     :host {
       display: inline-flex;
     }
@@ -1664,28 +1664,28 @@ ve.styles = b`
   `;
 at([
   l({ type: Boolean, reflect: !0 })
-], ve.prototype, "checked", 2);
+], fe.prototype, "checked", 2);
 at([
   l({ type: Boolean, reflect: !0 })
-], ve.prototype, "disabled", 2);
+], fe.prototype, "disabled", 2);
 at([
   l({ type: String, reflect: !0 })
-], ve.prototype, "size", 2);
+], fe.prototype, "size", 2);
 at([
   l({ type: String })
-], ve.prototype, "label", 2);
+], fe.prototype, "label", 2);
 at([
   l({ type: String })
-], ve.prototype, "subtext", 2);
-ve = at([
+], fe.prototype, "subtext", 2);
+fe = at([
   g("ca-toggle")
-], ve);
+], fe);
 var Io = Object.defineProperty, Mo = Object.getOwnPropertyDescriptor, kt = (e, t, r, a) => {
   for (var o = a > 1 ? void 0 : a ? Mo(t, r) : t, i = e.length - 1, s; i >= 0; i--)
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Io(t, r, o), o;
 };
-let Ae = class extends v {
+let Ae = class extends f {
   constructor() {
     super(...arguments), this.variant = "default", this.size = "md", this.dot = !1, this.color = "";
   }
@@ -1792,7 +1792,7 @@ var Ao = Object.defineProperty, jo = Object.getOwnPropertyDescriptor, Kt = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Ao(t, r, o), o;
 };
-let We = class extends v {
+let We = class extends f {
   constructor() {
     super(...arguments), this.selected = !1, this.disabled = !1, this.size = "md";
   }
@@ -1890,7 +1890,7 @@ var To = Object.defineProperty, Bo = Object.getOwnPropertyDescriptor, Ut = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && To(t, r, o), o;
 };
-let Xe = class extends v {
+let Xe = class extends f {
   constructor() {
     super(...arguments), this.selected = !1, this.viewed = !1, this.disabled = !1;
   }
@@ -1989,7 +1989,7 @@ var Lo = Object.defineProperty, Ro = Object.getOwnPropertyDescriptor, zt = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Lo(t, r, o), o;
 };
-let je = class extends v {
+let je = class extends f {
   constructor() {
     super(...arguments), this.padding = "md", this.elevated = !1, this.flat = !1, this.interactive = !1;
   }
@@ -2048,7 +2048,7 @@ var Fo = Object.defineProperty, No = Object.getOwnPropertyDescriptor, Ct = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Fo(t, r, o), o;
 };
-let Te = class extends v {
+let Te = class extends f {
   constructor() {
     super(...arguments), this.selected = !1, this.size = "md", this.label = "", this._hasIcon = !1;
   }
@@ -2201,7 +2201,7 @@ var Vo = Object.defineProperty, Ho = Object.getOwnPropertyDescriptor, pr = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Vo(t, r, o), o;
 };
-let gt = class extends v {
+let gt = class extends f {
   constructor() {
     super(...arguments), this.variant = "highlight", this.tone = "neutral";
   }
@@ -2305,7 +2305,7 @@ var qo = Object.defineProperty, Ko = Object.getOwnPropertyDescriptor, Ot = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && qo(t, r, o), o;
 };
-let Be = class extends v {
+let Be = class extends f {
   constructor() {
     super(...arguments), this.href = "", this.target = "", this.type = "subtle", this.size = "md";
   }
@@ -2416,7 +2416,7 @@ var Uo = Object.defineProperty, Yo = Object.getOwnPropertyDescriptor, hr = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Uo(t, r, o), o;
 };
-let bt = class extends v {
+let bt = class extends f {
   constructor() {
     super(...arguments), this.size = "md", this.variant = "dots";
   }
@@ -2493,7 +2493,7 @@ var Qo = Object.defineProperty, Go = Object.getOwnPropertyDescriptor, ur = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Qo(t, r, o), o;
 };
-let xt = class extends v {
+let xt = class extends f {
   constructor() {
     super(...arguments), this.orientation = "horizontal", this.spacing = "";
   }
@@ -2569,12 +2569,12 @@ class or extends qr {
 }
 or.directiveName = "unsafeHTML", or.resultType = 1;
 const N = Hr(or);
-var Wo = Object.defineProperty, Xo = Object.getOwnPropertyDescriptor, fr = (e, t, r, a) => {
+var Wo = Object.defineProperty, Xo = Object.getOwnPropertyDescriptor, vr = (e, t, r, a) => {
   for (var o = a > 1 ? void 0 : a ? Xo(t, r) : t, i = e.length - 1, s; i >= 0; i--)
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Wo(t, r, o), o;
 };
-let mt = class extends v {
+let mt = class extends f {
   constructor() {
     super(...arguments), this.tabs = [], this.activeId = "";
   }
@@ -2677,13 +2677,13 @@ mt.styles = b`
       background-color: var(--ca-text-primary);
     }
   `;
-fr([
+vr([
   l({ type: Array })
 ], mt.prototype, "tabs", 2);
-fr([
+vr([
   l({ type: String, attribute: "active-id" })
 ], mt.prototype, "activeId", 2);
-mt = fr([
+mt = vr([
   g("ca-underline-tabs")
 ], mt);
 var Jo = Object.defineProperty, Zo = Object.getOwnPropertyDescriptor, Yt = (e, t, r, a) => {
@@ -2691,7 +2691,7 @@ var Jo = Object.defineProperty, Zo = Object.getOwnPropertyDescriptor, Yt = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Jo(t, r, o), o;
 };
-let Je = class extends v {
+let Je = class extends f {
   constructor() {
     super(...arguments), this.tabs = [], this.activeId = "", this.filled = !1;
   }
@@ -2806,7 +2806,7 @@ var ea = Object.defineProperty, ta = Object.getOwnPropertyDescriptor, Kr = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && ea(t, r, o), o;
 };
-let Nt = class extends v {
+let Nt = class extends f {
   constructor() {
     super(...arguments), this.sections = [];
   }
@@ -2887,7 +2887,7 @@ var ra = Object.defineProperty, oa = Object.getOwnPropertyDescriptor, we = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && ra(t, r, o), o;
 };
-let Z = class extends v {
+let Z = class extends f {
   constructor() {
     super(...arguments), this.value = 0, this.max = 100, this.showLabel = !1, this.size = "md", this.labelSuffix = "", this.color = "", this.segments = [];
   }
@@ -2980,7 +2980,7 @@ var aa = Object.defineProperty, ia = Object.getOwnPropertyDescriptor, w = (e, t,
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && aa(t, r, o), o;
 };
-let y = class extends v {
+let y = class extends f {
   constructor() {
     super(...arguments), this.columns = [], this.rows = [], this.heading = "", this.headingBadge = "", this.supportingText = "", this.selectable = !1, this.draggable = !1, this.showSearch = !1, this.showFilters = !1, this.filterTabs = [], this.activeFilterTab = "", this.rowActions = [], this.selectedIds = [], this.rowHeight = "default", this.expandable = !1, this.expandedIds = [], this.resizable = !1, this.columnFilters = {}, this.clickableRows = !1, this.groups = [], this.inlineAdd = !1, this.virtualScroll = !1, this._openMenuRowId = null, this._searchQuery = "", this._dragRowId = null, this._dragOverRowId = null, this._dragOverPosition = null, this._openFilterColKey = null, this._columnWidths = /* @__PURE__ */ new Map(), this._fullRows = [], this._collapsedGroupIds = /* @__PURE__ */ new Set(), this._addRowGroupId = null, this._addRowValue = "", this._virtualScrollTop = 0, this._editingCell = null, this._editOriginalValue = null, this._searchTimeout = null, this._boundCloseMenu = this._closeMenu.bind(this), this._boundCloseFilter = this._closeFilter.bind(this), this._dragStartY = 0, this._dragRowIndex = -1, this._resizingColKey = null, this._resizeStartX = 0, this._resizeStartWidth = 0, this._filterSearchQuery = /* @__PURE__ */ new Map();
   }
@@ -4515,7 +4515,7 @@ const Er = [
   "#6366f1",
   "#6b7280"
 ];
-let ge = class extends v {
+let ge = class extends f {
   constructor() {
     super(...arguments), this.type = "bar", this.data = { labels: [], datasets: [] }, this.showLegend = !0, this._tooltip = null;
   }
@@ -4556,13 +4556,13 @@ let ge = class extends v {
   _renderBarChart() {
     const { labels: e, datasets: t } = this.data;
     if (!e.length || !t.length) return c;
-    const r = 600, a = 300, o = { top: 20, right: 20, bottom: 40, left: 50 }, i = r - o.left - o.right, s = a - o.top - o.bottom, d = t.flatMap((_) => _.data), p = Math.max(...d, 1), x = i / e.length, m = x / (t.length + 1), f = 5, $ = p / f;
+    const r = 600, a = 300, o = { top: 20, right: 20, bottom: 40, left: 50 }, i = r - o.left - o.right, s = a - o.top - o.bottom, d = t.flatMap((_) => _.data), p = Math.max(...d, 1), x = i / e.length, m = x / (t.length + 1), v = 5, $ = p / v;
     return n`
       <svg viewBox="0 0 ${r} ${a}">
         <g transform="translate(${o.left}, ${o.top})">
           <!-- Grid -->
-          ${Array.from({ length: f + 1 }, (_, k) => {
-      const O = s - k * s / f, I = Math.round(k * $);
+          ${Array.from({ length: v + 1 }, (_, k) => {
+      const O = s - k * s / v, I = Math.round(k * $);
       return n`
               <line class="grid-line" x1="0" y1=${O} x2=${i} y2=${O} />
               <text class="axis-label" x="-8" y=${O + 4} text-anchor="end">${I}</text>
@@ -4599,13 +4599,13 @@ let ge = class extends v {
   _renderLineChart() {
     const { labels: e, datasets: t } = this.data;
     if (!e.length || !t.length) return c;
-    const r = 600, a = 300, o = { top: 20, right: 20, bottom: 40, left: 50 }, i = r - o.left - o.right, s = a - o.top - o.bottom, d = t.flatMap(($) => $.data), p = Math.max(...d, 1), x = i / Math.max(e.length - 1, 1), m = 5, f = p / m;
+    const r = 600, a = 300, o = { top: 20, right: 20, bottom: 40, left: 50 }, i = r - o.left - o.right, s = a - o.top - o.bottom, d = t.flatMap(($) => $.data), p = Math.max(...d, 1), x = i / Math.max(e.length - 1, 1), m = 5, v = p / m;
     return n`
       <svg viewBox="0 0 ${r} ${a}">
         <g transform="translate(${o.left}, ${o.top})">
           <!-- Grid -->
           ${Array.from({ length: m + 1 }, ($, _) => {
-      const k = s - _ * s / m, O = Math.round(_ * f);
+      const k = s - _ * s / m, O = Math.round(_ * v);
       return n`
               <line class="grid-line" x1="0" y1=${k} x2=${i} y2=${k} />
               <text class="axis-label" x="-8" y=${k + 4} text-anchor="end">${O}</text>
@@ -4643,11 +4643,11 @@ let ge = class extends v {
   _renderPieChart() {
     const { datasets: e } = this.data;
     if (!e.length || !e[0].data.length) return c;
-    const t = e[0].data, r = this.data.labels, a = t.reduce((m, f) => m + f, 0);
+    const t = e[0].data, r = this.data.labels, a = t.reduce((m, v) => m + v, 0);
     if (a === 0) return c;
     const o = 150, i = 150, s = 120, d = this.type === "doughnut" ? s * 0.6 : 0;
     let p = -Math.PI / 2;
-    const x = t.map((m, f) => {
+    const x = t.map((m, v) => {
       const $ = m / a * 2 * Math.PI, _ = p + $, k = $ > Math.PI ? 1 : 0, O = o + s * Math.cos(p), I = i + s * Math.sin(p), Y = o + s * Math.cos(_), De = i + s * Math.sin(_);
       let ct = "";
       if (d > 0) {
@@ -4655,8 +4655,8 @@ let ge = class extends v {
         ct = `M${O},${I} A${s},${s} 0 ${k} 1 ${Y},${De} L${Qr},${Gr} A${d},${d} 0 ${k} 0 ${At},${Yr} Z`;
       } else
         ct = `M${o},${i} L${O},${I} A${s},${s} 0 ${k} 1 ${Y},${De} Z`;
-      const Jt = e[0].color ? void 0 : this._getColor(f);
-      return p = _, { d: ct, color: Jt || this._getColor(f), val: m, label: r[f] || `Segment ${f + 1}`, index: f };
+      const Jt = e[0].color ? void 0 : this._getColor(v);
+      return p = _, { d: ct, color: Jt || this._getColor(v), val: m, label: r[v] || `Segment ${v + 1}`, index: v };
     });
     return n`
       <svg viewBox="0 0 300 300">
@@ -4667,9 +4667,9 @@ let ge = class extends v {
               d=${m.d}
               fill=${m.color}
               @click=${() => this._handleSegmentClick(0, m.index, m.val, m.label)}
-              @mouseenter=${(f) => {
+              @mouseenter=${(v) => {
         const $ = (m.val / a * 100).toFixed(1);
-        this._tooltip = { text: `${m.label}: ${m.val} (${$}%)`, x: f.offsetX + 10, y: f.offsetY - 20 };
+        this._tooltip = { text: `${m.label}: ${m.val} (${$}%)`, x: v.offsetX + 10, y: v.offsetY - 20 };
       }}
               @mouseleave=${() => {
         this._tooltip = null;
@@ -4765,7 +4765,7 @@ var la = Object.defineProperty, ca = Object.getOwnPropertyDescriptor, _e = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && la(t, r, o), o;
 };
-let ee = class extends v {
+let ee = class extends f {
   constructor() {
     super(...arguments), this.tasks = [], this.viewMode = "week", this.showTodayMarker = !0, this._resizingTaskId = null, this._resizeSide = null, this._resizeStartX = 0, this._resizeStartDate = null;
   }
@@ -4904,7 +4904,7 @@ let ee = class extends v {
             <div class="timeline-rows">
               ${this.showTodayMarker && o >= 0 ? n`<div class="today-marker" style="left:${o * t + t / 2}px"></div>` : c}
               ${this.tasks.map((i, s) => {
-      const d = this._parseDate(i.startDate), p = this._parseDate(i.endDate), x = e[0], m = this._daysBetween(x, d), f = this._daysBetween(d, p) + 1, $ = m * t, _ = f * t, k = i.color || "var(--ca-color-primary)";
+      const d = this._parseDate(i.startDate), p = this._parseDate(i.endDate), x = e[0], m = this._daysBetween(x, d), v = this._daysBetween(d, p) + 1, $ = m * t, _ = v * t, k = i.color || "var(--ca-color-primary)";
       return n`
                   <div class="timeline-row">
                     <div class="timeline-row-bg">
@@ -5079,7 +5079,7 @@ ee.styles = b`
       left: 6px;
       font-size: 10px;
       font-weight: var(--ca-font-weight-semibold);
-      color: #fff;
+      color: var(--ca-color-white);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -5154,7 +5154,7 @@ var da = Object.defineProperty, pa = Object.getOwnPropertyDescriptor, St = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && da(t, r, o), o;
 };
-let Le = class extends v {
+let Le = class extends f {
   constructor() {
     super(...arguments), this.items = [], this.multiple = !1, this._internalIds = [];
   }
@@ -5293,7 +5293,7 @@ var ha = Object.defineProperty, ua = Object.getOwnPropertyDescriptor, $e = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && ha(t, r, o), o;
 };
-let te = class extends v {
+let te = class extends f {
   constructor() {
     super(...arguments), this.src = "", this.alt = "", this.name = "", this.size = "md", this.color = "", this._imgError = !1;
   }
@@ -5441,12 +5441,12 @@ $e([
 te = $e([
   g("ca-avatar")
 ], te);
-var fa = Object.defineProperty, va = Object.getOwnPropertyDescriptor, Dt = (e, t, r, a) => {
-  for (var o = a > 1 ? void 0 : a ? va(t, r) : t, i = e.length - 1, s; i >= 0; i--)
+var va = Object.defineProperty, fa = Object.getOwnPropertyDescriptor, Dt = (e, t, r, a) => {
+  for (var o = a > 1 ? void 0 : a ? fa(t, r) : t, i = e.length - 1, s; i >= 0; i--)
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
-  return a && o && fa(t, r, o), o;
+  return a && o && va(t, r, o), o;
 };
-let Re = class extends v {
+let Re = class extends f {
   constructor() {
     super(...arguments), this.members = [], this.max = 3, this.size = "md", this.interactive = !1;
   }
@@ -5547,7 +5547,7 @@ const Ye = [
   "October",
   "November",
   "December"
-], vr = [
+], fr = [
   "Jan",
   "Feb",
   "Mar",
@@ -5569,17 +5569,17 @@ function ba(e, t) {
 }
 function xa(e, t) {
   const r = [], a = ba(e, t), o = Pr(e, t), i = t === 0 ? 11 : t - 1, s = t === 0 ? e - 1 : e, d = Pr(s, i);
-  for (let f = a - 1; f >= 0; f--)
-    r.push({ year: s, month: i, day: d - f, isCurrentMonth: !1 });
-  for (let f = 1; f <= o; f++)
-    r.push({ year: e, month: t, day: f, isCurrentMonth: !0 });
+  for (let v = a - 1; v >= 0; v--)
+    r.push({ year: s, month: i, day: d - v, isCurrentMonth: !1 });
+  for (let v = 1; v <= o; v++)
+    r.push({ year: e, month: t, day: v, isCurrentMonth: !0 });
   const p = t === 11 ? 0 : t + 1, x = t === 11 ? e + 1 : e, m = 42 - r.length;
-  for (let f = 1; f <= m; f++)
-    r.push({ year: x, month: p, day: f, isCurrentMonth: !1 });
+  for (let v = 1; v <= m; v++)
+    r.push({ year: x, month: p, day: v, isCurrentMonth: !1 });
   return r;
 }
 function pt(e) {
-  return `${vr[e.getMonth()]} ${e.getDate()}, ${e.getFullYear()}`;
+  return `${fr[e.getMonth()]} ${e.getDate()}, ${e.getFullYear()}`;
 }
 function er(e) {
   const t = e.getFullYear(), r = String(e.getMonth() + 1).padStart(2, "0"), a = String(e.getDate()).padStart(2, "0");
@@ -5618,7 +5618,7 @@ const wa = n`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
 function tr(e) {
   return new Date(e.year, e.month, e.day);
 }
-let z = class extends v {
+let z = class extends f {
   constructor() {
     super(...arguments), this.mode = "single", this.size = "md", this.value = "", this.startDate = "", this.endDate = "", this.label = "", this.error = "", this.placeholder = "Select date", this.minDate = "", this.maxDate = "", this.disabled = !1, this.borderless = !1, this.overdue = !1, this._isOpen = !1, this._viewYear = (/* @__PURE__ */ new Date()).getFullYear(), this._viewMonth = (/* @__PURE__ */ new Date()).getMonth(), this._rangeStart = null, this._hoverDate = null, this._focusedIndex = null, this._liveText = "", this._boundClickOutside = this._handleClickOutside.bind(this);
   }
@@ -5726,12 +5726,12 @@ let z = class extends v {
     const r = tr(e), o = X(r, /* @__PURE__ */ new Date()), i = !e.isCurrentMonth, s = jt(r, this._parsedMin, this._parsedMax);
     let d = !1, p = !1, x = !1, m = !1;
     if (this.mode === "single") {
-      const f = this._singleDate;
-      f && X(r, f) && (d = !0);
+      const v = this._singleDate;
+      v && X(r, v) && (d = !0);
     } else if (this.mode === "range")
       if (this._rangeStart) {
-        const f = this._hoverDate ?? this._rangeStart, [$, _] = this._rangeStart.getTime() <= f.getTime() ? [this._rangeStart, f] : [f, this._rangeStart];
-        x = X(r, $), m = X(r, _), d = X(r, this._rangeStart) || X(r, f), p = Ir(r, $, _) && !X(r, $) && !X(r, _);
+        const v = this._hoverDate ?? this._rangeStart, [$, _] = this._rangeStart.getTime() <= v.getTime() ? [this._rangeStart, v] : [v, this._rangeStart];
+        x = X(r, $), m = X(r, _), d = X(r, this._rangeStart) || X(r, v), p = Ir(r, $, _) && !X(r, $) && !X(r, _);
       } else this._rangeStartVal && this._rangeEndVal && (x = X(r, this._rangeStartVal), m = X(r, this._rangeEndVal), d = x || m, p = Ir(r, this._rangeStartVal, this._rangeEndVal) && !x && !m);
     return {
       "day-cell": !0,
@@ -5977,7 +5977,7 @@ z.styles = b`
       --_day-size: var(--ca-datepicker-day-size, 36px);
       --_day-hover-bg: var(--ca-datepicker-day-hover-bg, var(--ca-surface-hover));
       --_selected-bg: var(--ca-datepicker-selected-bg, var(--ca-color-primary));
-      --_selected-color: var(--ca-datepicker-selected-color, #ffffff);
+      --_selected-color: var(--ca-datepicker-selected-color, var(--ca-color-on-primary));
       --_range-bg: var(--ca-datepicker-range-bg, color-mix(in srgb, var(--ca-color-primary) 12%, transparent));
       --_today-border: var(--ca-datepicker-today-border, var(--ca-border-strong));
       --_shadow: var(--ca-datepicker-shadow, var(--ca-shadow-menu));
@@ -6439,7 +6439,7 @@ var za = Object.defineProperty, Ca = Object.getOwnPropertyDescriptor, Qt = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && za(t, r, o), o;
 };
-let Ze = class extends v {
+let Ze = class extends f {
   constructor() {
     super(...arguments), this.open = !1, this.size = "md", this._previouslyFocused = null, this._boundKeydown = this._handleKeydown.bind(this);
   }
@@ -6549,7 +6549,7 @@ var Oa = Object.defineProperty, Sa = Object.getOwnPropertyDescriptor, ke = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Oa(t, r, o), o;
 };
-let re = class extends v {
+let re = class extends f {
   constructor() {
     super(...arguments), this.open = !1, this.position = "right", this.size = "40%", this.heading = "", this.backdrop = !0, this.noPadding = !1, this._previouslyFocused = null, this._boundKeydown = this._handleKeydown.bind(this), this._hasFooter = !1;
   }
@@ -6779,7 +6779,7 @@ var Da = Object.defineProperty, Ea = Object.getOwnPropertyDescriptor, B = (e, t,
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Da(t, r, o), o;
 };
-let D = class extends v {
+let D = class extends f {
   constructor() {
     super(...arguments), this.size = "md", this.label = "", this.placeholder = "Placeholder text", this.options = [], this.value = "", this.loading = !1, this.borderless = !1, this.searchable = !1, this.allowCreate = !1, this._isOpen = !1, this._searchQuery = "", this._dropdownPos = { top: 0, left: 0, width: 0 }, this._boundClickOutside = this._handleClickOutside.bind(this);
   }
@@ -7225,7 +7225,7 @@ var Pa = Object.defineProperty, Ia = Object.getOwnPropertyDescriptor, P = (e, t,
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Pa(t, r, o), o;
 };
-let S = class extends v {
+let S = class extends f {
   constructor() {
     super(...arguments), this.size = "md", this.label = "", this.placeholder = "Select...", this.options = [], this.value = [], this.loading = !1, this.disabled = !1, this.searchable = !1, this.maxVisibleChips = 3, this.allowCreate = !1, this._isOpen = !1, this._searchQuery = "", this._boundClickOutside = this._handleClickOutside.bind(this);
   }
@@ -7785,7 +7785,7 @@ var Ma = Object.defineProperty, Aa = Object.getOwnPropertyDescriptor, q = (e, t,
   return a && o && Ma(t, r, o), o;
 };
 const ja = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>', Ta = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4l-4 4 4 4"/></svg>', Ba = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>', La = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg>', Ra = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="1.6 2"><circle cx="7" cy="7" r="5.5"/></svg>';
-let M = class extends v {
+let M = class extends f {
   constructor() {
     super(...arguments), this.collapsed = !1, this.activeId = "", this.sections = [], this.profileActions = [], this.logoSrc = "", this.logoCollapsedSrc = "", this.logoAlt = "", this._openDropdowns = /* @__PURE__ */ new Set(), this._tooltip = null, this._popover = null, this._profilePopover = !1, this._boundClickOutside = this._handleClickOutside.bind(this);
   }
@@ -8554,7 +8554,7 @@ var Fa = Object.defineProperty, Na = Object.getOwnPropertyDescriptor, K = (e, t,
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Fa(t, r, o), o;
 };
-let A = class extends v {
+let A = class extends f {
   constructor() {
     super(...arguments), this.variant = "primary", this.size = "md", this.options = [], this.value = "", this.label = "", this.loading = !1, this.disabled = !1, this._isOpen = !1, this._focusedIndex = -1, this._boundClickOutside = this._handleClickOutside.bind(this);
   }
@@ -8741,7 +8741,7 @@ var Va = Object.defineProperty, Ha = Object.getOwnPropertyDescriptor, U = (e, t,
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Va(t, r, o), o;
 };
-let j = class extends v {
+let j = class extends f {
   constructor() {
     super(...arguments), this.size = "md", this.label = "", this.error = "", this.autoresize = !1, this.rows = 3, this.disabled = !1, this.value = "", this.placeholder = "", this._charCount = 0;
   }
@@ -8942,7 +8942,7 @@ var qa = Object.defineProperty, Ka = Object.getOwnPropertyDescriptor, Ur = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && qa(t, r, o), o;
 };
-let Ua = 0, Vt = class extends v {
+let Ua = 0, Vt = class extends f {
   constructor() {
     super(...arguments), this._toasts = [], this._timers = /* @__PURE__ */ new Map();
   }
@@ -9012,7 +9012,7 @@ var Ya = Object.defineProperty, Qa = Object.getOwnPropertyDescriptor, st = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Ya(t, r, o), o;
 };
-let be = class extends v {
+let be = class extends f {
   constructor() {
     super(...arguments), this.content = "", this.position = "top", this.delay = 300, this._visible = !1, this._coords = { top: 0, left: 0 }, this._showTimeout = null, this._hideTimeout = null;
   }
@@ -9116,7 +9116,7 @@ var Ga = Object.defineProperty, ze = (e, t, r, a) => {
     (s = e[i]) && (o = s(t, r, o) || o);
   return o && Ga(t, r, o), o;
 };
-const xr = class xr extends v {
+const xr = class xr extends f {
   constructor() {
     super(...arguments), this.options = [], this.value = "", this.size = "md", this.borderless = !1, this.allowCreate = !1, this.placeholder = "Select...", this._isOpen = !1, this._focusedIndex = -1, this._boundClickOutside = this._handleClickOutside.bind(this);
   }
@@ -9466,7 +9466,7 @@ var ri = Object.defineProperty, oi = Object.getOwnPropertyDescriptor, Ce = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && ri(t, r, o), o;
 };
-let oe = class extends v {
+let oe = class extends f {
   constructor() {
     super(...arguments), this.members = [], this.value = [], this.size = "md", this.borderless = !1, this.searchable = !0, this._isOpen = !1, this._searchQuery = "", this._boundClickOutside = this._handleClickOutside.bind(this);
   }
@@ -9788,7 +9788,7 @@ const Tt = [
   "#ec4899",
   "#6b7280"
 ];
-let R = class extends v {
+let R = class extends f {
   constructor() {
     super(...arguments), this.labels = [], this.value = [], this.allowCreate = !1, this.size = "md", this.borderless = !1, this._isOpen = !1, this._searchQuery = "", this._showCreate = !1, this._newLabelName = "", this._newLabelColor = Tt[0], this._boundClickOutside = this._handleClickOutside.bind(this);
   }
@@ -9966,7 +9966,7 @@ R.styles = b`
       border-radius: var(--ca-radius-full);
       font-size: var(--ca-font-size-xs);
       font-weight: var(--ca-font-weight-semibold);
-      color: #fff;
+      color: var(--ca-color-white);
       white-space: nowrap;
       line-height: 1.4;
     }
@@ -10163,7 +10163,7 @@ R.styles = b`
     }
     .create-btn-primary {
       background-color: var(--ca-color-primary);
-      color: #fff;
+      color: var(--ca-color-on-primary);
     }
     .create-btn-primary:hover { opacity: 0.9; }
     .create-btn-cancel {
@@ -10224,7 +10224,7 @@ const li = [
   "#374151",
   "#1e3a5f"
 ];
-let xe = class extends v {
+let xe = class extends f {
   constructor() {
     super(...arguments), this.value = "", this.presets = li, this.size = "md", this.allowCustom = !1, this._customHex = "";
   }
@@ -10411,7 +10411,7 @@ var ci = Object.defineProperty, di = Object.getOwnPropertyDescriptor, Et = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && ci(t, r, o), o;
 };
-let Fe = class extends v {
+let Fe = class extends f {
   constructor() {
     super(...arguments), this.value = 0, this.unit = "hours", this.borderless = !1, this.size = "md";
   }
@@ -10558,7 +10558,7 @@ var pi = Object.defineProperty, hi = Object.getOwnPropertyDescriptor, L = (e, t,
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && pi(t, r, o), o;
 };
-let E = class extends v {
+let E = class extends f {
   constructor() {
     super(...arguments), this.columns = [], this.groups = [], this.heading = "", this.supportingText = "", this.draggable = !0, this.expandable = !0, this.inlineAdd = !0, this.clickableRows = !0, this.selectable = !1, this._expandedIds = [], this._filterModalOpen = !1, this._activeFilters = {}, this._sort = void 0;
   }
@@ -10778,8 +10778,8 @@ E.styles = b`
       height: 18px;
       padding: 0 5px;
       border-radius: 9px;
-      background: var(--ca-primary);
-      color: #fff;
+      background: var(--ca-color-primary);
+      color: var(--ca-color-on-primary);
       font-size: 11px;
       font-weight: 600;
       line-height: 1;
@@ -10857,12 +10857,12 @@ L([
 E = L([
   g("ca-task-table")
 ], E);
-var ui = Object.defineProperty, fi = Object.getOwnPropertyDescriptor, ne = (e, t, r, a) => {
-  for (var o = a > 1 ? void 0 : a ? fi(t, r) : t, i = e.length - 1, s; i >= 0; i--)
+var ui = Object.defineProperty, vi = Object.getOwnPropertyDescriptor, ne = (e, t, r, a) => {
+  for (var o = a > 1 ? void 0 : a ? vi(t, r) : t, i = e.length - 1, s; i >= 0; i--)
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && ui(t, r, o), o;
 };
-let H = class extends v {
+let H = class extends f {
   constructor() {
     super(...arguments), this.title = "", this.taskKey = "", this.priorityColor = "", this.dueDate = "", this.overdue = !1, this.labels = [], this.assignees = [], this.commentsCount = 0, this.attachmentsCount = 0;
   }
@@ -10944,7 +10944,7 @@ H.styles = b`
       border-radius: var(--ca-radius-full);
       font-size: 10px;
       font-weight: var(--ca-font-weight-semibold);
-      color: #fff;
+      color: var(--ca-color-white);
       line-height: 1.5;
     }
     .footer {
@@ -11019,12 +11019,12 @@ ne([
 H = ne([
   g("ca-kanban-card")
 ], H);
-var vi = Object.defineProperty, gi = Object.getOwnPropertyDescriptor, pe = (e, t, r, a) => {
+var fi = Object.defineProperty, gi = Object.getOwnPropertyDescriptor, pe = (e, t, r, a) => {
   for (var o = a > 1 ? void 0 : a ? gi(t, r) : t, i = e.length - 1, s; i >= 0; i--)
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
-  return a && o && vi(t, r, o), o;
+  return a && o && fi(t, r, o), o;
 };
-let G = class extends v {
+let G = class extends f {
   constructor() {
     super(...arguments), this.columns = [], this.allowCreate = !1, this._dragCardId = null, this._dragFromColumnId = null, this._dragOverColumnId = null, this._dragOverIndex = -1, this._addingColumnId = null, this._addCardValue = "";
   }
@@ -11288,7 +11288,7 @@ var bi = Object.defineProperty, xi = Object.getOwnPropertyDescriptor, Oe = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && bi(t, r, o), o;
 };
-let ae = class extends v {
+let ae = class extends f {
   constructor() {
     super(...arguments), this.value = "", this.placeholder = "Write something...", this.toolbar = ["bold", "italic", "underline", "|", "h1", "h2", "|", "ul", "ol", "|", "blockquote", "code", "|", "link"], this.readonly = !1, this.minHeight = "", this._activeFormats = /* @__PURE__ */ new Set(), this._debounceTimer = null;
   }
@@ -11560,7 +11560,7 @@ var mi = Object.defineProperty, yi = Object.getOwnPropertyDescriptor, qe = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && mi(t, r, o), o;
 };
-let le = class extends v {
+let le = class extends f {
   constructor() {
     super(...arguments), this.comments = [], this.currentUser = { name: "" }, this._editingId = null, this._editText = "", this._newText = "";
   }
@@ -11956,7 +11956,7 @@ var wi = Object.defineProperty, _i = Object.getOwnPropertyDescriptor, gr = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && wi(t, r, o), o;
 };
-let yt = class extends v {
+let yt = class extends f {
   constructor() {
     super(...arguments), this.entries = [], this.loading = !1;
   }
@@ -12130,7 +12130,7 @@ var $i = Object.defineProperty, ki = Object.getOwnPropertyDescriptor, Ke = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && $i(t, r, o), o;
 };
-let ce = class extends v {
+let ce = class extends f {
   constructor() {
     super(...arguments), this.entries = [], this.allowAdd = !1, this.totalLogged = 0, this._addDuration = "", this._addDescription = "", this._addBillable = !1;
   }
@@ -12497,15 +12497,15 @@ var zi = Object.defineProperty, Ci = Object.getOwnPropertyDescriptor, Pt = (e, t
   return a && o && zi(t, r, o), o;
 };
 function Bt(e) {
-  return `${vr[e.getMonth()]} ${e.getDate()}`;
+  return `${fr[e.getMonth()]} ${e.getDate()}`;
 }
 function jr(e) {
-  return `${vr[e.getMonth()]} ${e.getDate()}, ${e.getFullYear()}`;
+  return `${fr[e.getMonth()]} ${e.getDate()}, ${e.getFullYear()}`;
 }
 function Tr(e, t) {
   return Math.round(Math.abs(t.getTime() - e.getTime()) / 864e5);
 }
-let Ne = class extends v {
+let Ne = class extends f {
   constructor() {
     super(...arguments), this.periods = [], this.frequency = "quarterly", this.view = "timeline", this.heading = "ETA Ranges";
   }
@@ -12715,7 +12715,7 @@ Ne.styles = b`
     }
     .bar-date {
       font-size: 10px;
-      color: #fff;
+      color: var(--ca-color-on-primary);
       font-weight: 500;
       white-space: nowrap;
     }
@@ -12798,7 +12798,7 @@ var Oi = Object.defineProperty, Si = Object.getOwnPropertyDescriptor, Se = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Oi(t, r, o), o;
 };
-let ie = class extends v {
+let ie = class extends f {
   constructor() {
     super(...arguments), this.steps = [], this.currentStep = null, this.status = "pending", this.heading = "", this.subheading = "", this.expanded = !1, this.size = "md";
   }
@@ -13154,7 +13154,7 @@ var Di = Object.defineProperty, Ei = Object.getOwnPropertyDescriptor, br = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Di(t, r, o), o;
 };
-let wt = class extends v {
+let wt = class extends f {
   constructor() {
     super(...arguments), this.items = [], this.separator = "/";
   }
@@ -13240,7 +13240,7 @@ var Pi = Object.defineProperty, Ii = Object.getOwnPropertyDescriptor, lt = (e, t
   return a && o && Pi(t, r, o), o;
 };
 const Mi = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>';
-let me = class extends v {
+let me = class extends f {
   constructor() {
     super(...arguments), this.items = [], this.activeId = "", this.scrollOffset = 0, this.scrollBehavior = "smooth", this._expandedId = "", this._observer = null, this._visibleIds = /* @__PURE__ */ new Set();
   }
@@ -13520,7 +13520,7 @@ var Ai = Object.defineProperty, ji = Object.getOwnPropertyDescriptor, Gt = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Ai(t, r, o), o;
 };
-let et = class extends v {
+let et = class extends f {
   constructor() {
     super(...arguments), this.heading = "", this.description = "", this.actionLabel = "";
   }
@@ -13615,7 +13615,7 @@ var Ti = Object.defineProperty, Bi = Object.getOwnPropertyDescriptor, It = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Ti(t, r, o), o;
 };
-let Ve = class extends v {
+let Ve = class extends f {
   constructor() {
     super(...arguments), this.variant = "text", this.width = "", this.height = "", this.animation = "pulse";
   }
@@ -13691,7 +13691,7 @@ var Li = Object.defineProperty, Ri = Object.getOwnPropertyDescriptor, Mt = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Li(t, r, o), o;
 };
-let He = class extends v {
+let He = class extends f {
   constructor() {
     super(...arguments), this.items = [], this.open = !1, this.x = 0, this.y = 0;
   }
@@ -13827,7 +13827,7 @@ var Fi = Object.defineProperty, Ni = Object.getOwnPropertyDescriptor, Wt = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Fi(t, r, o), o;
 };
-let tt = class extends v {
+let tt = class extends f {
   constructor() {
     super(...arguments), this.count = 0, this.open = !1, this.actions = [], this._closing = !1;
   }
@@ -14022,7 +14022,7 @@ var Vi = Object.defineProperty, Hi = Object.getOwnPropertyDescriptor, Ue = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Vi(t, r, o), o;
 };
-let de = class extends v {
+let de = class extends f {
   constructor() {
     super(...arguments), this.open = !1, this.commands = [], this.placeholder = "Search commands...", this._query = "", this._focusedIndex = -1, this._previouslyFocused = null, this._boundKeydown = this._handleKeydown.bind(this);
   }
@@ -14295,7 +14295,7 @@ var qi = Object.defineProperty, Ki = Object.getOwnPropertyDescriptor, Xt = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && qi(t, r, o), o;
 };
-let rt = class extends v {
+let rt = class extends f {
   constructor() {
     super(...arguments), this.notifications = [], this.unreadCount = 0, this.open = !1, this._boundClickOutside = this._handleClickOutside.bind(this);
   }
@@ -14430,7 +14430,7 @@ rt.styles = b`
       padding: 0 4px;
       border-radius: var(--ca-radius-full);
       background-color: var(--ca-color-danger);
-      color: #fff;
+      color: var(--ca-color-white);
       font-size: 10px;
       font-weight: var(--ca-font-weight-semibold);
       line-height: 16px;
@@ -14595,7 +14595,7 @@ rt = Xt([
 ], rt);
 export {
   Ye as MONTH_NAMES,
-  vr as MONTH_NAMES_SHORT,
+  fr as MONTH_NAMES_SHORT,
   ga as WEEKDAY_LABELS,
   xa as buildCalendarGrid,
   pt as formatDate,

@@ -51,8 +51,8 @@ export class CaTaskTable extends LitElement {
       height: 18px;
       padding: 0 5px;
       border-radius: 9px;
-      background: var(--ca-primary);
-      color: #fff;
+      background: var(--ca-color-primary);
+      color: var(--ca-color-on-primary);
       font-size: 11px;
       font-weight: 600;
       line-height: 1;
