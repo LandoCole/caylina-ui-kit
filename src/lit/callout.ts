@@ -50,35 +50,38 @@ export class CaCallout extends LitElement {
       gap: 24px;
     }
 
-    /* Tone variants — tinted soft backgrounds with matching icon color */
-    :host([tone='warning']) .callout {
-      background-color: var(--ca-warning-bg);
-      border-color: color-mix(in srgb, var(--ca-color-warning) 30%, transparent);
-    }
-    :host([tone='warning']) .icon-slot {
-      color: var(--ca-warning-fg);
-    }
-    :host([tone='success']) .callout {
-      background-color: var(--ca-success-bg);
-      border-color: color-mix(in srgb, var(--ca-color-success) 25%, transparent);
-    }
-    :host([tone='success']) .icon-slot {
-      color: var(--ca-success-fg);
-    }
-    :host([tone='danger']) .callout {
-      background-color: var(--ca-danger-bg);
-      border-color: color-mix(in srgb, var(--ca-color-danger) 25%, transparent);
-    }
-    :host([tone='danger']) .icon-slot {
-      color: var(--ca-danger-fg);
-    }
+    /* Tone variants — CA alert style: thick colored left rule, no fill/box.
+       A whisper of tint keeps the bar legible on the page surface. */
+    :host([tone='warning']) .callout,
+    :host([tone='success']) .callout,
+    :host([tone='danger']) .callout,
     :host([tone='info']) .callout {
-      background-color: var(--ca-info-bg);
-      border-color: color-mix(in srgb, var(--ca-color-primary) 25%, transparent);
+      border: none;
+      border-radius: 0;
+      border-left: 3px solid var(--ca-divider);
+      background-color: transparent;
+      padding: 12px 16px;
     }
-    :host([tone='info']) .icon-slot {
-      color: var(--ca-info-fg);
+    :host([tone='warning']) .callout {
+      border-left-color: var(--ca-color-warning);
+      background-color: color-mix(in srgb, var(--ca-color-warning) 5%, transparent);
     }
+    :host([tone='warning']) .icon-slot { color: var(--ca-color-warning); }
+    :host([tone='success']) .callout {
+      border-left-color: var(--ca-color-success);
+      background-color: color-mix(in srgb, var(--ca-color-success) 5%, transparent);
+    }
+    :host([tone='success']) .icon-slot { color: var(--ca-color-success); }
+    :host([tone='danger']) .callout {
+      border-left-color: var(--ca-color-danger);
+      background-color: color-mix(in srgb, var(--ca-color-danger) 5%, transparent);
+    }
+    :host([tone='danger']) .icon-slot { color: var(--ca-color-danger); }
+    :host([tone='info']) .callout {
+      border-left-color: var(--ca-color-info);
+      background-color: color-mix(in srgb, var(--ca-color-info) 5%, transparent);
+    }
+    :host([tone='info']) .icon-slot { color: var(--ca-color-info); }
   `;
 
   @property({ type: String, reflect: true }) variant: 'highlight' | 'info' = 'highlight';

@@ -18,6 +18,7 @@ export declare class CaToastContainer extends LitElement {
     toast(message: string, options?: ToastOptions): void;
     private _dismiss;
     private _renderCloseIcon;
+    private _renderTypeIcon;
     render(): typeof nothing | import("lit-html").TemplateResult<1>;
 }
 /**

@@ -21,14 +21,15 @@ let _nextId = 0;
 export class CaToastContainer extends LitElement {
   static styles = css`
     :host { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 9500; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; }
-    .toast { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--ca-radius-md); font-family: var(--ca-font-family); font-size: 13px; box-shadow: var(--ca-shadow-md); pointer-events: auto; animation: toast-slide-in 0.25s ease; white-space: nowrap; }
+    .toast { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: var(--ca-radius-md); font-family: var(--ca-font-family); font-size: 13px; font-weight: var(--ca-font-weight-medium); box-shadow: var(--ca-shadow-md); pointer-events: auto; animation: toast-slide-in 0.25s ease; white-space: nowrap; }
     .toast.exiting { animation: toast-slide-out 0.2s ease forwards; }
-    .info { background-color: var(--ca-text-primary); color: var(--ca-surface); }
+    .info { background-color: var(--ca-color-info); color: var(--ca-color-white); }
     .success { background-color: var(--ca-color-success); color: var(--ca-color-white); }
     .error { background-color: var(--ca-color-danger); color: var(--ca-color-white); }
     .warning { background-color: var(--ca-color-warning); color: var(--ca-color-white); }
+    .lead-icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .message { flex: 1; line-height: 1.4; }
-    .close { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; border: none; background: none; color: inherit; cursor: pointer; opacity: 0.7; transition: opacity 0.15s ease; }
+    .close { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; border: none; background: none; color: inherit; cursor: pointer; opacity: 0.8; transition: opacity 0.15s ease; }
     .close:hover { opacity: 1; }
     @keyframes toast-slide-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes toast-slide-out { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(16px); } }
@@ -81,6 +82,20 @@ export class CaToastContainer extends LitElement {
     return html`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
   }
 
+  private _renderTypeIcon(type: ToastItem['type']) {
+    const c = 'currentColor';
+    switch (type) {
+      case 'success':
+        return html`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke=${c} stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+      case 'warning':
+        return html`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke=${c} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a1 1 0 0 0 .86 1.5h18.64a1 1 0 0 0 .86-1.5L13.71 3.86a1 1 0 0 0-1.72 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>`;
+      case 'error':
+        return html`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke=${c} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`;
+      default:
+        return html`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke=${c} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
+    }
+  }
+
   render() {
     if (this._toasts.length === 0) return nothing;
 
@@ -88,6 +103,7 @@ export class CaToastContainer extends LitElement {
       ${this._toasts.map(
         (t) => html`
           <div class=${classMap({ toast: true, [t.type]: true, exiting: t.exiting })}>
+            <span class="lead-icon">${this._renderTypeIcon(t.type)}</span>
             <span class="message">${t.message}</span>
             <button class="close" @click=${() => this._dismiss(t.id)} aria-label="Close">
               ${this._renderCloseIcon()}

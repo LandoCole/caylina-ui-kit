@@ -1,12 +1,14 @@
 /* ============================================================================
-   CAYLINA DESIGN TOKENS — v2 "Refresh"
+   CAYLINA DESIGN TOKENS — v3 "CA"
    ----------------------------------------------------------------------------
-   Drop-in replacement for src/tokens.css. Same custom-property names as v1
-   (so every @caylina/ui-kit component keeps working unchanged) — values,
-   and a handful of net-new tokens, updated to the v2 visual direction:
-   restrained periwinkle accent, cool neutral surfaces, sharp geometry,
-   tight/layered elevation. See DESIGN-GUIDELINES.md for full rationale,
-   usage rules, and the v1 → v2 diff.
+   Drop-in replacement for src/tokens.css. Same custom-property names as v1/v2
+   (so every @caylina/ui-kit component keeps working unchanged) — values, plus
+   a handful of net-new tokens, retuned to the CA Component Library aesthetic:
+   navy + aqua dual accent (navy = authority/primary, aqua = interaction/
+   selection), true-neutral greyscale surfaces, uppercase tracked-caps micro-
+   type, near-square geometry, flat elevation, and a fixed 14-hue data palette.
+   See docs/design/CA-3.0-DESIGN-SYSTEM.md for full rationale, usage rules, and
+   the v2 → v3 diff.
 
    Load order: this file, then component JS. Dark mode: add
    [data-theme="dark"] to <html> (see GUIDE.md "Theming & Dark Mode").
@@ -16,55 +18,85 @@
 
 @layer caylina.tokens {
   :root {
-    /* ── Brand Colors (constant across themes) ── */
-    --ca-color-primary: #4B5FC6;
-    --ca-color-primary-hover: #4152B0;
-    --ca-color-primary-pressed: #39499C;
-    --ca-color-primary-tint: #EEF0FB;
-    --ca-color-primary-tint-strong: #DFE3F8;
+    /* ── Brand Colors — NAVY = authority (constant across themes) ── */
+    --ca-color-primary: #0C3980;
+    --ca-color-primary-hover: #476BB3;
+    --ca-color-primary-pressed: #082C63;
+    --ca-color-primary-tint: #E9EEF7;
+    --ca-color-primary-tint-strong: #CFDCEE;
     --ca-color-on-primary: #FFFFFF;
-    --ca-color-secondary: #222222;
-    --ca-color-secondary-hover: rgba(34, 34, 34, 0.05);
+    --ca-color-secondary: #333333;
+    --ca-color-secondary-hover: rgba(12, 57, 128, 0.06);
     --ca-color-white: #FFFFFF;
-    --ca-color-link: #4152B0;
-    --ca-color-danger: #CE3F1F;
-    --ca-color-danger-pressed: #A8341C;
-    --ca-color-success: #16A34A;
-    --ca-color-warning: #B45309;
+    --ca-color-link: #2A5EA8;
+    --ca-color-danger: #C6392B;
+    --ca-color-danger-pressed: #A32C20;
+    --ca-color-success: #3E8E43;
+    --ca-color-warning: #D9822B;
+    --ca-color-info: #2E86AB;
 
-    /* ── Semantic Surfaces ── */
-    --ca-bg-page: #FAFAFB;
+    /* ── Accent Colors — AQUA = interaction/selection ── */
+    --ca-color-accent: #3CABC9;
+    --ca-color-accent-hover: #2F93AE;
+    --ca-color-accent-pressed: #287A90;
+    --ca-color-accent-tint: #E4F3F7;
+    --ca-color-on-accent: #FFFFFF;
+
+    /* ── Data palette (badges/tags/charts only — never chrome) ── */
+    --ca-palette-navy: #0C3980;
+    --ca-palette-aqua: #3CABC9;
+    --ca-palette-blue-grey: #83A1C2;
+    --ca-palette-purple: #B55F99;
+    --ca-palette-yellow: #FFD800;
+    --ca-palette-green: #63AB64;
+    --ca-palette-orange: #E78024;
+    --ca-palette-turquoise: #26A299;
+    --ca-palette-salmon: #F26851;
+    --ca-palette-grape: #716ABA;
+    --ca-palette-ruby: #9E5A6A;
+    --ca-palette-lime: #C9C42D;
+    --ca-palette-medium-blue: #3C81C3;
+    --ca-palette-red: #D50000;
+
+    /* ── Semantic Surfaces (reference greyscale) ── */
+    --ca-bg-page: #FAFAFA;
     --ca-surface: #FFFFFF;
-    --ca-surface-hover: #F3F4F6;
-    --ca-surface-active: #F5F6F8;
+    --ca-surface-hover: #F3F3F3;
+    --ca-surface-active: #F2F4F7;
     --ca-surface-elevated: #FFFFFF;
 
-    /* ── Semantic Text ── */
-    --ca-text-primary: #16181D;
-    --ca-text-secondary: #565A63;
-    --ca-text-muted: #8B8F98;
-    --ca-text-danger: #B23217;
+    /* ── Semantic Text (reference greyscale — text tops out at #333, not black) ── */
+    --ca-text-primary: #333333;
+    --ca-text-secondary: #555555;
+    --ca-text-muted: #919191;
+    --ca-text-tertiary: #AAAAAA;
+    --ca-text-danger: #A32C20;
 
     /* ── Semantic Borders ── */
-    --ca-border: #E8E9EC;
-    --ca-border-strong: #D5D7DC;
-    --ca-border-input: #D5D7DC;
-    --ca-divider: #E8E9EC;
+    --ca-border: #DDDDDD;
+    --ca-border-strong: #C4C4C4;
+    --ca-border-input: #DDDDDD;
+    --ca-divider: #E4E4E4;
 
     /* ── State Colors ── */
-    --ca-color-disabled: #F5F6F8;
-    --ca-color-disabled-text: #8B8F98;
-    --ca-color-focus-ring: rgba(75, 95, 198, 0.28);
+    --ca-color-disabled: #F9F9F9;
+    --ca-color-disabled-text: #AAAAAA;
+    --ca-color-focus-ring: rgba(12, 57, 128, 0.30);
+
+    /* ── Interactive-control accent wiring (checkbox/radio/toggle → aqua) ── */
+    --ca-checkbox-checked-bg: var(--ca-color-accent);
+    --ca-checkbox-checked-border: var(--ca-color-accent);
+    --ca-radio-checked-color: var(--ca-color-accent);
 
     /* ── Semantic fill/foreground pairs (badges, callouts, toasts) ── */
-    --ca-success-bg: #E7F6ED;
-    --ca-success-fg: #15803D;
-    --ca-warning-bg: #FBEFD9;
-    --ca-warning-fg: #9A5B08;
-    --ca-danger-bg: #FBE9E4;
-    --ca-danger-fg: #B23217;
-    --ca-info-bg: var(--ca-color-primary-tint);
-    --ca-info-fg: var(--ca-color-primary-pressed);
+    --ca-success-bg: #E4F1E5;
+    --ca-success-fg: #2F6D34;
+    --ca-warning-bg: #FBEBD9;
+    --ca-warning-fg: #9A5B12;
+    --ca-danger-bg: #FBE5E2;
+    --ca-danger-fg: #A32C20;
+    --ca-info-bg: #E3F0F6;
+    --ca-info-fg: #1F6285;
 
     /* ── Typography ── */
     --ca-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
@@ -85,24 +117,30 @@
     --ca-font-size-xl: 20px;
     --ca-font-size-2xl: 34px;
 
-    /* Role-based type tokens — prefer these over raw sizes in product UI */
-    --ca-type-display: 600 34px/1.08 var(--ca-font-family-display);
-    --ca-type-heading: 600 20px/1.2 var(--ca-font-family-display);
+    /* Role-based type tokens — prefer these over raw sizes in product UI.
+       Note: text-transform + letter-spacing live on the consuming component
+       (they can't ride the `font` shorthand); see --ca-type-label / -button. */
+    --ca-type-display: 700 34px/1.08 var(--ca-font-family-display);
+    --ca-type-heading: 700 20px/1.2 var(--ca-font-family-display);
     --ca-type-subheading: 600 16px/1.3 var(--ca-font-family);
     --ca-type-body: 450 14px/1.5 var(--ca-font-family);
     --ca-type-caption: 450 13px/1.4 var(--ca-font-family);
-    --ca-type-label: 600 11px/1 var(--ca-font-family-mono);
+    --ca-type-label: 700 11px/1 var(--ca-font-family);
+    --ca-type-button: 600 13px/1 var(--ca-font-family);
+    /* Companion tracking tokens for the uppercase micro-type roles */
+    --ca-tracking-label: 0.07em;
+    --ca-tracking-button: 0.045em;
 
-    /* ── Radii — sharp / dense ── */
+    /* ── Radii — near-square / CA-sharp ── */
     --ca-radius-xs: 2px;
-    --ca-radius-sm: 4px;
-    --ca-radius-md: 6px;
-    --ca-radius-lg: 8px;
-    --ca-radius-xl: 12px;
+    --ca-radius-sm: 3px;
+    --ca-radius-md: 4px;
+    --ca-radius-lg: 6px;
+    --ca-radius-xl: 8px;
     --ca-radius-full: 9999px;
-    --ca-radius-button: 4px;
-    --ca-radius-focus-wrapper: 8px;
-    --ca-radius-link-focus: 4px;
+    --ca-radius-button: 2px;
+    --ca-radius-focus-wrapper: 6px;
+    --ca-radius-link-focus: 3px;
     --ca-radius-link-focus-sm: 2px;
 
     /* ── Control Heights ── shared by button, input, select, multi-select, datepicker */
@@ -133,8 +171,8 @@
     --ca-transition-fast: 0.15s ease;
     --ca-transition-normal: 0.2s ease;
 
-    /* ── Toggle ── */
-    --ca-toggle-active: var(--ca-color-primary);
+    /* ── Toggle (aqua = interaction) ── */
+    --ca-toggle-active: var(--ca-color-accent);
 
     /* ── PM Status Colors (unchanged from v1 — domain palette, not restyled) ── */
     --ca-color-status-todo: #6b7280;
@@ -181,52 +219,65 @@
 
   /* ── Dark Mode ── */
   [data-theme="dark"] {
-    --ca-color-primary: #8093EA;
-    --ca-color-primary-hover: #909FEE;
-    --ca-color-primary-pressed: #7183E0;
-    --ca-color-primary-tint: rgba(128, 147, 234, 0.15);
-    --ca-color-primary-tint-strong: rgba(128, 147, 234, 0.24);
-    --ca-color-on-primary: #0E1220;
+    --ca-color-primary: #5A82D6;
+    --ca-color-primary-hover: #6E92DE;
+    --ca-color-primary-pressed: #4E77CE;
+    --ca-color-primary-tint: rgba(90, 130, 214, 0.16);
+    --ca-color-primary-tint-strong: rgba(90, 130, 214, 0.26);
+    --ca-color-on-primary: #0B1220;
     --ca-color-secondary: rgba(255, 255, 255, 0.85);
-    --ca-color-secondary-text: #161A23;
-    --ca-checkbox-checkmark: #161A23;
+    --ca-color-secondary-text: #14161B;
+    --ca-checkbox-checkmark: #08202A;
     --ca-color-secondary-divider: rgba(0, 0, 0, 0.15);
     --ca-color-secondary-hover: rgba(255, 255, 255, 0.05);
-    --ca-color-link: #A5B4FC;
-    --ca-color-danger: #F87171;
-    --ca-color-danger-pressed: #E2625F;
-    --ca-color-success: #34D399;
-    --ca-color-warning: #F59E0B;
+    --ca-color-link: #9DB6E8;
+    --ca-color-danger: #E9695B;
+    --ca-color-danger-pressed: #D6584A;
+    --ca-color-success: #5FBF66;
+    --ca-color-warning: #E89B4A;
+    --ca-color-info: #5AB4D8;
+
+    /* Accent — aqua, lightened for dark surfaces */
+    --ca-color-accent: #5AC4E0;
+    --ca-color-accent-hover: #6ECFE8;
+    --ca-color-accent-pressed: #4FB6D4;
+    --ca-color-accent-tint: rgba(90, 196, 224, 0.16);
+    --ca-color-on-accent: #08202A;
+    --ca-checkbox-checked-bg: var(--ca-color-accent);
+    --ca-checkbox-checked-border: var(--ca-color-accent);
+    --ca-radio-checked-color: var(--ca-color-accent);
 
     --ca-bg-page: #0B0C0F;
-    --ca-surface: #131519;
+    --ca-surface: #14161B;
     --ca-surface-hover: #20242B;
-    --ca-surface-active: #1A1D22;
-    --ca-surface-elevated: #1A1D22;
+    --ca-surface-active: #1B1E24;
+    --ca-surface-elevated: #1B1E24;
 
     --ca-text-primary: #ECEDEF;
     --ca-text-secondary: #9CA0A9;
     --ca-text-muted: #6E727C;
-    --ca-text-danger: #F87171;
+    --ca-text-tertiary: #5B5F68;
+    --ca-text-danger: #F0897D;
 
     --ca-border: rgba(255, 255, 255, 0.09);
     --ca-border-strong: rgba(255, 255, 255, 0.17);
     --ca-border-input: rgba(255, 255, 255, 0.17);
     --ca-divider: rgba(255, 255, 255, 0.09);
 
-    --ca-color-disabled: #1A1D22;
+    --ca-color-disabled: #1B1E24;
     --ca-color-disabled-text: #6E727C;
-    --ca-color-focus-ring: rgba(128, 147, 234, 0.35);
+    --ca-color-focus-ring: rgba(90, 130, 214, 0.38);
 
-    --ca-success-bg: rgba(52, 211, 153, 0.14);
-    --ca-success-fg: #6EE7B7;
-    --ca-warning-bg: rgba(245, 158, 11, 0.15);
-    --ca-warning-fg: #FCD34D;
-    --ca-danger-bg: rgba(248, 113, 113, 0.15);
-    --ca-danger-fg: #FCA5A5;
-    --ca-info-fg: #A5B4FC;
+    --ca-success-bg: rgba(95, 191, 102, 0.15);
+    --ca-success-fg: #86D98C;
+    --ca-warning-bg: rgba(232, 155, 74, 0.16);
+    --ca-warning-fg: #F0B472;
+    --ca-danger-bg: rgba(233, 105, 91, 0.16);
+    --ca-danger-fg: #F0A79D;
+    --ca-info-bg: rgba(90, 180, 216, 0.15);
+    --ca-info-fg: #8FCFE6;
 
-    --ca-toggle-active: var(--ca-color-primary);
+    --ca-toggle-active: var(--ca-color-accent);
 
     /* ── Status pill bg/fg pairs (dark mode, unchanged from v1) ── */
     --ca-color-status-todo: #9CA3AF;

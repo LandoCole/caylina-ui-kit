@@ -16,7 +16,9 @@ export class CaButton extends LitElement {
       border: none;
       cursor: pointer;
       font-family: var(--ca-font-family);
-      font-weight: var(--ca-font-weight-medium);
+      font-weight: var(--ca-font-weight-semibold);
+      text-transform: uppercase;
+      letter-spacing: var(--ca-tracking-button);
       line-height: 1;
       white-space: nowrap;
       position: relative;

@@ -676,7 +676,9 @@ Me.styles = b`
       border: none;
       cursor: pointer;
       font-family: var(--ca-font-family);
-      font-weight: var(--ca-font-weight-medium);
+      font-weight: var(--ca-font-weight-semibold);
+      text-transform: uppercase;
+      letter-spacing: var(--ca-tracking-button);
       line-height: 1;
       white-space: nowrap;
       position: relative;
@@ -1693,7 +1695,7 @@ let Ae = class extends f {
     super(...arguments), this.variant = "default", this.size = "md", this.dot = !1, this.color = "";
   }
   updated(e) {
-    super.updated?.(e), e.has("color") && (this.color ? this.dot ? (this.style.backgroundColor = this.color, this.style.removeProperty("color"), this.style.removeProperty("border-color")) : (this.style.color = `color-mix(in srgb, ${this.color} 75%, var(--ca-text-primary))`, this.style.backgroundColor = `color-mix(in srgb, ${this.color} 14%, transparent)`, this.style.borderColor = `color-mix(in srgb, ${this.color} 30%, transparent)`) : (this.style.removeProperty("color"), this.style.removeProperty("background-color"), this.style.removeProperty("border-color")));
+    super.updated?.(e), e.has("color") && (this.color ? this.dot ? (this.style.backgroundColor = this.color, this.style.removeProperty("color"), this.style.removeProperty("border-color")) : (this.style.color = "#fff", this.style.backgroundColor = this.color, this.style.removeProperty("border-color")) : (this.style.removeProperty("color"), this.style.removeProperty("background-color"), this.style.removeProperty("border-color")));
   }
   render() {
     return this.dot ? n`` : n`<slot></slot>`;
@@ -1705,36 +1707,39 @@ Ae.styles = b`
       align-items: center;
       justify-content: center;
       gap: 4px;
-      border-radius: var(--ca-radius-full);
+      border-radius: var(--ca-radius-sm);
       font-family: var(--ca-font-family);
-      font-weight: var(--ca-font-weight-semibold);
+      font-weight: var(--ca-font-weight-bold);
+      text-transform: uppercase;
+      letter-spacing: var(--ca-tracking-label);
       line-height: 1;
       white-space: nowrap;
       box-sizing: border-box;
-      /* Default = info (periwinkle accent family) */
-      color: var(--ca-info-fg);
-      background-color: var(--ca-info-bg);
-      border: 1px solid color-mix(in srgb, var(--ca-color-primary) 30%, transparent);
+      /* Default = solid navy (brand) */
+      color: var(--ca-color-on-primary);
+      background-color: var(--ca-color-primary);
+      border: none;
     }
 
     /* Sizes */
     :host([size='sm']) {
-      font-size: var(--ca-font-size-xs);
+      font-size: 10px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 7px;
+    }
+    :host, :host([size='md']) {
+      font-size: 11px;
       min-width: 20px;
       height: 20px;
       padding: 0 8px;
     }
-    :host, :host([size='md']) {
-      font-size: 12px;
-      min-width: 22px;
-      height: 22px;
-      padding: 0 9px;
-    }
 
-    /* Dot mode */
+    /* Dot mode — solid round marker */
     :host([dot]) {
       padding: 0;
       border: none;
+      border-radius: var(--ca-radius-full);
     }
     :host([dot][size='sm']) {
       width: 8px;
@@ -1747,21 +1752,18 @@ Ae.styles = b`
       min-width: 10px;
     }
 
-    /* Variants — soft tinted pills with matching colored borders */
+    /* Variants — solid semantic fills, white text (CA badge style) */
     :host([variant='success']) {
-      color: var(--ca-success-fg);
-      background-color: var(--ca-success-bg);
-      border-color: color-mix(in srgb, var(--ca-color-success) 30%, transparent);
+      color: #fff;
+      background-color: var(--ca-color-success);
     }
     :host([variant='warning']) {
-      color: var(--ca-warning-fg);
-      background-color: var(--ca-warning-bg);
-      border-color: color-mix(in srgb, var(--ca-color-warning) 35%, transparent);
+      color: #fff;
+      background-color: var(--ca-color-warning);
     }
     :host([variant='danger']) {
-      color: var(--ca-danger-fg);
-      background-color: var(--ca-danger-bg);
-      border-color: color-mix(in srgb, var(--ca-color-danger) 30%, transparent);
+      color: #fff;
+      background-color: var(--ca-color-danger);
     }
 
     /* Dot variant retains solid color */
@@ -1790,8 +1792,8 @@ kt([
 Ae = kt([
   g("ca-badge")
 ], Ae);
-var Ao = Object.defineProperty, To = Object.getOwnPropertyDescriptor, Kt = (e, t, r, a) => {
-  for (var o = a > 1 ? void 0 : a ? To(t, r) : t, i = e.length - 1, s; i >= 0; i--)
+var Ao = Object.defineProperty, jo = Object.getOwnPropertyDescriptor, Kt = (e, t, r, a) => {
+  for (var o = a > 1 ? void 0 : a ? jo(t, r) : t, i = e.length - 1, s; i >= 0; i--)
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Ao(t, r, o), o;
 };
@@ -1887,10 +1889,10 @@ Kt([
 We = Kt([
   g("ca-chip")
 ], We);
-var jo = Object.defineProperty, Bo = Object.getOwnPropertyDescriptor, Ut = (e, t, r, a) => {
+var To = Object.defineProperty, Bo = Object.getOwnPropertyDescriptor, Ut = (e, t, r, a) => {
   for (var o = a > 1 ? void 0 : a ? Bo(t, r) : t, i = e.length - 1, s; i >= 0; i--)
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
-  return a && o && jo(t, r, o), o;
+  return a && o && To(t, r, o), o;
 };
 let Xe = class extends f {
   constructor() {
@@ -1991,7 +1993,7 @@ var Lo = Object.defineProperty, Ro = Object.getOwnPropertyDescriptor, zt = (e, t
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Lo(t, r, o), o;
 };
-let Te = class extends f {
+let je = class extends f {
   constructor() {
     super(...arguments), this.padding = "md", this.elevated = !1, this.flat = !1, this.interactive = !1;
   }
@@ -1999,7 +2001,7 @@ let Te = class extends f {
     return n`<slot></slot>`;
   }
 };
-Te.styles = b`
+je.styles = b`
     :host {
       display: block;
       border: 1px solid var(--ca-border);
@@ -2032,25 +2034,25 @@ Te.styles = b`
   `;
 zt([
   l({ type: String, reflect: !0 })
-], Te.prototype, "padding", 2);
+], je.prototype, "padding", 2);
 zt([
   l({ type: Boolean, reflect: !0 })
-], Te.prototype, "elevated", 2);
+], je.prototype, "elevated", 2);
 zt([
   l({ type: Boolean, reflect: !0 })
-], Te.prototype, "flat", 2);
+], je.prototype, "flat", 2);
 zt([
   l({ type: Boolean, reflect: !0 })
-], Te.prototype, "interactive", 2);
-Te = zt([
+], je.prototype, "interactive", 2);
+je = zt([
   g("ca-card")
-], Te);
+], je);
 var Fo = Object.defineProperty, No = Object.getOwnPropertyDescriptor, Ct = (e, t, r, a) => {
   for (var o = a > 1 ? void 0 : a ? No(t, r) : t, i = e.length - 1, s; i >= 0; i--)
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Fo(t, r, o), o;
 };
-let je = class extends f {
+let Te = class extends f {
   constructor() {
     super(...arguments), this.selected = !1, this.size = "md", this.label = "", this._hasIcon = !1;
   }
@@ -2088,7 +2090,7 @@ let je = class extends f {
     `;
   }
 };
-je.styles = b`
+Te.styles = b`
     :host {
       display: inline-flex;
     }
@@ -2185,19 +2187,19 @@ je.styles = b`
   `;
 Ct([
   l({ type: Boolean, reflect: !0 })
-], je.prototype, "selected", 2);
+], Te.prototype, "selected", 2);
 Ct([
   l({ type: String, reflect: !0 })
-], je.prototype, "size", 2);
+], Te.prototype, "size", 2);
 Ct([
   l({ type: String })
-], je.prototype, "label", 2);
+], Te.prototype, "label", 2);
 Ct([
   v()
-], je.prototype, "_hasIcon", 2);
-je = Ct([
+], Te.prototype, "_hasIcon", 2);
+Te = Ct([
   g("ca-card-button")
-], je);
+], Te);
 var Vo = Object.defineProperty, Ho = Object.getOwnPropertyDescriptor, pr = (e, t, r, a) => {
   for (var o = a > 1 ? void 0 : a ? Ho(t, r) : t, i = e.length - 1, s; i >= 0; i--)
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
@@ -2263,35 +2265,38 @@ gt.styles = b`
       gap: 24px;
     }
 
-    /* Tone variants — tinted soft backgrounds with matching icon color */
-    :host([tone='warning']) .callout {
-      background-color: var(--ca-warning-bg);
-      border-color: color-mix(in srgb, var(--ca-color-warning) 30%, transparent);
-    }
-    :host([tone='warning']) .icon-slot {
-      color: var(--ca-warning-fg);
-    }
-    :host([tone='success']) .callout {
-      background-color: var(--ca-success-bg);
-      border-color: color-mix(in srgb, var(--ca-color-success) 25%, transparent);
-    }
-    :host([tone='success']) .icon-slot {
-      color: var(--ca-success-fg);
-    }
-    :host([tone='danger']) .callout {
-      background-color: var(--ca-danger-bg);
-      border-color: color-mix(in srgb, var(--ca-color-danger) 25%, transparent);
-    }
-    :host([tone='danger']) .icon-slot {
-      color: var(--ca-danger-fg);
-    }
+    /* Tone variants — CA alert style: thick colored left rule, no fill/box.
+       A whisper of tint keeps the bar legible on the page surface. */
+    :host([tone='warning']) .callout,
+    :host([tone='success']) .callout,
+    :host([tone='danger']) .callout,
     :host([tone='info']) .callout {
-      background-color: var(--ca-info-bg);
-      border-color: color-mix(in srgb, var(--ca-color-primary) 25%, transparent);
+      border: none;
+      border-radius: 0;
+      border-left: 3px solid var(--ca-divider);
+      background-color: transparent;
+      padding: 12px 16px;
     }
-    :host([tone='info']) .icon-slot {
-      color: var(--ca-info-fg);
+    :host([tone='warning']) .callout {
+      border-left-color: var(--ca-color-warning);
+      background-color: color-mix(in srgb, var(--ca-color-warning) 5%, transparent);
     }
+    :host([tone='warning']) .icon-slot { color: var(--ca-color-warning); }
+    :host([tone='success']) .callout {
+      border-left-color: var(--ca-color-success);
+      background-color: color-mix(in srgb, var(--ca-color-success) 5%, transparent);
+    }
+    :host([tone='success']) .icon-slot { color: var(--ca-color-success); }
+    :host([tone='danger']) .callout {
+      border-left-color: var(--ca-color-danger);
+      background-color: color-mix(in srgb, var(--ca-color-danger) 5%, transparent);
+    }
+    :host([tone='danger']) .icon-slot { color: var(--ca-color-danger); }
+    :host([tone='info']) .callout {
+      border-left-color: var(--ca-color-info);
+      background-color: color-mix(in srgb, var(--ca-color-info) 5%, transparent);
+    }
+    :host([tone='info']) .icon-slot { color: var(--ca-color-info); }
   `;
 pr([
   l({ type: String, reflect: !0 })
@@ -2677,7 +2682,7 @@ mt.styles = b`
       border-radius: 1px 1px 0 0;
     }
     .tab.active .indicator {
-      background-color: var(--ca-color-primary);
+      background-color: var(--ca-color-accent);
     }
   `;
 vr([
@@ -5610,7 +5615,7 @@ function Ir(e, t, r) {
   const a = e.getTime(), o = t.getTime(), i = r.getTime(), s = Math.min(o, i), d = Math.max(o, i);
   return a >= s && a <= d;
 }
-function Tt(e, t, r) {
+function jt(e, t, r) {
   if (t) {
     const a = new Date(t.getFullYear(), t.getMonth(), t.getDate());
     if (e < a) return !0;
@@ -5702,11 +5707,11 @@ let z = class extends f {
   }
   _goToToday() {
     const e = /* @__PURE__ */ new Date();
-    this._viewYear = e.getFullYear(), this._viewMonth = e.getMonth(), this._announceLive(`${Ye[this._viewMonth]} ${this._viewYear}`), this.mode === "single" && !Tt(e, this._parsedMin, this._parsedMax) && this._selectDate(e);
+    this._viewYear = e.getFullYear(), this._viewMonth = e.getMonth(), this._announceLive(`${Ye[this._viewMonth]} ${this._viewYear}`), this.mode === "single" && !jt(e, this._parsedMin, this._parsedMax) && this._selectDate(e);
   }
   // ── Selection ──────────────────────────────────────────────────────
   _selectDate(e) {
-    if (Tt(e, this._parsedMin, this._parsedMax)) return;
+    if (jt(e, this._parsedMin, this._parsedMax)) return;
     if (this.mode === "single") {
       this.dispatchEvent(
         new CustomEvent("ca-change", {
@@ -5735,7 +5740,7 @@ let z = class extends f {
   }
   // ── Day cell state computation ─────────────────────────────────────
   _getDayClasses(e, t) {
-    const r = tr(e), o = X(r, /* @__PURE__ */ new Date()), i = !e.isCurrentMonth, s = Tt(r, this._parsedMin, this._parsedMax);
+    const r = tr(e), o = X(r, /* @__PURE__ */ new Date()), i = !e.isCurrentMonth, s = jt(r, this._parsedMin, this._parsedMax);
     let d = !1, h = !1, m = !1, x = !1;
     if (this.mode === "single") {
       const u = this._singleDate;
@@ -5929,7 +5934,7 @@ let z = class extends f {
                 @keydown=${this._handleGridKeydown}
               >
                 ${t.map((r, a) => {
-      const o = tr(r), i = Tt(o, this._parsedMin, this._parsedMax), s = this._getDayClasses(r, a);
+      const o = tr(r), i = jt(o, this._parsedMin, this._parsedMax), s = this._getDayClasses(r, a);
       return n`
                     <button
                       type="button"
@@ -7799,7 +7804,7 @@ var Ma = Object.defineProperty, Aa = Object.getOwnPropertyDescriptor, q = (e, t,
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Ma(t, r, o), o;
 };
-const Ta = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>', ja = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4l-4 4 4 4"/></svg>', Ba = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>', La = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg>', Ra = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="1.6 2"><circle cx="7" cy="7" r="5.5"/></svg>';
+const ja = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>', Ta = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4l-4 4 4 4"/></svg>', Ba = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>', La = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg>', Ra = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="1.6 2"><circle cx="7" cy="7" r="5.5"/></svg>';
 let M = class extends f {
   constructor() {
     super(...arguments), this.collapsed = !1, this.activeId = "", this.sections = [], this.profileActions = [], this.logoSrc = "", this.logoCollapsedSrc = "", this.logoAlt = "", this._openDropdowns = /* @__PURE__ */ new Set(), this._tooltip = null, this._popover = null, this._profilePopover = !1, this._boundClickOutside = this._handleClickOutside.bind(this);
@@ -7912,7 +7917,7 @@ let M = class extends f {
       "chevron-open": r
     })}
                 >
-                  ${N(Ta)}
+                  ${N(ja)}
                 </span>
               ` : c}
         </button>
@@ -8002,7 +8007,7 @@ let M = class extends f {
         @click=${this._toggleCollapse}
         aria-label=${this.collapsed ? "Expand sidebar" : "Collapse sidebar"}
       >
-        ${this.collapsed ? N(Ba) : N(ja)}
+        ${this.collapsed ? N(Ba) : N(Ta)}
       </button>
 
       <div class="logo-area">
@@ -8755,7 +8760,7 @@ var Va = Object.defineProperty, Ha = Object.getOwnPropertyDescriptor, U = (e, t,
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Va(t, r, o), o;
 };
-let T = class extends f {
+let j = class extends f {
   constructor() {
     super(...arguments), this.size = "md", this.label = "", this.error = "", this.autoresize = !1, this.rows = 3, this.disabled = !1, this.value = "", this.placeholder = "", this._charCount = 0;
   }
@@ -8803,7 +8808,7 @@ let T = class extends f {
     `;
   }
 };
-T.styles = b`
+j.styles = b`
     :host {
       display: flex;
       flex-direction: column;
@@ -8918,40 +8923,40 @@ T.styles = b`
   `;
 U([
   l({ type: String, reflect: !0 })
-], T.prototype, "size", 2);
+], j.prototype, "size", 2);
 U([
   l({ type: String })
-], T.prototype, "label", 2);
+], j.prototype, "label", 2);
 U([
   l({ type: String, reflect: !0 })
-], T.prototype, "error", 2);
+], j.prototype, "error", 2);
 U([
   l({ type: Number })
-], T.prototype, "maxlength", 2);
+], j.prototype, "maxlength", 2);
 U([
   l({ type: Boolean })
-], T.prototype, "autoresize", 2);
+], j.prototype, "autoresize", 2);
 U([
   l({ type: Number })
-], T.prototype, "rows", 2);
+], j.prototype, "rows", 2);
 U([
   l({ type: Boolean })
-], T.prototype, "disabled", 2);
+], j.prototype, "disabled", 2);
 U([
   l({ type: String })
-], T.prototype, "value", 2);
+], j.prototype, "value", 2);
 U([
   l({ type: String })
-], T.prototype, "placeholder", 2);
+], j.prototype, "placeholder", 2);
 U([
   v()
-], T.prototype, "_charCount", 2);
+], j.prototype, "_charCount", 2);
 U([
   F("textarea")
-], T.prototype, "_textareaEl", 2);
-T = U([
+], j.prototype, "_textareaEl", 2);
+j = U([
   g("ca-textarea")
-], T);
+], j);
 var qa = Object.defineProperty, Ka = Object.getOwnPropertyDescriptor, Ur = (e, t, r, a) => {
   for (var o = a > 1 ? void 0 : a ? Ka(t, r) : t, i = e.length - 1, s; i >= 0; i--)
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
@@ -8983,11 +8988,25 @@ let Ua = 0, Vt = class extends f {
   _renderCloseIcon() {
     return n`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
   }
+  _renderTypeIcon(e) {
+    const t = "currentColor";
+    switch (e) {
+      case "success":
+        return n`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke=${t} stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+      case "warning":
+        return n`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke=${t} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a1 1 0 0 0 .86 1.5h18.64a1 1 0 0 0 .86-1.5L13.71 3.86a1 1 0 0 0-1.72 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>`;
+      case "error":
+        return n`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke=${t} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`;
+      default:
+        return n`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke=${t} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
+    }
+  }
   render() {
     return this._toasts.length === 0 ? c : n`
       ${this._toasts.map(
       (e) => n`
           <div class=${p({ toast: !0, [e.type]: !0, exiting: e.exiting })}>
+            <span class="lead-icon">${this._renderTypeIcon(e.type)}</span>
             <span class="message">${e.message}</span>
             <button class="close" @click=${() => this._dismiss(e.id)} aria-label="Close">
               ${this._renderCloseIcon()}
@@ -9000,14 +9019,15 @@ let Ua = 0, Vt = class extends f {
 };
 Vt.styles = b`
     :host { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 9500; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; }
-    .toast { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--ca-radius-md); font-family: var(--ca-font-family); font-size: 13px; box-shadow: var(--ca-shadow-md); pointer-events: auto; animation: toast-slide-in 0.25s ease; white-space: nowrap; }
+    .toast { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: var(--ca-radius-md); font-family: var(--ca-font-family); font-size: 13px; font-weight: var(--ca-font-weight-medium); box-shadow: var(--ca-shadow-md); pointer-events: auto; animation: toast-slide-in 0.25s ease; white-space: nowrap; }
     .toast.exiting { animation: toast-slide-out 0.2s ease forwards; }
-    .info { background-color: var(--ca-text-primary); color: var(--ca-surface); }
+    .info { background-color: var(--ca-color-info); color: var(--ca-color-white); }
     .success { background-color: var(--ca-color-success); color: var(--ca-color-white); }
     .error { background-color: var(--ca-color-danger); color: var(--ca-color-white); }
     .warning { background-color: var(--ca-color-warning); color: var(--ca-color-white); }
+    .lead-icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .message { flex: 1; line-height: 1.4; }
-    .close { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; border: none; background: none; color: inherit; cursor: pointer; opacity: 0.7; transition: opacity 0.15s ease; }
+    .close { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; border: none; background: none; color: inherit; cursor: pointer; opacity: 0.8; transition: opacity 0.15s ease; }
     .close:hover { opacity: 1; }
     @keyframes toast-slide-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes toast-slide-out { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(16px); } }
@@ -9387,37 +9407,37 @@ xr.styles = b`
       flex-shrink: 0;
     }
   `;
-let j = xr;
+let T = xr;
 ze([
   l({ type: Array })
-], j.prototype, "options");
+], T.prototype, "options");
 ze([
   l({ type: String })
-], j.prototype, "value");
+], T.prototype, "value");
 ze([
   l({ type: String, reflect: !0 })
-], j.prototype, "size");
+], T.prototype, "size");
 ze([
   l({ type: Boolean, reflect: !0 })
-], j.prototype, "borderless");
+], T.prototype, "borderless");
 ze([
   l({ type: Boolean, attribute: "allow-create" })
-], j.prototype, "allowCreate");
+], T.prototype, "allowCreate");
 ze([
   l({ type: String })
-], j.prototype, "placeholder");
+], T.prototype, "placeholder");
 ze([
   v()
-], j.prototype, "_isOpen");
+], T.prototype, "_isOpen");
 ze([
   v()
-], j.prototype, "_focusedIndex");
+], T.prototype, "_focusedIndex");
 var Wa = Object.getOwnPropertyDescriptor, Xa = (e, t, r, a) => {
   for (var o = a > 1 ? void 0 : a ? Wa(t, r) : t, i = e.length - 1, s; i >= 0; i--)
     (s = e[i]) && (o = s(o) || o);
   return o;
 };
-let Mr = class extends j {
+let Mr = class extends T {
 };
 Mr = Xa([
   g("ca-status-selector")
@@ -9427,7 +9447,7 @@ var Ja = Object.getOwnPropertyDescriptor, Za = (e, t, r, a) => {
     (s = e[i]) && (o = s(o) || o);
   return o;
 };
-let ar = class extends j {
+let ar = class extends T {
   renderOptionIcon(e) {
     return e.icon ? n`<span class="priority-icon" style="color: ${e.color}">${this._getIconSvg(e.icon)}</span>` : n`<span class="option-dot" style="background-color: ${e.color}"></span>`;
   }
@@ -9447,7 +9467,7 @@ let ar = class extends j {
   }
 };
 ar.styles = [
-  j.styles,
+  T.styles,
   b`
       .priority-icon {
         display: inline-flex;
@@ -9471,7 +9491,7 @@ var ei = Object.getOwnPropertyDescriptor, ti = (e, t, r, a) => {
     (s = e[i]) && (o = s(o) || o);
   return o;
 };
-let Ar = class extends j {
+let Ar = class extends T {
 };
 Ar = ti([
   g("ca-phase-selector")
@@ -9791,7 +9811,7 @@ var ai = Object.defineProperty, ii = Object.getOwnPropertyDescriptor, W = (e, t,
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && ai(t, r, o), o;
 };
-const jt = [
+const Tt = [
   "#ef4444",
   "#f97316",
   "#eab308",
@@ -9805,7 +9825,7 @@ const jt = [
 ];
 let R = class extends f {
   constructor() {
-    super(...arguments), this.labels = [], this.value = [], this.allowCreate = !1, this.size = "md", this.borderless = !1, this._isOpen = !1, this._searchQuery = "", this._showCreate = !1, this._newLabelName = "", this._newLabelColor = jt[0], this._boundClickOutside = this._handleClickOutside.bind(this);
+    super(...arguments), this.labels = [], this.value = [], this.allowCreate = !1, this.size = "md", this.borderless = !1, this._isOpen = !1, this._searchQuery = "", this._showCreate = !1, this._newLabelName = "", this._newLabelColor = Tt[0], this._boundClickOutside = this._handleClickOutside.bind(this);
   }
   connectedCallback() {
     super.connectedCallback(), document.addEventListener("click", this._boundClickOutside);
@@ -9817,7 +9837,7 @@ let R = class extends f {
     this._isOpen && (e.composedPath().includes(this) || this._close());
   }
   _close() {
-    this._isOpen = !1, this._searchQuery = "", this._showCreate = !1, this._newLabelName = "", this._newLabelColor = jt[0];
+    this._isOpen = !1, this._searchQuery = "", this._showCreate = !1, this._newLabelName = "", this._newLabelColor = Tt[0];
   }
   _toggle() {
     this._isOpen ? this._close() : this._isOpen = !0;
@@ -9836,7 +9856,7 @@ let R = class extends f {
         bubbles: !0,
         composed: !0
       })
-    ), this._showCreate = !1, this._newLabelName = "", this._newLabelColor = jt[0]);
+    ), this._showCreate = !1, this._newLabelName = "", this._newLabelColor = Tt[0]);
   }
   get _filteredLabels() {
     if (!this._searchQuery) return this.labels;
@@ -9907,7 +9927,7 @@ let R = class extends f {
               <div class="create-section" @click=${(t) => t.stopPropagation()}>
                 ${this._showCreate ? n`
                       <div class="swatches">
-                        ${jt.map(
+                        ${Tt.map(
       (t) => n`
                             <button class=${p({ swatch: !0, selected: t === this._newLabelColor })}
                               @click=${() => {
@@ -12524,10 +12544,10 @@ var zi = Object.defineProperty, Ci = Object.getOwnPropertyDescriptor, Pt = (e, t
 function Bt(e) {
   return `${fr[e.getMonth()]} ${e.getDate()}`;
 }
-function Tr(e) {
+function jr(e) {
   return `${fr[e.getMonth()]} ${e.getDate()}, ${e.getFullYear()}`;
 }
-function jr(e, t) {
+function Tr(e, t) {
   return Math.round(Math.abs(t.getTime() - e.getTime()) / 864e5);
 }
 let Ne = class extends f {
@@ -12583,7 +12603,7 @@ let Ne = class extends f {
     return this.periods.map((e) => {
       const t = Q(e.periodStart), r = Q(e.periodEnd), a = Q(e.earliestDate), o = Q(e.latestDate);
       if (!t || !r || !a || !o) return c;
-      const i = r.getTime() - t.getTime(), s = i > 0 ? (a.getTime() - t.getTime()) / i * 100 : 0, d = i > 0 ? (r.getTime() - o.getTime()) / i * 100 : 0, h = jr(a, o);
+      const i = r.getTime() - t.getTime(), s = i > 0 ? (a.getTime() - t.getTime()) / i * 100 : 0, d = i > 0 ? (r.getTime() - o.getTime()) / i * 100 : 0, h = Tr(a, o);
       return n`
         <div class="period-block">
           <div class="period-header">
@@ -12608,19 +12628,19 @@ let Ne = class extends f {
     return this.periods.map((e) => {
       const t = Q(e.earliestDate), r = Q(e.latestDate);
       if (!t || !r) return c;
-      const a = jr(t, r);
+      const a = Tr(t, r);
       return n`
         <div class="list-row">
           <span class="list-badge">${e.label}</span>
           <div class="list-dates">
             <div class="list-date-group">
               <span class="list-micro-label">Earliest</span>
-              <span class="list-date-value">${Tr(t)}</span>
+              <span class="list-date-value">${jr(t)}</span>
             </div>
             <span class="list-arrow">\u2192</span>
             <div class="list-date-group">
               <span class="list-micro-label">Latest</span>
-              <span class="list-date-value">${Tr(r)}</span>
+              <span class="list-date-value">${jr(r)}</span>
             </div>
           </div>
           <span class="duration">${a}d</span>
@@ -13541,8 +13561,8 @@ lt([
 me = lt([
   g("ca-page-nav")
 ], me);
-var Ai = Object.defineProperty, Ti = Object.getOwnPropertyDescriptor, Gt = (e, t, r, a) => {
-  for (var o = a > 1 ? void 0 : a ? Ti(t, r) : t, i = e.length - 1, s; i >= 0; i--)
+var Ai = Object.defineProperty, ji = Object.getOwnPropertyDescriptor, Gt = (e, t, r, a) => {
+  for (var o = a > 1 ? void 0 : a ? ji(t, r) : t, i = e.length - 1, s; i >= 0; i--)
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
   return a && o && Ai(t, r, o), o;
 };
@@ -13636,10 +13656,10 @@ Gt([
 et = Gt([
   g("ca-empty-state")
 ], et);
-var ji = Object.defineProperty, Bi = Object.getOwnPropertyDescriptor, It = (e, t, r, a) => {
+var Ti = Object.defineProperty, Bi = Object.getOwnPropertyDescriptor, It = (e, t, r, a) => {
   for (var o = a > 1 ? void 0 : a ? Bi(t, r) : t, i = e.length - 1, s; i >= 0; i--)
     (s = e[i]) && (o = (a ? s(t, r, o) : s(o)) || o);
-  return a && o && ji(t, r, o), o;
+  return a && o && Ti(t, r, o), o;
 };
 let Ve = class extends f {
   constructor() {
@@ -14626,7 +14646,7 @@ export {
   ga as WEEKDAY_LABELS,
   xa as buildCalendarGrid,
   pt as formatDate,
-  Tt as isDateDisabled,
+  jt as isDateDisabled,
   Ir as isInRange,
   X as isSameDay,
   Q as parseISODateString,
